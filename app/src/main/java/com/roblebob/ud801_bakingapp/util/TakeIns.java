@@ -27,7 +27,7 @@ public class TakeIns {
 
 
 
-    public List<Recipe> collect(String src_url) {
+    public List<Recipe> takeIn(String src_url) {
         try {
             return fromJson( getResponseFromHttpUrl( src_url));
         } catch( IOException e) {
@@ -37,11 +37,19 @@ public class TakeIns {
     }
 
 
-    public static List<Recipe> fromJson(String json) throws IOException {
-        Moshi moshi  = new Moshi.Builder().build();
-        Type type = Types.newParameterizedType(List.class, Recipe.class);
-        JsonAdapter<List<Recipe>> adapter = moshi.adapter( type);
-        return  adapter.nullSafe().fromJson(json);
+
+
+    public static List<Recipe> fromJson(String json)  {
+        try {
+            Moshi moshi = new Moshi.Builder().build();
+            Type type = Types.newParameterizedType(List.class, Recipe.class);
+            JsonAdapter<List<Recipe>> adapter = moshi.adapter(type);
+            return adapter.nullSafe().fromJson(json);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

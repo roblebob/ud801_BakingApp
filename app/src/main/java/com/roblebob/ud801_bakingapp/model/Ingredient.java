@@ -42,6 +42,22 @@ public class Ingredient {
 
 
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        //return quantity == that.quantity  &&  measure == that.measure  &&  Objects.equal(ingredient, that.ingredient);
+        return hashCode() == that.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+        //return Objects.hashCode(quantity, measure, ingredient);
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -51,23 +67,6 @@ public class Ingredient {
                 .add("ingredient", ingredient)
                 .toString();
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ingredient that = (Ingredient) o;
-        return quantity == that.quantity &&
-                measure == that.measure &&
-                Objects.equal(ingredient, that.ingredient);
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-        //return Objects.hashCode(quantity, measure, ingredient);
-    }
-
 
 }
 

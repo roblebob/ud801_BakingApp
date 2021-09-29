@@ -68,6 +68,23 @@ public class Recipe {
         this.image = image;
     }
 
+
+
+    @Override
+    public boolean equals(Object o) {
+        //if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe that = (Recipe) o;
+        //return id == that.id && servings == that.servings && Objects.equal(name, that.name) && Objects.equal(ingredients, that.ingredients) && Objects.equal(steps, that.steps) && Objects.equal(image, that.image);
+        return hashCode() == that.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        //return Objects.hashCode(id, name, ingredients, steps, servings, image);
+        return toString().hashCode();
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -80,22 +97,5 @@ public class Recipe {
                 .toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Recipe recipe = (Recipe) o;
-        return id == recipe.id &&
-                servings == recipe.servings &&
-                Objects.equal(name, recipe.name) &&
-                Objects.equal(ingredients, recipe.ingredients) &&
-                Objects.equal(steps, recipe.steps) &&
-                Objects.equal(image, recipe.image);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id, name, ingredients, steps, servings, image);
-    }
 }
 

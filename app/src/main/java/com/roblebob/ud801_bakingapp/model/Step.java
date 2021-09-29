@@ -56,6 +56,22 @@ public class Step {
         this.thumbnailURL = thumbnailURL;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        //if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step that = (Step) o;
+        //return id == that.id  &&  Objects.equal(shortDescription, that.shortDescription)  &&  Objects.equal(description, that.description)  &&  Objects.equal(videoURL, that.videoURL)  &&  Objects.equal(thumbnailURL, that.thumbnailURL);
+        return hashCode() == that.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+        //return Objects.hashCode(id, shortDescription, description, videoURL, thumbnailURL);
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -68,21 +84,4 @@ public class Step {
                 .toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Step step = (Step) o;
-        return id == step.id &&
-                Objects.equal(shortDescription, step.shortDescription) &&
-                Objects.equal(description, step.description) &&
-                Objects.equal(videoURL, step.videoURL) &&
-                Objects.equal(thumbnailURL, step.thumbnailURL);
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-        //return Objects.hashCode(id, shortDescription, description, videoURL, thumbnailURL);
-    }
 }

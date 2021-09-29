@@ -5,17 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.roblebob.ud801_bakingapp.model.Recipe;
+import com.roblebob.ud801_bakingapp.util.TakeIns;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
 
 
     public static final String SRC_URL = Resources.getSystem().getString(R.string.src_url);
-
+    public String json;
+    public List<Recipe> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_main);
 
 
