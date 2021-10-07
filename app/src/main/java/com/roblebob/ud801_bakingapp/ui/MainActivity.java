@@ -1,10 +1,11 @@
-package com.roblebob.ud801_bakingapp;
+package com.roblebob.ud801_bakingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.util.TakeIns;
 
