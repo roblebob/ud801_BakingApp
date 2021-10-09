@@ -1,22 +1,41 @@
 package com.roblebob.ud801_bakingapp.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import java.util.Objects;
 
-import androidx.annotation.NonNull;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-
+@Entity(tableName = "Ingredient")
 public class Ingredient {
 
-    int quantity;
-    Measure measure;
-    String ingredient;
+    @PrimaryKey                             private int     id;
+    @ColumnInfo(name = "recipeName")        private String  recipeName;
+    @ColumnInfo(name = "quantity")          private int     quantity;
+    @ColumnInfo(name = "measure")           private String  measure;
+    @ColumnInfo(name = "name")              private String  name;
 
 
-    public Ingredient(int quantity, Measure measure, String ingredient) {
+    public Ingredient(String recipeName, int quantity, String measure, String name) {
+        this.recipeName = recipeName;
         this.quantity = quantity;
         this.measure = measure;
-        this.ingredient = ingredient;
+        this.name = name;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
     }
 
     public int getQuantity() {
@@ -26,47 +45,35 @@ public class Ingredient {
         this.quantity = quantity;
     }
 
-    public Measure getMeasure() {
+    public String getMeasure() {
         return measure;
     }
-    public void setMeasure(Measure measure) {
+    public void setMeasure(String measure) {
         this.measure = measure;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public String getName() {
+        return name;
     }
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
+    public void setName(String name) {
+        this.name = name;
     }
-
-
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ingredient that = (Ingredient) o;
-        //return quantity == that.quantity  &&  measure == that.measure  &&  Objects.equal(ingredient, that.ingredient);
-        return hashCode() == that.hashCode();
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        Ingredient that = (Ingredient) obj;
+        return
+                this.getRecipeName().equals( that.getRecipeName()) &&
+                this.getQuantity() == that.getQuantity() &&
+                this.getMeasure().equals( that.getMeasure()) &&
+                this.getName().equals( that.getRecipeName());
     }
 
     @Override
     public int hashCode() {
-        return toString().hashCode();
-        //return Objects.hashCode(quantity, measure, ingredient);
+        return Objects.hash( getRecipeName(),  getQuantity(), getMeasure(), getName());
     }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("quantity", quantity)
-                .add("measure", measure)
-                .add("ingredient", ingredient)
-                .toString();
-    }
-
 }
 

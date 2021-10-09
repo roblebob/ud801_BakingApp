@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp.model;
+package com.roblebob.ud801_bakingapp.util;
 
 
 public enum Measure {

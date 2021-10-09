@@ -1,20 +1,26 @@
 package com.roblebob.ud801_bakingapp.model;
 
-import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
+import java.util.Objects;
 
+
+@Entity(tableName = "Step")
 public class Step {
 
-    private int id;
-    private String shortDescription;
-    private String description;
-    private String videoURL;
-    private String thumbnailURL;
+    @PrimaryKey                             private int     id;
+    @ColumnInfo(name = "recipeName")        private String  recipeName;
+    @ColumnInfo(name = "stepNumber")        private int     stepNumber;
+    @ColumnInfo(name = "shortDescription")  private String  shortDescription;
+    @ColumnInfo(name = "description")       private String  description;
+    @ColumnInfo(name = "videoURL")          private String  videoURL;
+    @ColumnInfo(name = "thumbnailURL")      private String  thumbnailURL;
 
-    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
-        this.id = id;
+    public Step(String recipeName, int stepNumber, String shortDescription, String description, String videoURL, String thumbnailURL) {
+        this.recipeName = recipeName;
+        this.stepNumber = stepNumber;
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoURL = videoURL;
@@ -26,6 +32,20 @@ public class Step {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
+    public int getStepNumber() {
+        return stepNumber;
+    }
+    public void setStepNumber(int stepNumber) {
+        this.stepNumber = stepNumber;
     }
 
     public String getShortDescription() {
@@ -56,32 +76,14 @@ public class Step {
         this.thumbnailURL = thumbnailURL;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        //if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Step that = (Step) o;
-        //return id == that.id  &&  Objects.equal(shortDescription, that.shortDescription)  &&  Objects.equal(description, that.description)  &&  Objects.equal(videoURL, that.videoURL)  &&  Objects.equal(thumbnailURL, that.thumbnailURL);
-        return hashCode() == that.hashCode();
-    }
-
     @Override
     public int hashCode() {
-        return toString().hashCode();
-        //return Objects.hashCode(id, shortDescription, description, videoURL, thumbnailURL);
+        return Objects.hash( getId(), getRecipeName(), getStepNumber(), getShortDescription(), getDescription(), getVideoURL(), getThumbnailURL());
     }
 
-    @NonNull
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("shortDescription", shortDescription)
-                .add("description", description)
-                .add("videoURL", videoURL)
-                .add("thumbnailURL", thumbnailURL)
-                .toString();
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        return this.toString().equals(obj.toString());
     }
-
 }
