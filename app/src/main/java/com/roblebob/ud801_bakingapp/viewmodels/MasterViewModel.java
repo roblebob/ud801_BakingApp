@@ -21,4 +21,8 @@ public class MasterViewModel extends ViewModel {
         return mAppRepository.getRecipeNameListLive();
     }
 
+    public void start() {
+        mAppRepository.integrate();
+    }
+
 }

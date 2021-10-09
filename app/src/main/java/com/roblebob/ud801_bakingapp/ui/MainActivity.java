@@ -13,12 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean mTwoPane;
 
-
-    public static final String SRC_URL = Resources.getSystem().getString(R.string.src_url);
-    public String json;
-    public List<Recipe> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
