@@ -3,17 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:appState="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/master_list_single_item_recipe_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recipe"
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/master_list_single_item_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         appState:layout_constraintTop_toTopOf="parent"
         appState:layout_constraintBottom_toBottomOf="parent"
         appState:layout_constraintStart_toStartOf="parent"
         appState:layout_constraintEnd_toEndOf="parent"
+        appState:cardBackgroundColor="@color/accent"
+        appState:cardCornerRadius="4dp"
         />
+
+    <TextView
+        android:elevation="2dp"
+        android:id="@+id/master_list_single_item_recipe_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipe"
+        android:textColor="@color/primary_dark"
+        appState:layout_constraintTop_toTopOf="@id/master_list_single_item_card_view"
+        appState:layout_constraintBottom_toBottomOf="@id/master_list_single_item_card_view"
+        appState:layout_constraintStart_toStartOf="@id/master_list_single_item_card_view"
+        appState:layout_constraintEnd_toEndOf="@id/master_list_single_item_card_view"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

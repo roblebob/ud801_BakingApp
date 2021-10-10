@@ -1,6 +1,7 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
     @Override
     public void onItemClickListener(Recipe recipe) {
+        Log.e(this.getClass().getSimpleName(), recipe.getName() + "was clicked");
         Toast.makeText(getContext(), recipe.getName(), Toast.LENGTH_LONG).show();
     }
 }
