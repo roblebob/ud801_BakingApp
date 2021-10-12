@@ -70,14 +70,17 @@ public class MasterRVAdapter extends RecyclerView.Adapter<MasterRVAdapter.Master
     public class MasterRVViewHolder extends RecyclerView.ViewHolder
     {
         TextView recipeNameTv;
+        TextView servingsTv;
 
         public MasterRVViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeNameTv = itemView.findViewById(R.id.master_list_single_item_recipe_tv);
+            servingsTv = itemView.findViewById(R.id.master_list_single_item_servings_value_tv);
         }
 
         public void bindTo(Recipe recipe) {
             recipeNameTv.setText(recipe.getName());
+            servingsTv.setText(String.valueOf(recipe.getServings()));
         }
     }
 }
