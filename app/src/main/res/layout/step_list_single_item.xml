@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:resAuto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/step_list_single_item_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        resAuto:cardBackgroundColor="@color/primary"
+        resAuto:layout_constraintBottom_toBottomOf="@id/guideline5"
+        resAuto:layout_constraintEnd_toEndOf="parent"
+        resAuto:layout_constraintStart_toStartOf="parent"
+        resAuto:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        />
+
+
+    <TextView
+        android:id="@+id/step_list_single_item_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="0"
+        resAuto:layout_constraintStart_toStartOf="@+id/guideline3"
+        resAuto:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="."
+        resAuto:layout_constraintBaseline_toBaselineOf="@+id/step_list_single_item_index"
+        resAuto:layout_constraintStart_toEndOf="@id/step_list_single_item_index" />
+
+    <TextView
+        android:id="@+id/step_list_single_item_short_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="shortDiscription"
+
+        resAuto:layout_constraintBaseline_toBaselineOf="@+id/step_list_single_item_index"
+        resAuto:layout_constraintStart_toStartOf="@+id/guideline4" />
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        resAuto:layout_constraintGuide_begin="30dp" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        resAuto:layout_constraintGuide_begin="65dp" />
+
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        resAuto:layout_constraintGuide_begin="36dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        resAuto:layout_constraintGuide_begin="70dp" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

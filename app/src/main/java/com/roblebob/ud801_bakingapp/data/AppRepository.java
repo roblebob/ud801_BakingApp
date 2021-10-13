@@ -30,17 +30,21 @@ public class AppRepository {
     }
 
 
+
+
     public LiveData<List<Recipe>> getRecipeNameListLive() {
         return this.mAppDatabase.recipeDao().loadRecipeList();
     }
 
-    public LiveData<List<Ingredient>> getIngredientListLive(Recipe recipe) {
-        return this.mAppDatabase.ingredientDao().loadIngredientsLive(recipe.getName());
+    public LiveData<List<Ingredient>> getIngredientListLive(String recipeName) {
+        return this.mAppDatabase.ingredientDao().loadIngredientsLive(recipeName);
     }
 
-    public LiveData<List<Step>> getStepListLive(Recipe recipe) {
-        return this.mAppDatabase.stepDao().loadStepListLive(recipe.getName());
+    public LiveData<List<Step>> getStepListLive(String recipeName) {
+        return this.mAppDatabase.stepDao().loadStepListLive(recipeName);
     }
+
+
 
 
     public void insert( Recipe recipe) {
@@ -54,6 +58,8 @@ public class AppRepository {
     public void insert( Step step) {
         Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.stepDao().insert( step));
     }
+
+
 
 
     public void integrate() {

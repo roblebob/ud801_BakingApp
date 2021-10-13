@@ -25,7 +25,7 @@
         android:id="@+id/master_list_single_item_recipe_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recipe"
+        android:text="@string/recipe_default_name"
         android:textSize="@dimen/recipe_text_size"
         android:textColor="@color/primary_dark"
         appState:layout_constraintTop_toTopOf="@id/master_list_single_item_card_view"
@@ -39,10 +39,10 @@
         android:id="@+id/master_list_single_item_servings_key_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Servings:"
-        appState:layout_constraintEnd_toStartOf="@+id/master_list_single_item_servings_value_tv"
-        appState:layout_constraintStart_toStartOf="@+id/master_list_single_item_recipe_tv"
-        appState:layout_constraintTop_toBottomOf="@+id/master_list_single_item_recipe_tv" />
+        android:text="Servings: "
+        appState:layout_constraintEnd_toEndOf="@+id/master_list_single_item_recipe_tv"
+        appState:layout_constraintTop_toBottomOf="@+id/master_list_single_item_recipe_tv"
+        appState:layout_constraintStart_toStartOf="@+id/master_list_single_item_recipe_tv" />
 
     <TextView
         android:elevation="2dp"
@@ -50,8 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        appState:layout_constraintBaseline_toBaselineOf="@+id/master_list_single_item_servings_key_tv"
         appState:layout_constraintStart_toEndOf="@id/master_list_single_item_servings_key_tv"
-        appState:layout_constraintEnd_toEndOf="@+id/master_list_single_item_recipe_tv"
-        appState:layout_constraintTop_toBottomOf="@+id/master_list_single_item_recipe_tv" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

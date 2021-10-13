@@ -534,4 +534,5 @@
     "image": ""
   }
 ]</string>
+  <string name="recipe_default_name">recipeName</string>
 </resources>

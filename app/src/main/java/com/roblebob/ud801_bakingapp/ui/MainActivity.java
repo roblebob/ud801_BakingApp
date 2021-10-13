@@ -2,8 +2,10 @@ package com.roblebob.ud801_bakingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
@@ -11,28 +13,29 @@ import com.roblebob.ud801_bakingapp.util.TakeIns;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.activity_main);
-
-
-
-
-
     }
 
 
 
+    // Callback from the MasterListFragment
+    @Override
+    public void onRecipeSelected(Recipe recipe) {
 
+        Log.e(this.getClass().getSimpleName(), recipe.getName() + " was clicked");
 
+        final Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("recipeName", recipe.getName());
+        intent.putExtra("servings", recipe.getServings());
+        startActivity(intent);
+    }
 }
 
 

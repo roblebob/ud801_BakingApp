@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity(tableName = "Ingredient")
 public class Ingredient {
 
-    @PrimaryKey                             private int     id;
+    @PrimaryKey(autoGenerate = true)        private int     id;
     @ColumnInfo(name = "recipeName")        private String  recipeName;
     @ColumnInfo(name = "quantity")          private int     quantity;
     @ColumnInfo(name = "measure")           private String  measure;

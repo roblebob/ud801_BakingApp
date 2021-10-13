@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity(tableName = "Step")
 public class Step {
 
-    @PrimaryKey                             private int     id;
+    @PrimaryKey(autoGenerate = true)        private int     id;
     @ColumnInfo(name = "recipeName")        private String  recipeName;
     @ColumnInfo(name = "stepNumber")        private int     stepNumber;
     @ColumnInfo(name = "shortDescription")  private String  shortDescription;

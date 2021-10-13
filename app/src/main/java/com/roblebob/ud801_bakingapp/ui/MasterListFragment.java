@@ -1,5 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,8 +59,6 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
 
         masterViewModel.start();
-
-
         return rootview;
     }
 
@@ -68,10 +67,44 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
 
 
-
+    // Callback from the MasterRVAdapter
     @Override
     public void onItemClickListener(Recipe recipe) {
-        Log.e(this.getClass().getSimpleName(), recipe.getName() + "was clicked");
+        Log.e(this.getClass().getSimpleName(), recipe.getName() + " was clicked");
         Toast.makeText(getContext(), recipe.getName(), Toast.LENGTH_LONG).show();
+
+        mCallback.onRecipeSelected(recipe);
     }
+
+
+
+
+
+    /**
+        Callback interface back to the MainActivity
+    **/
+
+    public interface OnRecipeClickListener {
+        void onRecipeSelected(Recipe recipe);
+    }
+
+    OnRecipeClickListener mCallback;
+
+
+    // Override onAttach to make sure that the container activity has implemented the callback
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mCallback = (OnRecipeClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnImageClickListener");
+        }
+    }
+
+
 }
