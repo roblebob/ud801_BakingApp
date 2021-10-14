@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="recipe_text_size">26sp</dimen>
+    <dimen name="margin">15dp</dimen>
+    <dimen name="padding">15dp</dimen>
 </resources>

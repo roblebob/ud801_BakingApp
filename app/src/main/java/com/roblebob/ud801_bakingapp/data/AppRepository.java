@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.google.common.util.concurrent.ExecutionError;
+
 import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.model.Step;
@@ -20,11 +20,13 @@ import java.util.List;
 
 
 
+
 public class AppRepository {
 
-    final String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    final static String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    private AppDatabase mAppDatabase;
+
+    private final AppDatabase mAppDatabase;
     public AppRepository(AppDatabase appDatabase) {
         this.mAppDatabase = appDatabase;
     }

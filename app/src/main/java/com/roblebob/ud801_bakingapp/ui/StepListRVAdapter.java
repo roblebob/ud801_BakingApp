@@ -67,17 +67,17 @@ public class StepListRVAdapter extends RecyclerView.Adapter<StepListRVAdapter.St
 
     public class StepRVViewHolder extends RecyclerView.ViewHolder {
 
-        TextView indexTv;
+        TextView stepNumberTv;
         TextView shortDescriptionTv;
 
         public StepRVViewHolder(@NonNull View itemView) {
             super(itemView);
-            indexTv = itemView.findViewById(R.id.step_list_single_item_index);
+            stepNumberTv = itemView.findViewById(R.id.step_list_single_item_step_number);
             shortDescriptionTv = itemView.findViewById(R.id.step_list_single_item_short_description);
         }
 
         public void bindTo(Step step) {
-            indexTv.setText(String.valueOf(step.getId()));
+            stepNumberTv.setText(String.valueOf(step.getStepNumber()));
             shortDescriptionTv.setText(step.getShortDescription());
         }
     }

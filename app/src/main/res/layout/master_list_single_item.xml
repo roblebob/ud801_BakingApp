@@ -16,8 +16,9 @@
         appState:layout_constraintBottom_toBottomOf="parent"
         appState:layout_constraintStart_toStartOf="parent"
         appState:layout_constraintEnd_toEndOf="parent"
-        appState:cardBackgroundColor="@color/accent"
+        appState:cardBackgroundColor="@color/divider"
         appState:cardCornerRadius="4dp"
+        android:layout_marginTop="15dp"
         />
 
     <TextView
