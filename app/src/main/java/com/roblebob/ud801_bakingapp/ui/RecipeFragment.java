@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,9 +50,11 @@ public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemCl
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        if (savedInstanceState != null) { mRecipeName = savedInstanceState.getString("recipeName"); }
 
+        if (savedInstanceState != null) { mRecipeName = savedInstanceState.getString("recipeName"); }
         Log.e(this.getClass().getSimpleName(), mRecipeName);
+        ((TextView) rootview.findViewById(R.id.fragment_recipe_heading_tv)).setText(mRecipeName);
+
 
         RecyclerView stepListRV = rootview.findViewById(R.id.fragment_recipe_steps_rv);
         RecyclerView.LayoutManager stepListRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
@@ -78,9 +81,6 @@ public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemCl
         } else {
             Log.e(this.getClass().getSimpleName(), "recipeName is not present");
         }
-
-
-
 
 
         return rootview;

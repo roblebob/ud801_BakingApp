@@ -38,6 +38,7 @@
         android:background="@color/accent_light"
         android:layout_margin="@dimen/margin"
         android:padding="@dimen/padding"
+        android:textAlignment="center"
         resAuto:layout_constraintBottom_toTopOf="@+id/fragment_step_navigation_left"
         resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_shortDescription" />
 
