@@ -15,7 +15,7 @@ import com.roblebob.ud801_bakingapp.model.Step;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepListRVAdapter extends RecyclerView.Adapter<StepListRVAdapter.StepRVViewHolder> {
+public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepListRVAdapter.StepRVViewHolder> {
 
     List<Step> mStepList = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class StepListRVAdapter extends RecyclerView.Adapter<StepListRVAdapter.St
 
     public interface ItemClickListener { void onItemClickListener(Step step); }
     ItemClickListener mItemClickListener;
-    StepListRVAdapter(ItemClickListener itemClickListener) { mItemClickListener = itemClickListener; }
+    RecipeStepListRVAdapter(ItemClickListener itemClickListener) { mItemClickListener = itemClickListener; }
 
 
 

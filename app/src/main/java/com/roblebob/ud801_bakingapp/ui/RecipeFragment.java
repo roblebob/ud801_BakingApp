@@ -1,5 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +21,12 @@ import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
-import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 
 import java.util.List;
 
-public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemClickListener{
+public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
-    StepListRVAdapter mStepListRVAdapter;
+    RecipeStepListRVAdapter mRecipeStepListRVAdapter;
 
     // Mandatory empty constructor
     public RecipeFragment() {
@@ -59,8 +59,8 @@ public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemCl
         RecyclerView stepListRV = rootview.findViewById(R.id.fragment_recipe_steps_rv);
         RecyclerView.LayoutManager stepListRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
         stepListRV.setLayoutManager(stepListRVLayoutManager);
-        mStepListRVAdapter = new StepListRVAdapter(this);
-        stepListRV.setAdapter(mStepListRVAdapter);
+        mRecipeStepListRVAdapter = new RecipeStepListRVAdapter(this);
+        stepListRV.setAdapter(mRecipeStepListRVAdapter);
 
 
         if (mRecipeName != null) {
@@ -73,7 +73,7 @@ public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemCl
                 public void onChanged(List<Step> steps) {
                     if (steps != null) {
                         Log.e(this.getClass().getSimpleName(), "size: " + steps.size());
-                        mStepListRVAdapter.submit(steps);
+                        mRecipeStepListRVAdapter.submit(steps);
                     }
                 }
             });
@@ -87,13 +87,52 @@ public class RecipeFragment extends Fragment implements StepListRVAdapter.ItemCl
     }
 
     @Override
-    public void onItemClickListener(Step step) {
-        Log.e(this.getClass().getSimpleName(), "" + step.getId() + ".  " + step.getShortDescription());
-    }
-
-
-    @Override
     public void onSaveInstanceState(Bundle currentState) {
         currentState.putString("recipeName", mRecipeName);
     }
+
+
+
+    @Override
+    public void onItemClickListener(Step step) {
+        Log.e(this.getClass().getSimpleName(), "" + step.getId() + ".  " + step.getShortDescription());
+
+        mCallback.onStepSelected(step);
+    }
+
+
+
+    /**
+     Callback interface back to the MainActivity
+     **/
+
+    public interface OnStepClickListener {
+        void onStepSelected(Step step);
+    }
+
+    OnStepClickListener mCallback;
+
+
+    // Override onAttach to make sure that the container activity has implemented the callback
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mCallback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnImageClickListener");
+        }
+    }
+
+
+
+
+
+
+
+
 }
