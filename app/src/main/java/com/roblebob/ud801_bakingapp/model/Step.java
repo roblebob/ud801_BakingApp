@@ -2,12 +2,13 @@ package com.roblebob.ud801_bakingapp.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
 
-@Entity(tableName = "Step")
+@Entity(tableName = "Step", indices = @Index(value = {"recipeName", "stepNumber"}, unique = true))
 public class Step {
 
     @PrimaryKey(autoGenerate = true)        private int     id;
@@ -78,12 +79,18 @@ public class Step {
 
     @Override
     public int hashCode() {
-        return Objects.hash( getId(), getRecipeName(), getStepNumber(), getShortDescription(), getDescription(), getVideoURL(), getThumbnailURL());
+        return Objects.hash( getRecipeName(), getStepNumber(), getShortDescription(), getDescription(), getVideoURL(), getThumbnailURL());
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
-        return this.toString().equals(obj.toString());
+        Step step = (Step) obj;
+        return  this.getRecipeName().equals(step.getRecipeName())  &&
+                this.getStepNumber() == step.getStepNumber()  &&
+                this.getShortDescription().equals(step.getShortDescription())  &&
+                this.getDescription().equals(step.getDescription())  &&
+                this.getVideoURL().equals(step.getVideoURL())  &&
+                this.getThumbnailURL().equals(step.getThumbnailURL());
     }
 }
