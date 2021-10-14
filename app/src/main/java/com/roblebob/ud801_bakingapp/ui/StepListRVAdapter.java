@@ -48,9 +48,7 @@ public class StepListRVAdapter extends RecyclerView.Adapter<StepListRVAdapter.St
 
         holder.bindTo(mStepList.get(position));
 
-        holder.itemView.setOnClickListener( (view) -> {
-            mItemClickListener.onItemClickListener(mStepList.get(position));
-        });
+        holder.itemView.setOnClickListener( (view) -> mItemClickListener.onItemClickListener(mStepList.get(position)));
     }
 
 

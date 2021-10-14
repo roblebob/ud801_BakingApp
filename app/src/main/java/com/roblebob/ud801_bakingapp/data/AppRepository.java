@@ -9,16 +9,17 @@ import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.util.Executors;
-import com.roblebob.ud801_bakingapp.util.Networking;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
-
-
+import java.util.Scanner;
 
 
 public class AppRepository {
@@ -68,7 +69,7 @@ public class AppRepository {
         Executors.getInstance().networkIO().execute( () -> {
 
             try {
-                String result = Networking.getResponseFromHttpUrl(URL);
+                String result = getResponseFromHttpUrl(URL);
 
                 JSONArray jsonArray = new JSONArray(result);
                 for (int i=0; i < jsonArray.length(); i++) {
@@ -109,5 +110,33 @@ public class AppRepository {
             }
 
         });
+    }
+
+
+
+
+
+    /* *********************************************************************************************
+     * This method returns the entire result from the HTTP response.
+     *
+     * @param   urlString The URL to fetch the HTTP response from (as a String and NOT as URL).
+     * @return  The contents of the HTTP response.
+     * @throws  IOException Related to network and stream reading
+     */
+    public static String getResponseFromHttpUrl(String urlString) throws IOException {
+
+        java.net.URL url = new URL(urlString);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            InputStream in = urlConnection.getInputStream();
+
+            Scanner scanner = new Scanner(in);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput)  return scanner.next();
+            else           return null;
+        }
+        finally { urlConnection.disconnect(); }
     }
 }
