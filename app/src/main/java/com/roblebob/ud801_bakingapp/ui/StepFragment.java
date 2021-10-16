@@ -1,5 +1,7 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.ExtractorUtil;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
+
+
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+
+
+
+
+
+
 
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
@@ -58,7 +82,7 @@ public class StepFragment extends Fragment {
 
         if (savedInstanceState != null) {
             mRecipeName = savedInstanceState.getString("recipeName");
-            mStepNumber = savedInstanceState.getInt("stepNumer");
+            mStepNumber = savedInstanceState.getInt("stepNumber");
         }
 
         if (mRecipeName != null) {
@@ -101,14 +125,82 @@ public class StepFragment extends Fragment {
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
 
 
+        mExoPlayerView = (PlayerView) rootview.findViewById(R.id.fragment_step_video);
+
 
         return rootview;
     }
 
+
+
     void setup(Step step) {
         mShortDescriptionTv.setText(step.getShortDescription());
         mDescriptionTv.setText(step.getDescription());
+        initializePlayer( Uri.parse( !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL() ));
     }
+
+
+
+
+
+    PlayerView mExoPlayerView;
+    SimpleExoPlayer mExoPlayer;
+
+
+    void initializePlayer(Uri uri) {
+
+        if (mExoPlayer != null) {
+            releasePlayer();
+        }
+
+
+        if (mExoPlayer == null) {
+
+            SimpleExoPlayer.Builder builder = new SimpleExoPlayer.Builder(
+                    this.getContext(),
+                    new DefaultRenderersFactory( this.getContext())
+            );
+            builder.setTrackSelector( (TrackSelector) new DefaultTrackSelector( this.getContext()));
+            builder.setLoadControl( (LoadControl) new DefaultLoadControl());
+            mExoPlayer = builder.build();
+
+
+            mExoPlayerView.setPlayer( mExoPlayer);
+
+            String userAgent = Util.getUserAgent( this.getContext(), getString(R.string.app_name));
+
+            MediaSource mediaSource = new ProgressiveMediaSource
+                    .Factory( new DefaultDataSourceFactory( this.getContext(), userAgent ))
+                    .createMediaSource(uri);
+
+            mExoPlayer.setMediaSource(mediaSource);
+            mExoPlayer.prepare();
+            mExoPlayer.setPlayWhenReady(true);
+        }
+
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        releasePlayer();
+    }
+
+
+
+
+    private void releasePlayer() {
+        mExoPlayer.stop();
+        mExoPlayer.release();
+        mExoPlayer = null;
+    }
+
+
+
+
+
 
 
 
@@ -121,3 +213,5 @@ public class StepFragment extends Fragment {
         currentState.putInt("stepNumber", mStepNumber);
     }
 }
+
+
