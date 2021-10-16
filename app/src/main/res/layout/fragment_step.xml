@@ -11,7 +11,6 @@
         android:layout_height="250dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
-        android:background="@color/divider"
         resAuto:layout_constraintEnd_toEndOf="parent"
         resAuto:layout_constraintStart_toStartOf="parent"
         resAuto:layout_constraintTop_toTopOf="parent" />
@@ -25,23 +24,32 @@
         resAuto:layout_constraintStart_toStartOf="parent"
         resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_video"
         android:layout_margin="@dimen/margin"
-        android:background="@color/accent"
+        android:textSize="@dimen/step_heading_size"
         android:text="shortDecription"
         android:textAlignment="center"
         android:padding="@dimen/padding"
         />
 
-    <TextView
-        android:id="@+id/fragment_step_description"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/accent_light"
-        android:layout_margin="@dimen/margin"
-        android:padding="@dimen/padding"
-        android:textAlignment="center"
-        resAuto:layout_constraintBottom_toTopOf="@+id/fragment_step_navigation_left"
-        resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_shortDescription" />
+        android:layout_height="wrap_content"
+        resAuto:layout_constraintEnd_toEndOf="parent"
+        resAuto:layout_constraintStart_toStartOf="parent"
+        resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_shortDescription">
 
+        <TextView
+            android:id="@+id/fragment_step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:lineSpacingExtra="4dp"
+            android:padding="40dp"
+            android:textAlignment="center"
+            android:layout_gravity="top|center_horizontal"
+            android:textSize="17sp" />
+
+
+    </ScrollView>
 
 
     <View
