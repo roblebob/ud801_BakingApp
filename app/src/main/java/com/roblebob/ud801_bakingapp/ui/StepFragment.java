@@ -16,7 +16,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.ExtractorUtil;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -48,7 +51,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepFragment extends Fragment {
+public class StepFragment extends Fragment implements Player.Listener{
 
     public StepFragment() {}
 
@@ -146,7 +149,6 @@ public class StepFragment extends Fragment {
     PlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
 
-
     void initializePlayer(Uri uri) {
 
         if (mExoPlayer != null) {
@@ -156,40 +158,23 @@ public class StepFragment extends Fragment {
 
         if (mExoPlayer == null) {
 
-            SimpleExoPlayer.Builder builder = new SimpleExoPlayer.Builder(
-                    this.getContext(),
-                    new DefaultRenderersFactory( this.getContext())
-            );
-            builder.setTrackSelector( (TrackSelector) new DefaultTrackSelector( this.getContext()));
-            builder.setLoadControl( (LoadControl) new DefaultLoadControl());
-            mExoPlayer = builder.build();
-
-
+            mExoPlayer = new SimpleExoPlayer
+                    .Builder(this.getContext(), new DefaultRenderersFactory( this.getContext()))
+                    .setTrackSelector( (TrackSelector) new DefaultTrackSelector( this.getContext()))
+                    .setLoadControl( (LoadControl) new DefaultLoadControl())
+                    .build();
             mExoPlayerView.setPlayer( mExoPlayer);
-
+            mExoPlayer.addListener(this);
             String userAgent = Util.getUserAgent( this.getContext(), getString(R.string.app_name));
-
             MediaSource mediaSource = new ProgressiveMediaSource
                     .Factory( new DefaultDataSourceFactory( this.getContext(), userAgent ))
-                    .createMediaSource(uri);
-
+                    .createMediaSource(MediaItem.fromUri(uri));
             mExoPlayer.setMediaSource(mediaSource);
             mExoPlayer.prepare();
             mExoPlayer.setPlayWhenReady(true);
         }
 
     }
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        releasePlayer();
-    }
-
-
-
 
     private void releasePlayer() {
         mExoPlayer.stop();
@@ -198,6 +183,14 @@ public class StepFragment extends Fragment {
     }
 
 
+    @Override
+    public void onIsPlayingChanged(boolean isPlaying) {
+        if (isPlaying) {
+            Log.e(this.getClass().getSimpleName(), "PLAYING");
+        } else if (mExoPlayer.getPlaybackState() == Player.STATE_READY) {
+            Log.e(this.getClass().getSimpleName(), "PAUSED");
+        }
+    }
 
 
 
@@ -206,6 +199,13 @@ public class StepFragment extends Fragment {
 
 
 
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        releasePlayer();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle currentState) {
