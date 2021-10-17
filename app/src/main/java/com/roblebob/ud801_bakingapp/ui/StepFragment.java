@@ -3,6 +3,8 @@ package com.roblebob.ud801_bakingapp.ui;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,6 +132,7 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         mExoPlayerView = (PlayerView) rootview.findViewById(R.id.fragment_step_video);
 
+        initializedMediaSession();
 
         return rootview;
     }
@@ -143,8 +146,9 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
-
-
+    /**
+     *  ExoPlayer
+     */
 
     PlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
@@ -187,9 +191,50 @@ public class StepFragment extends Fragment implements Player.Listener{
     public void onIsPlayingChanged(boolean isPlaying) {
         if (isPlaying) {
             Log.e(this.getClass().getSimpleName(), "PLAYING");
+            mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, mExoPlayer.getCurrentPosition(), 1f);
         } else if (mExoPlayer.getPlaybackState() == Player.STATE_READY) {
             Log.e(this.getClass().getSimpleName(), "PAUSED");
+            mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
+        mMediaSession.setPlaybackState( mStateBuilder.build());
+    }
+
+
+
+
+
+
+
+
+    /**
+     *  MediaSession
+     */
+
+    MediaSessionCompat mMediaSession;
+    PlaybackStateCompat.Builder mStateBuilder;
+
+    public void initializedMediaSession() {
+
+        mMediaSession = new MediaSessionCompat(this.getContext(), this.getClass().getSimpleName());
+
+        mMediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS );
+
+        mMediaSession.setMediaButtonReceiver( null);
+
+        mStateBuilder = new PlaybackStateCompat.Builder().setActions(
+                PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_PAUSE | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS );
+
+        mMediaSession.setPlaybackState(mStateBuilder.build());
+
+        mMediaSession.setCallback( new MySessionCallBack());
+
+        mMediaSession.setActive(true);
+    }
+
+    private class MySessionCallBack extends MediaSessionCompat.Callback {
+        @Override public void onPlay() {}
+        @Override public void onPause() {}
+        @Override public void onStop() {}
     }
 
 
@@ -203,6 +248,7 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     @Override
     public void onDestroyView() {
+        mMediaSession.setActive(false);
         super.onDestroyView();
         releasePlayer();
     }
