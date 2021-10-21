@@ -1,6 +1,12 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -13,9 +19,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.media.session.MediaButtonReceiver;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -146,6 +154,31 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
+    @Override
+    public void onDestroyView() {
+        mMediaSession.setActive(false);
+        super.onDestroyView();
+        releasePlayer();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString("recipeName", mRecipeName);
+        currentState.putInt("stepNumber", mStepNumber);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      *  ExoPlayer
      */
@@ -181,6 +214,8 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
     private void releasePlayer() {
+        mNotificationManager.cancelAll();
+
         mExoPlayer.stop();
         mExoPlayer.release();
         mExoPlayer = null;
@@ -197,6 +232,8 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
+
+        showNotification( mStateBuilder.build());
     }
 
 
@@ -210,7 +247,7 @@ public class StepFragment extends Fragment implements Player.Listener{
      *  MediaSession
      */
 
-    MediaSessionCompat mMediaSession;
+    static MediaSessionCompat mMediaSession;
     PlaybackStateCompat.Builder mStateBuilder;
 
     public void initializedMediaSession() {
@@ -232,9 +269,9 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
     private class MySessionCallBack extends MediaSessionCompat.Callback {
-        @Override public void onPlay() {}
-        @Override public void onPause() {}
-        @Override public void onStop() {}
+        @Override public void onPlay() { mExoPlayer.setPlayWhenReady(true); }
+        @Override public void onPause() { mExoPlayer.setPlayWhenReady(false); }
+        @Override public void onStop() { mExoPlayer.seekTo(0);}
     }
 
 
@@ -242,22 +279,97 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
+    /**
+     * Notification Control
+     */
+
+    NotificationManager mNotificationManager;
+    NotificationCompat.Builder mNotificationBuilder;
+
+    private void showNotification( PlaybackStateCompat state) {
+
+        int NOTIFICATION_ID = 234;
+        String CHANNEL_ID = "my_channel_01";
+        CharSequence CHANNEL_NAME = "my_channel";
+        String CHANNEL_DESCRIPTION = "This is my channel";
+        int CHANNEL_IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, CHANNEL_IMPORTANCE);
+        notificationChannel.setDescription(CHANNEL_DESCRIPTION);
+        notificationChannel.enableLights(true);
+        notificationChannel.setLightColor(Color.RED);
+        notificationChannel.enableVibration(true);
+        notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+        notificationChannel.setShowBadge(false);
 
 
 
 
-    @Override
-    public void onDestroyView() {
-        mMediaSession.setActive(false);
-        super.onDestroyView();
-        releasePlayer();
+        int icon;
+        String play_pause;
+        if( state.getState() == PlaybackStateCompat.STATE_PLAYING) {
+            icon = R.drawable.exo_controls_pause;
+            play_pause = getString( R.string.pause);
+        } else {
+            icon = R.drawable.exo_controls_play;
+            play_pause = getString( R.string.play);
+        }
+
+
+        NotificationCompat.Action playPauseAction = new NotificationCompat.Action(
+                icon,
+                play_pause,
+                MediaButtonReceiver.buildMediaButtonPendingIntent( getContext(), PlaybackStateCompat.ACTION_PLAY_PAUSE));
+
+        NotificationCompat.Action restartAction = new NotificationCompat.Action(
+                R.drawable.exo_controls_previous,
+                getString(R.string.restart),
+                MediaButtonReceiver .buildMediaButtonPendingIntent( getContext(), PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS));
+
+
+
+
+
+
+
+        PendingIntent contentPendingIntend = PendingIntent.getActivity(
+                getContext(),
+                0,
+                new Intent(getContext(), StepActivity.class),
+                0
+        );
+
+
+        mNotificationBuilder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                .setContentTitle( "BakingApp")
+                .setContentText("Press play to hear the piece!")
+                .setContentIntent( contentPendingIntend)
+                //.setSmallIcon(R.drawable.)
+                .setVisibility( NotificationCompat.VISIBILITY_PUBLIC)
+                .addAction( restartAction)
+                .addAction( playPauseAction)
+                .setStyle( new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setMediaSession( mMediaSession.getSessionToken())
+                        .setShowActionsInCompactView(0,1));
+
+
+        mNotificationManager = (NotificationManager) getContext().getSystemService( Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify( NOTIFICATION_ID, mNotificationBuilder.build());
+
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        currentState.putString("recipeName", mRecipeName);
-        currentState.putInt("stepNumber", mStepNumber);
+    public static class MediaReceiver extends BroadcastReceiver {
+
+        public MediaReceiver() { }
+
+        @Override public void onReceive( Context context, Intent intent) {
+            MediaButtonReceiver .handleIntent( mMediaSession, intent);
+        }
     }
+
+
+
+
 }
 
 
