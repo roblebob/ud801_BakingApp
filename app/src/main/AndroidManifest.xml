@@ -26,6 +26,7 @@
         <activity android:name=".ui.RecipeActivity"/>
         <activity android:name=".ui.StepActivity"/>
             <!-- android:launchMode="singleTop" -->
+        <activity android:name=".ui.IngredientsActivity"/>
     </application>
 
 </manifest>

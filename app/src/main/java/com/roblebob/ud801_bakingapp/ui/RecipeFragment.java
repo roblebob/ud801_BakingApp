@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -83,6 +84,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         }
 
 
+        ((Button) rootview.findViewById(R.id.fragment_recipe_ingredients_button)).setOnClickListener( (view) -> {
+            mIngredientsCallback.onIngredientsSelected();
+        });
+
         return rootview;
     }
 
@@ -97,7 +102,7 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
     public void onItemClickListener(Step step) {
         Log.e(this.getClass().getSimpleName(), "" + step.getId() + ".  " + step.getShortDescription());
 
-        mCallback.onStepSelected(step);
+        mStepCallback.onStepSelected(step);
     }
 
 
@@ -106,11 +111,12 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
      Callback interface back to the MainActivity
      **/
 
-    public interface OnStepClickListener {
-        void onStepSelected(Step step);
-    }
+    public interface OnStepClickListener { void onStepSelected(Step step); }
+    OnStepClickListener mStepCallback;
 
-    OnStepClickListener mCallback;
+    public interface OnIngredientsClickListener { void onIngredientsSelected(); }
+    OnIngredientsClickListener mIngredientsCallback;
+
 
 
     // Override onAttach to make sure that the container activity has implemented the callback
@@ -121,7 +127,8 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         // This makes sure that the host activity has implemented the callback interface
         // If not, it throws an exception
         try {
-            mCallback = (OnStepClickListener) context;
+            mStepCallback = (OnStepClickListener) context;
+            mIngredientsCallback = (OnIngredientsClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnImageClickListener");
