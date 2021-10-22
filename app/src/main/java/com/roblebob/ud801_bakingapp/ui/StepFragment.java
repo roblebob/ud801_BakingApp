@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -129,6 +130,9 @@ public class StepFragment extends Fragment implements Player.Listener{
         mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_shortDescription);
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
 
+        mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
+        mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
+
 
         mExoPlayerView = (PlayerView) rootview.findViewById(R.id.fragment_step_video);
 
@@ -138,8 +142,23 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
+    ImageView mBackwardArrow;
+    ImageView mForwardArrow;
+
+
 
     void setup(Step step) {
+        if (step.getStepNumber() == 0) {
+            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.divider));
+            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+        } else if (step.getStepNumber() == mStepList.size() - 1) {
+            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.divider));
+        } else {
+            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+        }
+
         mShortDescriptionTv.setText(step.getShortDescription());
         mDescriptionTv.setText(step.getDescription());
         initializePlayer( Uri.parse( !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL() ));

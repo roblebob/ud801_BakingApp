@@ -78,6 +78,7 @@
 
 
     <ImageView
+        android:id="@+id/fragment_step_backward_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         resAuto:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_left"
@@ -90,6 +91,7 @@
         />
 
     <ImageView
+        android:id="@+id/fragment_step_forward_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         resAuto:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_right"
