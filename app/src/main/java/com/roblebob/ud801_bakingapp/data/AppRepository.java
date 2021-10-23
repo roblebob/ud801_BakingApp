@@ -86,7 +86,7 @@ public class AppRepository {
                     for (int i1=0; i1 < jsonArrayIngredients.length(); i1++) {
                         JSONObject jsonObjectIngredient = jsonArrayIngredients.getJSONObject(i1);
 
-                        int quantity = jsonObjectIngredient.getInt("quantity");
+                        double quantity = jsonObjectIngredient.getDouble("quantity");
                         String measure = jsonObjectIngredient.getString("measure");
                         String name = jsonObjectIngredient.getString("ingredient");
                         insert(new Ingredient(recipeName, quantity, measure, name));

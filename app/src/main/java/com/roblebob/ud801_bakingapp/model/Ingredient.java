@@ -11,12 +11,12 @@ public class Ingredient {
 
     @PrimaryKey(autoGenerate = true)        private int     id;
     @ColumnInfo(name = "recipeName")        private String  recipeName;
-    @ColumnInfo(name = "quantity")          private int     quantity;
+    @ColumnInfo(name = "quantity")          private double  quantity;
     @ColumnInfo(name = "measure")           private String  measure;
     @ColumnInfo(name = "name")              private String  name;
 
 
-    public Ingredient(String recipeName, int quantity, String measure, String name) {
+    public Ingredient(String recipeName, double quantity, String measure, String name) {
         this.recipeName = recipeName;
         this.quantity = quantity;
         this.measure = measure;
@@ -38,10 +38,10 @@ public class Ingredient {
         this.recipeName = recipeName;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
