@@ -56,8 +56,12 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
 
         public void bindTo(Ingredient ingredient) {
             ingredientsNameTv.setText(ingredient.getName());
-            ingredientsQuantityTv.setText(String.valueOf(ingredient.getQuantity()));
-            ingredientsMeasureTv.setText(ingredient.getMeasure());
+            ingredientsMeasureTv.setText(ingredient.getMeasure().equals("UNIT") ? "" : ingredient.getMeasure());
+            if (ingredient.getQuantity() - ((int) ingredient.getQuantity()) == 0.0) {
+                ingredientsQuantityTv.setText(String.valueOf( (int) ingredient.getQuantity()));
+            } else {
+                ingredientsQuantityTv.setText(String.valueOf(ingredient.getQuantity()));
+            }
         }
     }
 

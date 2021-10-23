@@ -22,7 +22,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="22dp"
-                android:elevation="2dp"
                 android:text="ingredient_name"
                 resAuto:layout_constraintEnd_toEndOf="parent"
                 resAuto:layout_constraintStart_toStartOf="parent"
@@ -33,9 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-
-                android:elevation="2dp"
                 android:text="350.0"
+                android:textSize="11sp"
                 resAuto:layout_constraintEnd_toStartOf="@+id/ingredient_list_single_item_measure_tv"
                 resAuto:layout_constraintHorizontal_chainStyle="packed"
                 resAuto:layout_constraintStart_toStartOf="parent"
@@ -46,8 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:elevation="2dp"
                 android:text="G"
+                android:textSize="10sp"
                 resAuto:layout_constraintBaseline_toBaselineOf="@+id/ingredient_list_single_item_quantity_tv"
                 resAuto:layout_constraintEnd_toEndOf="parent"
                 resAuto:layout_constraintStart_toEndOf="@id/ingredient_list_single_item_quantity_tv" />
