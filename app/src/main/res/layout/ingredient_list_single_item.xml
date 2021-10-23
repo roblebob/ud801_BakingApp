@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:resAuto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:background="@color/accent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/ingredient_list_single_item_card_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        resAuto:layout_constraintBottom_toBottomOf="parent"
-        resAuto:layout_constraintEnd_toEndOf="parent"
-        resAuto:layout_constraintStart_toStartOf="parent"
-        resAuto:layout_constraintTop_toTopOf="parent"
-
-        />
-
-    <TextView
-        android:id="@+id/ingredient_list_single_item_name_tv"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp"
-        android:elevation="2dp"
-        android:text="ingredient_name"
-        resAuto:layout_constraintEnd_toEndOf="@+id/ingredient_list_single_item_card_view"
-        resAuto:layout_constraintStart_toStartOf="@+id/ingredient_list_single_item_card_view"
-        resAuto:layout_constraintTop_toTopOf="@id/ingredient_list_single_item_card_view"
-        resAuto:layout_constraintVertical_chainStyle="packed" />
+        android:layout_margin="15dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
-    <TextView
-        android:id="@+id/ingredient_list_single_item_quantity_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
+            <TextView
+                android:id="@+id/ingredient_list_single_item_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
+                android:elevation="2dp"
+                android:text="ingredient_name"
+                resAuto:layout_constraintEnd_toEndOf="parent"
+                resAuto:layout_constraintStart_toStartOf="parent"
+                resAuto:layout_constraintTop_toTopOf="parent"/>
 
-        android:text="350.0"
-        resAuto:layout_constraintEnd_toStartOf="@+id/ingredient_list_single_item_measure_tv"
-        resAuto:layout_constraintHorizontal_chainStyle="packed"
-        resAuto:layout_constraintStart_toStartOf="@+id/ingredient_list_single_item_card_view"
-        resAuto:layout_constraintTop_toBottomOf="@id/ingredient_list_single_item_name_tv" />
+            <TextView
+                android:id="@+id/ingredient_list_single_item_quantity_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
 
-    <TextView
-        android:id="@+id/ingredient_list_single_item_measure_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        android:text="G"
-        resAuto:layout_constraintBaseline_toBaselineOf="@+id/ingredient_list_single_item_quantity_tv"
-        resAuto:layout_constraintEnd_toEndOf="@+id/ingredient_list_single_item_card_view"
-        resAuto:layout_constraintStart_toEndOf="@id/ingredient_list_single_item_quantity_tv" />
+                android:elevation="2dp"
+                android:text="350.0"
+                resAuto:layout_constraintEnd_toStartOf="@+id/ingredient_list_single_item_measure_tv"
+                resAuto:layout_constraintHorizontal_chainStyle="packed"
+                resAuto:layout_constraintStart_toStartOf="parent"
+                resAuto:layout_constraintTop_toBottomOf="@id/ingredient_list_single_item_name_tv" />
+
+            <TextView
+                android:id="@+id/ingredient_list_single_item_measure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:elevation="2dp"
+                android:text="G"
+                resAuto:layout_constraintBaseline_toBaselineOf="@+id/ingredient_list_single_item_quantity_tv"
+                resAuto:layout_constraintEnd_toEndOf="parent"
+                resAuto:layout_constraintStart_toEndOf="@id/ingredient_list_single_item_quantity_tv" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

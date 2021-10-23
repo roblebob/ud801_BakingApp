@@ -2,11 +2,12 @@ package com.roblebob.ud801_bakingapp.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Objects;
 
 
-@Entity(tableName = "Ingredient")
+@Entity(tableName = "Ingredient", indices = @Index(value = {"recipeName", "quantity", "measure", "name"}, unique = true))
 public class Ingredient {
 
     @PrimaryKey(autoGenerate = true)        private int     id;
