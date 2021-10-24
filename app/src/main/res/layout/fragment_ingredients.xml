@@ -14,6 +14,7 @@
         android:layout_gravity="fill_vertical"
         android:alwaysDrawnWithCache="false"
         android:visibility="visible"
+        android:background="@color/divider"
         />
 
 </LinearLayout>
