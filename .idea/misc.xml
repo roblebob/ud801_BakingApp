@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v21/app_widget_background.xml" value="0.3892307692307692" />
+        <entry key="app/src/main/res/drawable-v21/app_widget_inner_view_background.xml" value="0.3892307692307692" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3953125" />
+        <entry key="app/src/main/res/drawable/cake_5306411.xml" value="0.3892307692307692" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_left_24.xml" value="0.3892307692307692" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_right_24.xml" value="0.3892307692307692" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3953125" />
@@ -12,13 +15,14 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3555253623188406" />
         <entry key="app/src/main/res/layout/activity_recipe.xml" value="0.3365036231884058" />
         <entry key="app/src/main/res/layout/activity_step.xml" value="0.29846014492753625" />
+        <entry key="app/src/main/res/layout/baking_widget_provider.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/detail_fragment.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/first_fragment.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/fragment_ingredients.xml" value="0.18439716312056736" />
         <entry key="app/src/main/res/layout/fragment_master_list.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.32019927536231885" />
         <entry key="app/src/main/res/layout/fragment_step.xml" value="0.302536231884058" />
-        <entry key="app/src/main/res/layout/ingredient_list_single_item.xml" value="0.4321808510638298" />
+        <entry key="app/src/main/res/layout/ingredient_list_single_item.xml" value="0.12" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/main_fragment.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/master_fragment.xml" value="0.34103260869565216" />
@@ -27,6 +31,8 @@
         <entry key="app/src/main/res/layout/recipe.xml" value="0.32019927536231885" />
         <entry key="app/src/main/res/layout/recipe_activity.xml" value="0.32019927536231885" />
         <entry key="app/src/main/res/layout/step_list_single_item.xml" value="0.5" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3892307692307692" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3892307692307692" />
       </map>
     </option>
   </component>
