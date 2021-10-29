@@ -12,7 +12,5 @@
     android:targetCellHeight="2"
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen"
-
     />
 
-<!--     android:configure="com.roblebob.ud801_bakingapp.BakingWidgetConfig" -->

@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
         <receiver
             android:name=".BakingWidgetProvider"
             android:exported="true">
@@ -26,13 +25,10 @@
                 android:resource="@xml/baking_widget_provider_info" />
         </receiver>
 
-        <!--service android:name=".BakingWidgetService" /-->
         <service android:name=".BakingWidgetRemoteViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-
         <service android:name=".BakingWidgetRemoteViewServiceIngredients"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-
 
         <activity
             android:name=".ui.MainActivity"
@@ -47,13 +43,6 @@
         <activity android:name=".ui.RecipeActivity" />
         <activity android:name=".ui.StepActivity" /> <!-- android:launchMode="singleTop" -->
         <activity android:name=".ui.IngredientsActivity" />
-        <!--activity
-            android:name=".BakingWidgetConfig"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity-->
 
     </application>
 
