@@ -32,7 +32,7 @@ public class Executors {
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = new Executors(java.util.concurrent.Executors.newSingleThreadExecutor(),
-                        java.util.concurrent.Executors.newFixedThreadPool(7),
+                        java.util.concurrent.Executors.newFixedThreadPool(10),
                         new MainThreadExecutor());
             }
         }

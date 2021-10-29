@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -31,7 +32,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     public static final String EXTRA_CURRENT_RECIPE_NAME = "extraCurrentRecipeName";
 
 
-    private String mCurrentRecipeName;
+    //private String mCurrentRecipeName;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -69,7 +70,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
             Intent serviceIntentIngredients = new Intent(context, BakingWidgetRemoteViewServiceIngredients.class);
             serviceIntentIngredients.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            serviceIntentIngredients.putExtra(EXTRA_CURRENT_RECIPE_NAME, mCurrentRecipeName);
+            //serviceIntentIngredients.putExtra(EXTRA_CURRENT_RECIPE_NAME, mCurrentRecipeName);
             serviceIntentIngredients.setData(Uri.parse(serviceIntentIngredients.toUri(Intent.URI_INTENT_SCHEME)));
             views.setRemoteAdapter(R.id.widget_ingredient_list_view, serviceIntentIngredients);
             views.setEmptyView(R.id.widget_ingredient_list_view, R.id.widget_ingredient_empty_tv);
@@ -119,6 +120,11 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         Log.e(this.getClass().getSimpleName(), "onDelete()");
+        Executors.getInstance().diskIO().execute( () -> {
+            AppDatabase appDatabase = AppDatabase.getInstance(context);
+            AppStateDao appStateDao = appDatabase.appStateDao();
+            appStateDao.insert(new AppState("current_recipe_name", null));
+        });
     }
 
     @Override
@@ -137,33 +143,28 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
         if (ACTION_REFRESH.equals(intent.getAction())) {
 
-            mCurrentRecipeName = intent.getStringExtra(EXTRA_ITEM_RECIPE_NAME);
-            Toast.makeText(context, "clicked position " + mCurrentRecipeName , Toast.LENGTH_SHORT).show();
+            String currentRecipeName = intent.getStringExtra(EXTRA_ITEM_RECIPE_NAME);
 
 
-            Log.e(this.getClass().getSimpleName(), "onReceive():   current recipe name: " + mCurrentRecipeName);
+            Log.e(this.getClass().getSimpleName() + "  onReceive(): ", "[[" + currentRecipeName + "]]");
 
 
             int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
-//
-//            Intent serviceIntentIngredients = new Intent(context, BakingWidgetRemoteViewServiceIngredients.class);
-//            serviceIntentIngredients.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-//            serviceIntentIngredients.putExtra(EXTRA_CURRENT_RECIPE_NAME, mCurrentRecipeName);
-//            serviceIntentIngredients.setData(Uri.parse(serviceIntentIngredients.toUri(Intent.URI_INTENT_SCHEME)));
-//            views.setRemoteAdapter(R.id.widget_ingredient_list_view, serviceIntentIngredients);
-//            views.setEmptyView(R.id.widget_ingredient_list_view, R.id.widget_ingredient_empty_tv);
-//
-
-            AppDatabase appDatabase = AppDatabase.getInstance(context);
-            AppStateDao appStateDao = appDatabase.appStateDao();
-            Executors.getInstance().diskIO().execute( () -> appStateDao.insert(new AppState("current_recipe_name", mCurrentRecipeName)));
 
 
+
+            Executors.getInstance().diskIO().execute( () -> {
+                AppDatabase appDatabase = AppDatabase.getInstance(context);
+                AppStateDao appStateDao = appDatabase.appStateDao();
+                appStateDao.insert(new AppState("current_recipe_name", currentRecipeName));
+            });
+
+            //SystemClock.sleep(1000);
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_recipe_name_list_view);
+            // appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_recipe_name_list_view);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_ingredient_list_view);
         }
 

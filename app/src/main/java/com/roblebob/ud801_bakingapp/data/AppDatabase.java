@@ -20,7 +20,7 @@ public abstract class AppDatabase extends RoomDatabase { /*singleton-pattern*/
     public static AppDatabase   getInstance( Context context) {
         if ( sInstance == null) {  synchronized (LOCK) { sInstance = Room
                 .databaseBuilder(  context.getApplicationContext(),  AppDatabase.class,  AppDatabase.DATABASE_NAME)
-                .allowMainThreadQueries()  // TODO:
+                //.allowMainThreadQueries()
                 .build();
         }}
         return sInstance;

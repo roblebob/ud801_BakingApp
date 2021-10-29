@@ -9,10 +9,13 @@ import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.annotation.WorkerThread;
+
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.data.AppStateDao;
 import com.roblebob.ud801_bakingapp.data.RecipeDao;
 import com.roblebob.ud801_bakingapp.model.AppState;
+import com.roblebob.ud801_bakingapp.util.Executors;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -28,28 +31,32 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
     }
 
 
+    @WorkerThread
+    static class BakingWidgetItemFactory implements RemoteViewsFactory{
 
-    class BakingWidgetItemFactory implements RemoteViewsFactory{
-
-        private Context mContext;
-        private int mAppWidgetId;
-        //private String[] exampleData = {"Nutella Pie", "Brownies", "Yellow Cake", "Cheesecake" };
-        //private List<String> mList = new ArrayList<>(Arrays.asList(exampleData));
+        private final Context mContext;
+        private final int mAppWidgetId;
         private List<String> mList = new ArrayList<>();
-        private RecipeDao mRecipeDao;
+        //private final RecipeDao mRecipeDao;
 
 
         BakingWidgetItemFactory(Context context, Intent intent) {
             mContext = context;
             mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            AppDatabase appDatabase = AppDatabase.getInstance(mContext);
-            mRecipeDao = appDatabase.recipeDao();
+//            AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+//            mRecipeDao = appDatabase.recipeDao();
         }
 
         @Override
         public void onCreate() {
             // connect to data source
-            mList = mRecipeDao.loadRecipeNameList();
+            //mList = mRecipeDao.loadRecipeNameList();
+
+//            Executors.getInstance().diskIO().execute( () -> {
+//                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+//                RecipeDao recipeDao = appDatabase.recipeDao();
+//                mList = recipeDao.loadRecipeNameList();
+//            });
         }
 
         @Override
@@ -59,8 +66,18 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
             //String timeFormatted = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date);
 
             //mList = new ArrayList<>(Arrays.asList(exampleData));
-            mList =  mRecipeDao.loadRecipeNameList();
+
+            //mList =  mRecipeDao.loadRecipeNameList();
+
             //mList = mList.stream().map((s) -> s + "\n" + timeFormatted).collect(Collectors.toList());
+
+
+            Executors.getInstance().diskIO().execute( () -> {
+                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+                RecipeDao recipeDao = appDatabase.recipeDao();
+                mList = recipeDao.loadRecipeNameList();
+            });
+
 
             //SystemClock.sleep(3000); // to simulate
         }
@@ -87,7 +104,7 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
             views.setOnClickFillInIntent(R.id.baking_widget_single_item_recipe_name_tv, fillIntent);
 
             // heavy loading possible
-            SystemClock.sleep(500);
+            //SystemClock.sleep(500);
             return views;
         }
 
