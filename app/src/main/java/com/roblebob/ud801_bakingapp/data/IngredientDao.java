@@ -22,4 +22,9 @@ public interface IngredientDao {
 
     @Query("SELECT * FROM Ingredient WHERE recipeName = :recipeName" )
     LiveData<List<Ingredient>> loadIngredientsLive(String recipeName);
+
+
+    @Query("SELECT * FROM Ingredient WHERE recipeName = :recipeName" )
+    List<Ingredient> loadIngredients(String recipeName);
+
 }

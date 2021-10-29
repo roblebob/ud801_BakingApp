@@ -1,25 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     >
 
     <ImageView
         android:id="@+id/widget_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/cake_5306411"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/widget_recipe_name_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/widget_recipe_name_empty_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:text="Empty"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/widget_ingredient_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <TextView
+                android:id="@+id/widget_ingredient_empty_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/darker_gray"
+                android:text="Empty"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+
+    <!--Button
+        android:id="@+id/widget_ingredient_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"
+        android:textAlignment="center"
+        android:background="@color/divider"
+        /-->
+
+    <!--ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /-->
 
 
 </LinearLayout>
 
 
-<!--
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.Ud801_BakingApp.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,12 +104,53 @@
         style="@style/Widget.Ud801_BakingApp.AppWidget.InnerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_above="@id/widget_image_view"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
+        android:text="@string/app_name"
         android:textSize="24sp"
-        android:textStyle="bold|italic" />
-</RelativeLayout>
--->
+        android:textStyle="bold|italic"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <ImageView
+        android:id="@+id/widget_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/cake_5306411"
+        android:layout_above="@+id/widget_recipe_name_list_view"
+        android:layout_alignEnd="@id/widget_recipe_name_list_view"
+        />
+
+
+    <ListView
+        android:id="@+id/widget_recipe_name_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/widget_ingredient_button" />
+
+    <Button
+        android:id="@+id/widget_ingredient_button"
+        style="@style/Widget.Ud801_BakingApp.AppWidget.InnerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Ingredients"
+        android:textAlignment="center" />
+
+    <ListView
+        android:id="@+id/widget_ingredient_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/widget_ingredient_button" />
+
+
+
+
+</RelativeLayout-->

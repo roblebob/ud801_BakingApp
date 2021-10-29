@@ -16,13 +16,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
 
     // Callback from the MasterListFragment

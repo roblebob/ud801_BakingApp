@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 
+import com.roblebob.ud801_bakingapp.model.AppState;
 import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.model.Step;
@@ -35,17 +36,40 @@ public class AppRepository {
 
 
 
-    public LiveData<List<Recipe>> getRecipeNameListLive() {
-        return this.mAppDatabase.recipeDao().loadRecipeList();
+    public LiveData<List<Recipe>> getRecipeListLive() {
+        return this.mAppDatabase.recipeDao().loadRecipeListLive();
     }
 
     public LiveData<List<Ingredient>> getIngredientListLive(String recipeName) {
         return this.mAppDatabase.ingredientDao().loadIngredientsLive(recipeName);
     }
 
+    public List<Ingredient> getIngredientList(String recipeName) {
+        return this.mAppDatabase.ingredientDao().loadIngredients(recipeName);
+    }
+    public List<String> getRecipeNameList() {
+        return this.mAppDatabase.recipeDao().loadRecipeNameList();
+    }
+
+
+
     public LiveData<List<Step>> getStepListLive(String recipeName) {
         return this.mAppDatabase.stepDao().loadStepListLive(recipeName);
     }
+
+    public LiveData<String> getAppStateLive(String key) {
+        return this.mAppDatabase.appStateDao().loadState(key);
+    }
+
+    public LiveData<String> getCurrentRecipeNameLive() {
+        return this.mAppDatabase.appStateDao().loadCurrentRecipeName();
+    }
+
+    public void insertCurrentRecipeName(String recipeName) {
+        insert( new AppState("current_recipe_name", recipeName));
+    }
+
+
 
 
 
@@ -53,14 +77,17 @@ public class AppRepository {
     public void insert( Recipe recipe) {
         Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.recipeDao().insert( recipe));
     }
-
     public void insert( Ingredient ingredient) {
         Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.ingredientDao().insert( ingredient));
     }
-
     public void insert( Step step) {
         Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.stepDao().insert( step));
     }
+    public void insert(AppState appState) {
+        Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.appStateDao().insert( appState));
+    }
+
+
 
 
 

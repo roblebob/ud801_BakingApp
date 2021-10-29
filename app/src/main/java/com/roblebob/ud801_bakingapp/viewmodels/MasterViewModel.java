@@ -18,11 +18,20 @@ public class MasterViewModel extends ViewModel {
     }
 
     public LiveData<List<Recipe>> getRecipeListLive() {
-        return mAppRepository.getRecipeNameListLive();
+        return mAppRepository.getRecipeListLive();
     }
+
+    public LiveData<String> getCurrentRecipeNameLive() {
+        return mAppRepository.getCurrentRecipeNameLive();
+    }
+
+
 
     public void start() {
         mAppRepository.integrate();
     }
 
+    public void setCurrentRecipeName(String recipeName) {
+        mAppRepository.insertCurrentRecipeName( recipeName);
+    }
 }
