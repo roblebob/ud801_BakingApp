@@ -4,7 +4,7 @@
     android:initialKeyguardLayout="@layout/baking_widget_provider"
     android:initialLayout="@layout/baking_widget_provider"
     android:minWidth="320dp"
-    android:minHeight="100dp"
+    android:minHeight="160dp"
     android:previewImage="@drawable/cake_5306411"
     android:previewLayout="@layout/baking_widget_provider"
     android:resizeMode="horizontal|vertical"

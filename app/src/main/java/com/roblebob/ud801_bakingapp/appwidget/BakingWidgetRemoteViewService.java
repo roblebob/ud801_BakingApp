@@ -1,27 +1,22 @@
-package com.roblebob.ud801_bakingapp;
+package com.roblebob.ud801_bakingapp.appwidget;
 
-import static com.roblebob.ud801_bakingapp.BakingWidgetProvider.EXTRA_ITEM_RECIPE_NAME;
+import static com.roblebob.ud801_bakingapp.appwidget.BakingWidgetProvider.EXTRA_ITEM_RECIPE_NAME;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import androidx.annotation.WorkerThread;
 
+import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
-import com.roblebob.ud801_bakingapp.data.AppStateDao;
 import com.roblebob.ud801_bakingapp.data.RecipeDao;
-import com.roblebob.ud801_bakingapp.model.AppState;
 import com.roblebob.ud801_bakingapp.util.Executors;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class BakingWidgetRemoteViewService extends RemoteViewsService {

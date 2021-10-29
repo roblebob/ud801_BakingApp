@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp;
+package com.roblebob.ud801_bakingapp.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.RemoteViewsService;
 
 import androidx.annotation.WorkerThread;
 
+import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.data.AppStateDao;
 import com.roblebob.ud801_bakingapp.data.IngredientDao;

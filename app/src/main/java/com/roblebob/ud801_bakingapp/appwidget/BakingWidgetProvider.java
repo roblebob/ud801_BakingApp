@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp;
+package com.roblebob.ud801_bakingapp.appwidget;
 
 
 import android.app.PendingIntent;
@@ -8,12 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
+import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.data.AppStateDao;
 import com.roblebob.ud801_bakingapp.model.AppState;
