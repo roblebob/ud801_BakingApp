@@ -10,7 +10,9 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.roblebob.ud801_bakingapp.data.AppDatabase;
+import com.roblebob.ud801_bakingapp.data.AppStateDao;
 import com.roblebob.ud801_bakingapp.data.RecipeDao;
+import com.roblebob.ud801_bakingapp.model.AppState;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -53,12 +55,12 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
         @Override
         public void onDataSetChanged() {
             //refresh data
-            Date date = new Date();
-            String timeFormatted = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date);
+            //Date date = new Date();
+            //String timeFormatted = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date);
 
             //mList = new ArrayList<>(Arrays.asList(exampleData));
             mList =  mRecipeDao.loadRecipeNameList();
-            mList = mList.stream().map((s) -> s + "\n" + timeFormatted).collect(Collectors.toList());
+            //mList = mList.stream().map((s) -> s + "\n" + timeFormatted).collect(Collectors.toList());
 
             //SystemClock.sleep(3000); // to simulate
         }

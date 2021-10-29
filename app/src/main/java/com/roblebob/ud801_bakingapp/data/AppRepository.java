@@ -58,11 +58,11 @@ public class AppRepository {
     }
 
     public LiveData<String> getAppStateLive(String key) {
-        return this.mAppDatabase.appStateDao().loadState(key);
+        return this.mAppDatabase.appStateDao().loadStateLive(key);
     }
 
     public LiveData<String> getCurrentRecipeNameLive() {
-        return this.mAppDatabase.appStateDao().loadCurrentRecipeName();
+        return this.mAppDatabase.appStateDao().loadCurrentRecipeNameLive();
     }
 
     public void insertCurrentRecipeName(String recipeName) {

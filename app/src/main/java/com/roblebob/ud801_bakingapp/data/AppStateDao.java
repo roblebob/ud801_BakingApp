@@ -14,11 +14,15 @@ import com.roblebob.ud801_bakingapp.model.AppState;
 public interface AppStateDao {
 
     @Query("SELECT value FROM AppState WHERE `key` = :key")
-    LiveData< String> loadState(String key);
+    LiveData< String> loadStateLive(String key);
 
 
     @Query("SELECT value FROM AppState WHERE `key` = 'current_recipe_name'")
-    LiveData< String> loadCurrentRecipeName();
+    LiveData< String> loadCurrentRecipeNameLive();
+
+
+    @Query("SELECT value FROM AppState WHERE `key` = 'current_recipe_name'")
+    String loadCurrentRecipeName();
 
 
 
