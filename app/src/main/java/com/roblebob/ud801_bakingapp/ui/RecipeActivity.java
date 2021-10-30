@@ -17,14 +17,18 @@ public class RecipeActivity extends AppCompatActivity
         implements RecipeFragment.OnStepClickListener,
                     RecipeFragment.OnIngredientsClickListener
 {
-
     String mRecipeName;
+
+    boolean mTwoPane;
 
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        mTwoPane = findViewById(R.id.two_pane_devider) != null;
+
 
         if (savedInstanceState == null) {
 
@@ -36,9 +40,15 @@ public class RecipeActivity extends AppCompatActivity
             recipeFragment.setRecipeName(mRecipeName);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().add(R.id.recipe_container, recipeFragment).commit();
+
+
+
         } else {
             mRecipeName = savedInstanceState.getString("recipeName");
         }
+
+
+
 
 
     }
@@ -51,17 +61,32 @@ public class RecipeActivity extends AppCompatActivity
 
     @Override
     public void onStepSelected(Step step) {
-        final Intent intent = new Intent(this, StepActivity.class);
-        intent.putExtra("recipeName", step.getRecipeName());
-        intent.putExtra("stepNumber", step.getStepNumber());
-        startActivity(intent);
+        if (mTwoPane) {
+            StepFragment stepFragment = new StepFragment();
+            stepFragment.setRecipeName(mRecipeName);
+            stepFragment.setStepNumber(step.getStepNumber());
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.detail_container, stepFragment).commit();
+        } else {
+            final Intent intent = new Intent(this, StepActivity.class);
+            intent.putExtra("recipeName", step.getRecipeName());
+            intent.putExtra("stepNumber", step.getStepNumber());
+            startActivity(intent);
+        }
     }
 
 
     @Override
     public void onIngredientsSelected() {
-        final Intent intent = new Intent(this, IngredientsActivity.class);
-        intent.putExtra("recipeName", mRecipeName);
-        startActivity(intent);
+        if (mTwoPane) {
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setRecipeName(mRecipeName);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.detail_container, ingredientsFragment).commit();
+        } else {
+            final Intent intent = new Intent(this, IngredientsActivity.class);
+            intent.putExtra("recipeName", mRecipeName);
+            startActivity(intent);
+        }
     }
 }
