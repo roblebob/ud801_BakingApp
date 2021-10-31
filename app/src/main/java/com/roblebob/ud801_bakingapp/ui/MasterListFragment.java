@@ -46,8 +46,8 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         masterRV.setAdapter(mMasterRVAdapter);
 
 
-        AppDatabase appDatabase = AppDatabase.getInstance(this.getContext());
-        MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(appDatabase);
+
+        MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
 
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), new Observer<List<Recipe>>() {

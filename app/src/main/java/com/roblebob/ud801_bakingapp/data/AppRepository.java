@@ -1,10 +1,12 @@
 package com.roblebob.ud801_bakingapp.data;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 
+import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.AppState;
 import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Recipe;
@@ -25,44 +27,51 @@ import java.util.Scanner;
 
 public class AppRepository {
 
-    final static String URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    final String mSrcUrl;
+    final AppStateDao mAppStateDao;
+    final RecipeDao mRecipeDao;
+    final StepDao mStepDao;
+    final IngredientDao mIngredientDao;
 
-
-    private final AppDatabase mAppDatabase;
-    public AppRepository(AppDatabase appDatabase) {
-        this.mAppDatabase = appDatabase;
+    public AppRepository(Context context) {
+        AppDatabase appDatabase = AppDatabase.getInstance(context);
+        mRecipeDao = appDatabase.recipeDao();
+        mStepDao = appDatabase.stepDao();
+        mIngredientDao = appDatabase.ingredientDao();
+        mAppStateDao = appDatabase.appStateDao();
+        mSrcUrl = context.getString(R.string.src_url);
     }
 
 
 
 
     public LiveData<List<Recipe>> getRecipeListLive() {
-        return this.mAppDatabase.recipeDao().loadRecipeListLive();
+        return mRecipeDao.loadRecipeListLive();
     }
 
     public LiveData<List<Ingredient>> getIngredientListLive(String recipeName) {
-        return this.mAppDatabase.ingredientDao().loadIngredientsLive(recipeName);
+        return mIngredientDao.loadIngredientsLive(recipeName);
     }
 
     public List<Ingredient> getIngredientList(String recipeName) {
-        return this.mAppDatabase.ingredientDao().loadIngredients(recipeName);
+        return mIngredientDao.loadIngredients(recipeName);
     }
     public List<String> getRecipeNameList() {
-        return this.mAppDatabase.recipeDao().loadRecipeNameList();
+        return mRecipeDao.loadRecipeNameList();
     }
 
 
 
     public LiveData<List<Step>> getStepListLive(String recipeName) {
-        return this.mAppDatabase.stepDao().loadStepListLive(recipeName);
+        return mStepDao.loadStepListLive(recipeName);
     }
 
     public LiveData<String> getAppStateLive(String key) {
-        return this.mAppDatabase.appStateDao().loadStateLive(key);
+        return mAppStateDao.loadStateLive(key);
     }
 
     public LiveData<String> getCurrentRecipeNameLive() {
-        return this.mAppDatabase.appStateDao().loadCurrentRecipeNameLive();
+        return mAppStateDao.loadCurrentRecipeNameLive();
     }
 
     public void insertCurrentRecipeName(String recipeName) {
@@ -75,16 +84,16 @@ public class AppRepository {
 
 
     public void insert( Recipe recipe) {
-        Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.recipeDao().insert( recipe));
+        Executors.getInstance().diskIO().execute( () -> mRecipeDao.insert( recipe));
     }
     public void insert( Ingredient ingredient) {
-        Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.ingredientDao().insert( ingredient));
+        Executors.getInstance().diskIO().execute( () -> mIngredientDao.insert( ingredient));
     }
     public void insert( Step step) {
-        Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.stepDao().insert( step));
+        Executors.getInstance().diskIO().execute( () -> mStepDao.insert( step));
     }
     public void insert(AppState appState) {
-        Executors.getInstance().diskIO().execute( () -> this.mAppDatabase.appStateDao().insert( appState));
+        Executors.getInstance().diskIO().execute( () -> mAppStateDao.insert( appState));
     }
 
 
@@ -96,7 +105,7 @@ public class AppRepository {
         Executors.getInstance().networkIO().execute( () -> {
 
             try {
-                String result = getResponseFromHttpUrl(URL);
+                String result = getResponseFromHttpUrl(mSrcUrl);
 
                 JSONArray jsonArray = new JSONArray(result);
                 for (int i=0; i < jsonArray.length(); i++) {

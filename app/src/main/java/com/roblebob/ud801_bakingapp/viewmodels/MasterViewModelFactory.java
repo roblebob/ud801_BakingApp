@@ -1,22 +1,24 @@
 package com.roblebob.ud801_bakingapp.viewmodels;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
 
 public class MasterViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private final AppDatabase mAppDatabase;
+    private final Context mContext;
 
-    public MasterViewModelFactory(AppDatabase appDatabase) {
-        mAppDatabase = appDatabase;
+    public MasterViewModelFactory(Context context) {
+        mContext = context;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create (@NonNull Class<T> modelClass) {
-        return (T) new MasterViewModel(mAppDatabase);
+        //noinspection unchecked
+        return (T) new MasterViewModel(mContext);
     }
 }

@@ -59,8 +59,7 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         mRecipeStepListRVAdapter = new RecipeStepListRVAdapter(this);
         stepListRV.setAdapter(mRecipeStepListRVAdapter);
 
-        AppDatabase appDatabase = AppDatabase.getInstance(this.getContext());
-        DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(appDatabase, mRecipeName);
+        DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
         final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
         detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
             @Override

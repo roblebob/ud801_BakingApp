@@ -50,8 +50,8 @@ public class IngredientsFragment extends Fragment {
 
 
         if (mRecipeName != null) {
-            AppDatabase appDatabase = AppDatabase.getInstance(this.getContext());
-            DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(appDatabase, mRecipeName);
+
+            DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
             final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
 
             detailViewModel.getIngredientListLive().observe(getViewLifecycleOwner(), new Observer<List<Ingredient>>() {
