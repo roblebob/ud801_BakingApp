@@ -128,6 +128,14 @@ public class AppRepository {
                         String description = jsonObjectStep.getString("description");
                         String videoURL = jsonObjectStep.getString("videoURL");
                         String thumbnailURL = jsonObjectStep.getString("thumbnailURL");
+
+                        // corrections to inconsistency in data
+                        stepNumber = i1;
+                        description = description.substring(
+                                (description.contains(". ") && description.indexOf(".") < 4)
+                                        ? description.indexOf(". ") + 2 : 0
+                        );
+
                         insert(new Step( recipeName, stepNumber, shortDescription, description, videoURL, thumbnailURL));
                     }
                 }
