@@ -1,6 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,32 +42,19 @@ public class MasterRVAdapter extends RecyclerView.Adapter<MasterRVAdapter.Master
         return new MasterRVViewHolder(view);
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull MasterRVViewHolder holder, int position) {
         Recipe recipe = mRecipeList.get(position);
         holder.bindTo(recipe);
-
-
-        holder.itemView.setOnClickListener( (view) -> {
-            mItemClickListener.onItemClickListener( mRecipeList.get( position));
-        } );
-
-
+        holder.itemView.setOnClickListener( (view) -> mItemClickListener.onItemClickListener( mRecipeList.get( position)));
     }
-
-
 
     @Override
     public int getItemCount() {
         return mRecipeList.size();
     }
 
-
-
-
-    public class MasterRVViewHolder extends RecyclerView.ViewHolder
+    public static class MasterRVViewHolder extends RecyclerView.ViewHolder
     {
         TextView recipeNameTv;
         TextView servingsTv;

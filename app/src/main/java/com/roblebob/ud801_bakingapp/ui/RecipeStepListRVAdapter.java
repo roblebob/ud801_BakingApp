@@ -63,7 +63,7 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
 
 
 
-    public class StepRVViewHolder extends RecyclerView.ViewHolder {
+    public static class StepRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView stepNumberTv;
         TextView shortDescriptionTv;

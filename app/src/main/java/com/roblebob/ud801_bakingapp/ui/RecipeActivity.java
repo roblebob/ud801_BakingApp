@@ -2,8 +2,6 @@ package com.roblebob.ud801_bakingapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

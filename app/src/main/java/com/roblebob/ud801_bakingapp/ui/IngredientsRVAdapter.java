@@ -41,7 +41,7 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
 
 
 
-    public class IngredientsRVViewHolder extends RecyclerView.ViewHolder {
+    public static class IngredientsRVViewHolder extends RecyclerView.ViewHolder {
 
         TextView ingredientsNameTv;
         TextView ingredientsQuantityTv;

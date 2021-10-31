@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
@@ -71,7 +69,7 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
             }
         });
 
-        ((Button) rootview.findViewById(R.id.fragment_recipe_ingredients_button))
+        rootview.findViewById(R.id.fragment_recipe_ingredients_button)
                 .setOnClickListener( (view) -> mIngredientsCallback.onIngredientsSelected());
 
         return rootview;
@@ -99,7 +97,7 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
     // Override onAttach to make sure that the container activity has implemented the callback
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         // This makes sure that the host activity has implemented the callback interface

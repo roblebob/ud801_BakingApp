@@ -1,6 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
-import android.content.Context;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -19,44 +19,29 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.extractor.ExtractorUtil;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
-
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-
-
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 
-
-
-
-
-
-
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
 
-    public StepFragment() {}
+
+    public StepFragment() { }
 
     String mRecipeName;
     public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
@@ -111,14 +96,14 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
-        ((View) rootview.findViewById(R.id.fragment_step_navigation_left)).setOnClickListener(view -> {
+        rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
                 mStepNumber = mStepNumber - 1;
                 setup(mStepList.get(mStepNumber));
             }
         });
 
-        ((View) rootview.findViewById(R.id.fragment_step_navigation_right)).setOnClickListener(view -> {
+        rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
                 mStepNumber = mStepNumber + 1;
                 setup(mStepList.get(mStepNumber));
@@ -133,7 +118,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
 
 
-        mExoPlayerView = (PlayerView) rootview.findViewById(R.id.fragment_step_video);
+        mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
 
         initializedMediaSession();
 
@@ -148,14 +133,14 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     void setup(Step step) {
         if (step.getStepNumber() == 0) {
-            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.divider));
-            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.divider));
+            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.secondary_text));
         } else if (step.getStepNumber() == mStepList.size() - 1) {
-            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
-            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.divider));
+            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.secondary_text));
+            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.divider));
         } else {
-            mBackwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
-            mForwardArrow.setColorFilter(this.getContext().getColor(R.color.secondary_text));
+            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.secondary_text));
+            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.secondary_text));
         }
 
         mShortDescriptionTv.setText(step.getShortDescription());
@@ -182,15 +167,15 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (mExoPlayer == null) {
 
             mExoPlayer = new SimpleExoPlayer
-                    .Builder(this.getContext(), new DefaultRenderersFactory( this.getContext()))
-                    .setTrackSelector( (TrackSelector) new DefaultTrackSelector( this.getContext()))
-                    .setLoadControl( (LoadControl) new DefaultLoadControl())
+                    .Builder(this.requireContext(), new DefaultRenderersFactory( this.getContext()))
+                    .setTrackSelector(new DefaultTrackSelector( this.getContext()))
+                    .setLoadControl(new DefaultLoadControl())
                     .build();
             mExoPlayerView.setPlayer( mExoPlayer);
             mExoPlayer.addListener(this);
-            String userAgent = Util.getUserAgent( this.getContext(), getString(R.string.app_name));
+            String userAgent = Util.getUserAgent( this.requireContext(), getString(R.string.app_name));
             MediaSource mediaSource = new ProgressiveMediaSource
-                    .Factory( new DefaultDataSourceFactory( this.getContext(), userAgent ))
+                    .Factory( new DefaultDataSourceFactory( this.requireContext(), userAgent ))
                     .createMediaSource(MediaItem.fromUri(uri));
             mExoPlayer.setMediaSource(mediaSource);
             mExoPlayer.prepare();
@@ -234,9 +219,9 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     public void initializedMediaSession() {
 
-        mMediaSession = new MediaSessionCompat(this.getContext(), this.getClass().getSimpleName());
+        mMediaSession = new MediaSessionCompat(this.requireContext(), this.getClass().getSimpleName());
 
-        mMediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS );
+        //mMediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS );
 
         mMediaSession.setMediaButtonReceiver( null);
 
@@ -245,12 +230,12 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         mMediaSession.setPlaybackState(mStateBuilder.build());
 
-        mMediaSession.setCallback( new MySessionCallBack());
+        mMediaSession.setCallback(new MySessionCallBack());
 
         mMediaSession.setActive(true);
     }
 
-    private class MySessionCallBack extends MediaSessionCompat.Callback {
+    private static class MySessionCallBack extends MediaSessionCompat.Callback {
         @Override public void onPlay() {}
         @Override public void onPause() {}
         @Override public void onStop() {}
