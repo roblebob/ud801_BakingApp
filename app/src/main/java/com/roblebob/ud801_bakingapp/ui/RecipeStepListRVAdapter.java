@@ -1,5 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
 
     List<Step> mStepList = new ArrayList<>();
 
+    @SuppressLint("NotifyDataSetChanged")
     public void submit(List<Step> stepList) {
         Log.e(this.getClass().getSimpleName(), "size: " + stepList.size());
         mStepList = new ArrayList<>(stepList);

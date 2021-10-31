@@ -1,5 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,8 @@ public class IngredientsRVAdapter extends RecyclerView.Adapter<IngredientsRVAdap
 
     List<Ingredient> mIngredientList = new ArrayList<>();
 
-    public void submit( List<Ingredient> ingredientList) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void submit(List<Ingredient> ingredientList) {
         mIngredientList = new ArrayList<>(ingredientList);
         notifyDataSetChanged();
     }
