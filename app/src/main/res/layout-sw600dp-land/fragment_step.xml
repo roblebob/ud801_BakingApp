@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:resAuto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/fragment_step_video"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            resAuto:controller_layout_id="@layout/my_exo_player_control_view"
+            resAuto:layout_constraintEnd_toEndOf="parent"
+            resAuto:layout_constraintStart_toStartOf="parent"
+            resAuto:layout_constraintTop_toTopOf="parent"
+            resAuto:layout_constraintBottom_toTopOf="@id/fragment_step_guideline"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_step_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            resAuto:layout_constraintGuide_begin="475dp" />
+
+
+
+        <TextView
+            android:id="@+id/fragment_step_shortDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:paddingTop="40dp"
+            android:text="shortDecription"
+            android:textAlignment="center"
+            android:textSize="@dimen/step_heading_size"
+            resAuto:layout_constraintEnd_toEndOf="parent"
+            resAuto:layout_constraintHorizontal_bias="0.896"
+            resAuto:layout_constraintStart_toStartOf="parent"
+            resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_guideline" />
+
+        <TextView
+
+            android:id="@+id/fragment_step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:lineSpacingExtra="4dp"
+            android:padding="40dp"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            resAuto:layout_constraintEnd_toEndOf="parent"
+            resAuto:layout_constraintHorizontal_bias="1.0"
+
+            resAuto:layout_constraintStart_toStartOf="parent"
+            resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_shortDescription"
+            resAuto:layout_constraintVertical_bias="1.0" />
+
+        <View
+            android:id="@+id/fragment_step_navigation_left"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/margin"
+            android:background="@color/divider"
+            resAuto:layout_constraintBottom_toBottomOf="parent"
+            resAuto:layout_constraintEnd_toStartOf="@id/fragment_step_navigation_right"
+            resAuto:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/fragment_step_navigation_right"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@color/divider"
+            resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintEnd_toEndOf="parent"
+            resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left" />
+
+
+        <ImageView
+            android:id="@+id/fragment_step_backward_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="3"
+            android:scaleY="2"
+            resAuto:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_left"
+            resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintStart_toStartOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
+            resAuto:srcCompat="@drawable/ic_baseline_arrow_left_24" />
+
+        <ImageView
+            android:id="@+id/fragment_step_forward_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="3"
+            android:scaleY="2"
+            resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_right"
+            resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_right"
+            resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_right"
+            resAuto:srcCompat="@drawable/ic_baseline_arrow_right_24" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

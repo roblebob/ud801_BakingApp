@@ -38,7 +38,9 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         final View rootview = inflater.inflate(R.layout.fragment_master_list, container,false);
 
         RecyclerView masterRV = rootview.findViewById(R.id.master_RV);
-        RecyclerView.LayoutManager masterRVLayoutManager = new GridLayoutManager(this.getContext(), 1, RecyclerView.VERTICAL, false);
+        RecyclerView.LayoutManager masterRVLayoutManager = new GridLayoutManager(this.getContext(),
+                (rootview.findViewById(R.id.master_multi_pane_marker) != null)? 2 : 1,
+                RecyclerView.VERTICAL, false);
         masterRV.setLayoutManager(masterRVLayoutManager);
         mMasterRVAdapter = new MasterRVAdapter(this);
         masterRV.setAdapter(mMasterRVAdapter);

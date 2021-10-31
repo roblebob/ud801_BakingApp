@@ -27,19 +27,16 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
+    String mRecipeName;
+    public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
+
+    int mServings;
+    public void setServings(int servings) { mServings = servings; }
+
     RecipeStepListRVAdapter mRecipeStepListRVAdapter;
 
-    // Mandatory empty constructor
-    public RecipeFragment() {
-        Log.e(this.getClass().getSimpleName(), "was created");
-    }
 
-    String mRecipeName;
-    public void setRecipeName(String recipeName) {
-        mRecipeName = recipeName;
-        Log.e(this.getClass().getSimpleName(), "recipeName: " + mRecipeName + " was set");
-    }
-    int mServings;
+    public RecipeFragment() {}
 
 
     @Nullable
@@ -51,11 +48,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-
         if (savedInstanceState != null) { mRecipeName = savedInstanceState.getString("recipeName"); }
         Log.e(this.getClass().getSimpleName(), mRecipeName);
         ((TextView) rootview.findViewById(R.id.fragment_recipe_heading_tv)).setText(mRecipeName);
-
+        ((TextView) rootview.findViewById(R.id.fragment_recipe_servings_value_tv)).setText(String.valueOf(mServings));
 
         RecyclerView stepListRV = rootview.findViewById(R.id.fragment_recipe_steps_rv);
         RecyclerView.LayoutManager stepListRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
@@ -63,47 +59,30 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         mRecipeStepListRVAdapter = new RecipeStepListRVAdapter(this);
         stepListRV.setAdapter(mRecipeStepListRVAdapter);
 
-
-        if (mRecipeName != null) {
-            AppDatabase appDatabase = AppDatabase.getInstance(this.getContext());
-            DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(appDatabase, mRecipeName);
-            final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
-
-            detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
-                @Override
-                public void onChanged(List<Step> steps) {
-                    if (steps != null) {
-                        Log.e(this.getClass().getSimpleName(), "size: " + steps.size());
-                        mRecipeStepListRVAdapter.submit(steps);
-                    }
+        AppDatabase appDatabase = AppDatabase.getInstance(this.getContext());
+        DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(appDatabase, mRecipeName);
+        final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
+        detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
+            @Override
+            public void onChanged(List<Step> steps) {
+                if (steps != null) {
+                    Log.e(this.getClass().getSimpleName(), "size: " + steps.size());
+                    mRecipeStepListRVAdapter.submit(steps);
                 }
-            });
-
-        } else {
-            Log.e(this.getClass().getSimpleName(), "recipeName is not present");
-        }
-
-
-        ((Button) rootview.findViewById(R.id.fragment_recipe_ingredients_button)).setOnClickListener( (view) -> {
-            mIngredientsCallback.onIngredientsSelected();
+            }
         });
+
+        ((Button) rootview.findViewById(R.id.fragment_recipe_ingredients_button))
+                .setOnClickListener( (view) -> mIngredientsCallback.onIngredientsSelected());
 
         return rootview;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        currentState.putString("recipeName", mRecipeName);
-    }
-
-
+    public void onSaveInstanceState(Bundle currentState) { currentState.putString("recipeName", mRecipeName); }
 
     @Override
-    public void onItemClickListener(Step step) {
-        Log.e(this.getClass().getSimpleName(), "" + step.getId() + ".  " + step.getShortDescription());
-
-        mStepCallback.onStepSelected(step);
-    }
+    public void onItemClickListener(Step step) { mStepCallback.onStepSelected(step); }
 
 
 
@@ -134,12 +113,4 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
                     + " must implement OnImageClickListener");
         }
     }
-
-
-
-
-
-
-
-
 }

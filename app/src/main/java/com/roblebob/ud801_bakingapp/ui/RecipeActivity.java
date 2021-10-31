@@ -18,9 +18,7 @@ public class RecipeActivity extends AppCompatActivity
                     RecipeFragment.OnIngredientsClickListener
 {
     String mRecipeName;
-
     boolean mTwoPane;
-
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -29,28 +27,16 @@ public class RecipeActivity extends AppCompatActivity
 
         mTwoPane = findViewById(R.id.two_pane_devider) != null;
 
-
         if (savedInstanceState == null) {
-
             mRecipeName = getIntent().getStringExtra("recipeName");
-
-            Log.e(this.getClass().getSimpleName(), mRecipeName);
-
             RecipeFragment recipeFragment = new RecipeFragment();
             recipeFragment.setRecipeName(mRecipeName);
+            recipeFragment.setServings(getIntent().getIntExtra("servings", 0));
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().add(R.id.recipe_container, recipeFragment).commit();
-
-
-
         } else {
             mRecipeName = savedInstanceState.getString("recipeName");
         }
-
-
-
-
-
     }
 
     @Override
@@ -74,7 +60,6 @@ public class RecipeActivity extends AppCompatActivity
             startActivity(intent);
         }
     }
-
 
     @Override
     public void onIngredientsSelected() {

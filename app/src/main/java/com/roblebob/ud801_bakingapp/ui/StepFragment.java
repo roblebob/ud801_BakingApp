@@ -160,7 +160,8 @@ public class StepFragment extends Fragment implements Player.Listener{
         }
 
         mShortDescriptionTv.setText(step.getShortDescription());
-        mDescriptionTv.setText(step.getDescription());
+        mDescriptionTv.setText( (step.getDescription().equals(step.getShortDescription())) ? "" : step.getDescription());
+
         initializePlayer( Uri.parse( !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL() ));
     }
 

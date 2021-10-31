@@ -55,15 +55,6 @@ public class Recipe {
     }
 
 
-    @Override
-    public int hashCode() {
-        return Objects.hash( getId(), getName(), getServings(), getImage());
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        return this.toString().equals(obj.toString());
-    }
 }
 

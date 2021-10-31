@@ -61,20 +61,5 @@ public class Ingredient {
     }
 
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        Ingredient that = (Ingredient) obj;
-        return
-                this.getRecipeName().equals( that.getRecipeName()) &&
-                this.getQuantity() == that.getQuantity() &&
-                this.getMeasure().equals( that.getMeasure()) &&
-                this.getName().equals( that.getRecipeName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( getRecipeName(),  getQuantity(), getMeasure(), getName());
-    }
 }
 

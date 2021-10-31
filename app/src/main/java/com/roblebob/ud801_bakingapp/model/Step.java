@@ -82,15 +82,5 @@ public class Step {
         return Objects.hash( getRecipeName(), getStepNumber(), getShortDescription(), getDescription(), getVideoURL(), getThumbnailURL());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        Step step = (Step) obj;
-        return  this.getRecipeName().equals(step.getRecipeName())  &&
-                this.getStepNumber() == step.getStepNumber()  &&
-                this.getShortDescription().equals(step.getShortDescription())  &&
-                this.getDescription().equals(step.getDescription())  &&
-                this.getVideoURL().equals(step.getVideoURL())  &&
-                this.getThumbnailURL().equals(step.getThumbnailURL());
-    }
+
 }
