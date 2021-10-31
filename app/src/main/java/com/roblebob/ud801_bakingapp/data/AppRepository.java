@@ -53,12 +53,6 @@ public class AppRepository {
         return mIngredientDao.loadIngredientsLive(recipeName);
     }
 
-    public List<Ingredient> getIngredientList(String recipeName) {
-        return mIngredientDao.loadIngredients(recipeName);
-    }
-    public List<String> getRecipeNameList() {
-        return mRecipeDao.loadRecipeNameList();
-    }
 
 
 
@@ -66,9 +60,6 @@ public class AppRepository {
         return mStepDao.loadStepListLive(recipeName);
     }
 
-    public LiveData<String> getAppStateLive(String key) {
-        return mAppStateDao.loadStateLive(key);
-    }
 
     public LiveData<String> getCurrentRecipeNameLive() {
         return mAppStateDao.loadCurrentRecipeNameLive();
@@ -132,20 +123,18 @@ public class AppRepository {
                     for (int i1=0; i1 < jsonArraySteps.length(); i1++) {
                         JSONObject jsonObjectStep = jsonArraySteps.getJSONObject(i1);
 
-                        int stepNumber = jsonObjectStep.getInt("id");
                         String shortDescription = jsonObjectStep.getString("shortDescription");
                         String description = jsonObjectStep.getString("description");
                         String videoURL = jsonObjectStep.getString("videoURL");
                         String thumbnailURL = jsonObjectStep.getString("thumbnailURL");
 
-                        // corrections to inconsistency in data
-                        stepNumber = i1;
+                        // removing step number (inconsistent)
                         description = description.substring(
                                 (description.contains(". ") && description.indexOf(".") < 4)
                                         ? description.indexOf(". ") + 2 : 0
                         );
 
-                        insert(new Step( recipeName, stepNumber, shortDescription, description, videoURL, thumbnailURL));
+                        insert(new Step( recipeName, /* stepNumber */ i1, shortDescription, description, videoURL, thumbnailURL));
                     }
                 }
             } catch (IOException | JSONException e) {
