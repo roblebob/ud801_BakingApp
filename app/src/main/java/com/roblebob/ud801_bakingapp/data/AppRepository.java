@@ -61,15 +61,6 @@ public class AppRepository {
     }
 
 
-    public LiveData<String> getCurrentRecipeNameLive() {
-        return mAppStateDao.loadCurrentRecipeNameLive();
-    }
-
-    public void insertCurrentRecipeName(String recipeName) {
-        insert( new AppState("current_recipe_name", recipeName));
-    }
-
-
 
 
 

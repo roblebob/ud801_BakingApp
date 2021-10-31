@@ -8,19 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
 
-import java.util.List;
 
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
 
@@ -39,7 +37,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
         RecyclerView masterRV = rootview.findViewById(R.id.master_RV);
         RecyclerView.LayoutManager masterRVLayoutManager = new GridLayoutManager(this.getContext(),
-                (rootview.findViewById(R.id.master_multi_pane_marker) != null)? 2 : 1,
+                (rootview.findViewById(R.id.master_multi_pane_marker) != null)? 3 : 1,
                 RecyclerView.VERTICAL, false);
         masterRV.setLayoutManager(masterRVLayoutManager);
         mMasterRVAdapter = new MasterRVAdapter(this);
@@ -50,12 +48,9 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
 
-        masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(List<Recipe> recipeList) {
-                if (recipeList != null) {
-                    mMasterRVAdapter.submit(recipeList);
-                }
+        masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
+            if (recipeList != null) {
+                mMasterRVAdapter.submit(recipeList);
             }
         });
 
@@ -95,7 +90,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
     // Override onAttach to make sure that the container activity has implemented the callback
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         // This makes sure that the host activity has implemented the callback interface

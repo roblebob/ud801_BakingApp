@@ -3,15 +3,11 @@ package com.roblebob.ud801_bakingapp.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
-import com.roblebob.ud801_bakingapp.util.TakeIns;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
 

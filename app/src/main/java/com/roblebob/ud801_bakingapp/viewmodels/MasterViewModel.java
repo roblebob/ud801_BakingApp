@@ -23,17 +23,7 @@ public class MasterViewModel extends ViewModel {
         return mAppRepository.getRecipeListLive();
     }
 
-    public LiveData<String> getCurrentRecipeNameLive() {
-        return mAppRepository.getCurrentRecipeNameLive();
-    }
-
-
-
     public void start() {
         mAppRepository.integrate();
-    }
-
-    public void setCurrentRecipeName(String recipeName) {
-        mAppRepository.insertCurrentRecipeName( recipeName);
     }
 }
