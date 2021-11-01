@@ -38,7 +38,8 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
             mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
-        @Override public void onCreate() {}
+        @Override public void onCreate() { loadData(); }
+        @Override public void onDataSetChanged() { loadData(); }
         @Override public int getCount() { return mSize; }
         @Override public RemoteViews getLoadingView() { return null; }
         @Override public int getViewTypeCount() { return 1; }
@@ -47,20 +48,6 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
         @Override public void onDestroy() { }
 
 
-        @Override
-        public void onDataSetChanged() {
-
-            Executors.getInstance().diskIO().execute( () -> {
-                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
-                AppStateDao appStateDao = appDatabase.appStateDao();
-                IngredientDao ingredientDao = appDatabase.ingredientDao();
-                String currentRecipeName = appStateDao.loadCurrentRecipeName();
-                mIngredientList = ingredientDao.loadIngredients(currentRecipeName);
-                mSize = mIngredientList.size();
-                Log.e(this.getClass().getSimpleName(), "onDataSetChanged(): [[" + currentRecipeName + "]]");
-                Log.e(this.getClass().getSimpleName(), "size: " + mSize);
-            });
-        }
 
         @Override
         public RemoteViews getViewAt(int i) {
@@ -79,6 +66,19 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.baking_widget_single_item_ingredient);
             views.setTextViewText(R.id.baking_widget_single_item_ingredient_tv, s);
             return views;
+        }
+
+        private void loadData() {
+            Executors.getInstance().diskIO().execute( () -> {
+                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+                AppStateDao appStateDao = appDatabase.appStateDao();
+                IngredientDao ingredientDao = appDatabase.ingredientDao();
+                String currentRecipeName = appStateDao.loadCurrentRecipeName();
+                mIngredientList = ingredientDao.loadIngredients(currentRecipeName);
+                mSize = mIngredientList.size();
+                Log.e(this.getClass().getSimpleName(), "onDataSetChanged(): [[" + currentRecipeName + "]]");
+                Log.e(this.getClass().getSimpleName(), "size: " + mSize);
+            });
         }
     }
 }

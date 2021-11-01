@@ -37,8 +37,8 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
             mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
-        @Override public void onCreate() {}
-        @Override public void onDestroy() {}
+        @Override public void onCreate() { loadData(); }
+        @Override public void onDataSetChanged() { loadData(); }
         @Override public int getCount() {
             return mList.size();
         }
@@ -54,15 +54,7 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
         @Override public boolean hasStableIds() {
             return true;
         }
-
-        @Override
-        public void onDataSetChanged() {
-            Executors.getInstance().diskIO().execute( () -> {
-                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
-                RecipeDao recipeDao = appDatabase.recipeDao();
-                mList = recipeDao.loadRecipeNameList();
-            });
-        }
+        @Override public void onDestroy() {}
 
         @Override
         public RemoteViews getViewAt(int i) {
@@ -77,6 +69,12 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
             return views;
         }
 
+        private void loadData() {
+            Executors.getInstance().diskIO().execute( () -> {
+                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+                RecipeDao recipeDao = appDatabase.recipeDao();
+                mList = recipeDao.loadRecipeNameList();
+            });
+        }
     }
-
 }
