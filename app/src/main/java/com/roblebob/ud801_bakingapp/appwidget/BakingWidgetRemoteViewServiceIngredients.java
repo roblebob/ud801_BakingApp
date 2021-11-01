@@ -76,8 +76,6 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
                 String currentRecipeName = appStateDao.loadCurrentRecipeName();
                 mIngredientList = ingredientDao.loadIngredients(currentRecipeName);
                 mSize = mIngredientList.size();
-                Log.e(this.getClass().getSimpleName(), "onDataSetChanged(): [[" + currentRecipeName + "]]");
-                Log.e(this.getClass().getSimpleName(), "size: " + mSize);
             });
         }
     }

@@ -118,7 +118,6 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
-        Log.e(this.getClass().getSimpleName(), "onDelete()");
         Executors.getInstance().diskIO().execute( () -> {
             AppDatabase appDatabase = AppDatabase.getInstance(context);
             AppStateDao appStateDao = appDatabase.appStateDao();
