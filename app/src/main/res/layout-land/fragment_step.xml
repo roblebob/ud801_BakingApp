@@ -2,13 +2,12 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:resAuto="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/fragment_step_video"
@@ -32,13 +31,12 @@
 
 
         <TextView
-            android:id="@+id/fragment_step_shortDescription"
+            android:id="@+id/fragment_step_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
             android:layout_marginTop="108dp"
             android:padding="@dimen/padding"
-            android:text="shortDecription"
             android:textAlignment="center"
             android:textSize="@dimen/step_heading_size"
             resAuto:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +59,7 @@
             resAuto:layout_constraintHorizontal_bias="1.0"
 
             resAuto:layout_constraintStart_toStartOf="parent"
-            resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_shortDescription"
+            resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_short_description"
             resAuto:layout_constraintVertical_bias="1.0" />
 
         <View
@@ -96,7 +94,9 @@
             resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_left"
             resAuto:layout_constraintStart_toStartOf="@id/fragment_step_navigation_left"
             resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
-            resAuto:srcCompat="@drawable/ic_baseline_arrow_left_24" />
+            resAuto:srcCompat="@drawable/ic_baseline_arrow_left_24"
+            android:contentDescription="@string/content_description_back_navigation_arrow"
+            />
 
         <ImageView
             android:id="@+id/fragment_step_forward_arrow"
@@ -108,7 +108,9 @@
             resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_right"
             resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
             resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_right"
-            resAuto:srcCompat="@drawable/ic_baseline_arrow_right_24" />
+            resAuto:srcCompat="@drawable/ic_baseline_arrow_right_24"
+            android:contentDescription="@string/content_description_forward_navigation_arrow"
+            />
 
 
 

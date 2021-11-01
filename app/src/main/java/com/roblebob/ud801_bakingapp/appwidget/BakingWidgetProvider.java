@@ -24,8 +24,8 @@ import com.roblebob.ud801_bakingapp.util.Executors;
  */
 public class BakingWidgetProvider extends AppWidgetProvider {
 
-    public static final String ACTION_REFRESH = "actionRefresh";
-    public static final String EXTRA_ITEM_RECIPE_NAME = "extraItemRecipeName";
+    public static final String ACTION_REFRESH = "com.roblebob.ud801_bakingapp.appwidget.action_refresh";
+    public static final String EXTRA_ITEM_RECIPE_NAME = "com.roblebob.ud801_bakingapp.appwidget.extra_item_recipeName";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

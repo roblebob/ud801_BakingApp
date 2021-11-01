@@ -40,7 +40,6 @@ import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
 
-
     public StepFragment() { }
 
     String mRecipeName;
@@ -49,17 +48,11 @@ public class StepFragment extends Fragment implements Player.Listener{
     int mStepNumber;
     public void setStepNumber(int stepNumber) { mStepNumber = stepNumber; }
 
-
     List<Step> mStepList = new ArrayList<>();
-    public void setStepList(List<Step> stepList) {
-
-        mStepList = new ArrayList<>(stepList);
-        Log.e(this.getClass().getSimpleName(), "size: " + mStepList.size());
-    }
+    public void setStepList(List<Step> stepList) { mStepList = new ArrayList<>(stepList); }
 
     TextView mShortDescriptionTv;
     TextView mDescriptionTv;
-
 
 
     @Nullable
@@ -94,8 +87,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             });
         }
 
-
-
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
                 mStepNumber = mStepNumber - 1;
@@ -110,13 +101,11 @@ public class StepFragment extends Fragment implements Player.Listener{
             }
         });
 
-
-        mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_shortDescription);
+        mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
 
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
-
 
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
 
@@ -146,7 +135,14 @@ public class StepFragment extends Fragment implements Player.Listener{
         mShortDescriptionTv.setText(step.getShortDescription());
         mDescriptionTv.setText( (step.getDescription().equals(step.getShortDescription())) ? "" : step.getDescription());
 
-        initializePlayer( Uri.parse( !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL() ));
+        String videoUrl = !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL();
+
+        if (videoUrl == null || videoUrl.equals("")) {
+            mExoPlayerView.setVisibility(View.INVISIBLE);
+        } else {
+            mExoPlayerView.setVisibility(View.VISIBLE);
+            initializePlayer(Uri.parse(videoUrl));
+        }
     }
 
 

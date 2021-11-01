@@ -19,35 +19,35 @@
 
 
     <TextView
-        android:id="@+id/fragment_step_shortDescription"
+        android:id="@+id/fragment_step_short_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         resAuto:layout_constraintEnd_toEndOf="parent"
         resAuto:layout_constraintStart_toStartOf="parent"
-        resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_video"
+        resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_video"
         android:layout_margin="@dimen/margin"
         android:textSize="@dimen/step_heading_size"
-        android:text="shortDecription"
         android:textAlignment="center"
         android:padding="@dimen/padding"
         />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        resAuto:layout_constraintBottom_toTopOf="@+id/fragment_step_navigation_left"
         resAuto:layout_constraintEnd_toEndOf="parent"
         resAuto:layout_constraintStart_toStartOf="parent"
-        resAuto:layout_constraintTop_toBottomOf="@+id/fragment_step_shortDescription">
+        resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_short_description">
 
         <TextView
             android:id="@+id/fragment_step_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
             android:layout_margin="@dimen/margin"
             android:lineSpacingExtra="4dp"
             android:padding="40dp"
             android:textAlignment="center"
-            android:layout_gravity="top|center_horizontal"
             android:textSize="17sp" />
 
 
@@ -71,7 +71,8 @@
         android:layout_height="50dp"
         android:layout_marginEnd="@dimen/margin"
         android:background="@color/divider"
-        resAuto:layout_constraintBottom_toBottomOf="parent"
+        resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
+        resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
         resAuto:layout_constraintEnd_toEndOf="parent"
         resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
         />
@@ -81,26 +82,28 @@
         android:id="@+id/fragment_step_backward_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        resAuto:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_left"
-        resAuto:layout_constraintEnd_toEndOf="@+id/fragment_step_navigation_left"
-        resAuto:layout_constraintStart_toStartOf="@+id/fragment_step_navigation_left"
-        resAuto:layout_constraintTop_toTopOf="@+id/fragment_step_navigation_left"
+        resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
+        resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_left"
+        resAuto:layout_constraintStart_toStartOf="@id/fragment_step_navigation_left"
+        resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
         resAuto:srcCompat="@drawable/ic_baseline_arrow_left_24"
         android:scaleX="3"
         android:scaleY="2"
+        android:contentDescription="@string/content_description_back_navigation_arrow"
         />
 
     <ImageView
         android:id="@+id/fragment_step_forward_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        resAuto:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_right"
-        resAuto:layout_constraintEnd_toEndOf="@+id/fragment_step_navigation_right"
-        resAuto:layout_constraintStart_toEndOf="@+id/fragment_step_navigation_left"
-        resAuto:layout_constraintTop_toTopOf="@+id/fragment_step_navigation_right"
+        resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_right"
+        resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_right"
+        resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
+        resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_right"
         resAuto:srcCompat="@drawable/ic_baseline_arrow_right_24"
         android:scaleX="3"
         android:scaleY="2"
+        android:contentDescription="@string/content_description_forward_navigation_arrow"
         />
 
 

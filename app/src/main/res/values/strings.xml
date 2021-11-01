@@ -538,4 +538,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="content_description_back_navigation_arrow">back navigation arrow</string>
+    <string name="content_description_forward_navigation_arrow">forward navigation arrow</string>
 </resources>
