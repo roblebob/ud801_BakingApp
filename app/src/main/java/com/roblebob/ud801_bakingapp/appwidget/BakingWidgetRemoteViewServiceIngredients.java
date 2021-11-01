@@ -58,10 +58,14 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
                     "  " +
                     ((ingredient.getQuantity() - ((int) ingredient.getQuantity()) == 0.0) ?
                             String.valueOf( (int) ingredient.getQuantity()) :
-                            String.valueOf(ingredient.getQuantity()))
+                            String.valueOf(ingredient.getQuantity())
+                    )
                     +
                     " " +
-                    ingredient.getMeasure();
+                    ((ingredient.getMeasure().equals("UNIT")) ?
+                        "" :
+                        ingredient.getMeasure()
+                    );
 
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.baking_widget_single_item_ingredient);
             views.setTextViewText(R.id.baking_widget_single_item_ingredient_tv, s);
