@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:theme="@style/AppTheme.AppWidgetContainer"
+    style="@style/Widget.Ud801_BakingApp.AppWidget.Container"
     >
 
     <ImageView
