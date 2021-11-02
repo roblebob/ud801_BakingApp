@@ -2,6 +2,7 @@ package com.roblebob.ud801_bakingapp.ui;
 
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -26,6 +28,7 @@ public class MasterRVAdapter extends RecyclerView.Adapter<MasterRVAdapter.Master
 
     @SuppressLint("NotifyDataSetChanged")
     public void submit(List<Recipe> recipeList) {
+        Log.e(this.getClass().getSimpleName(), "--->" + recipeList.get(0).getName());
         mRecipeList = new ArrayList<>(recipeList);
         notifyDataSetChanged();
     }

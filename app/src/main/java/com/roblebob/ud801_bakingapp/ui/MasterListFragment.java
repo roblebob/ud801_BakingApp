@@ -19,6 +19,9 @@ import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
 
@@ -43,14 +46,15 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         mMasterRVAdapter = new MasterRVAdapter(this);
         masterRV.setAdapter(mMasterRVAdapter);
 
-
-
         MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
 
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
-            if (recipeList != null) {
+            Log.e(this.getClass().getSimpleName(), "recieving  " + recipeList.toString() );
+            if (recipeList.size() != 0) {
                 mMasterRVAdapter.submit(recipeList);
+            } else {
+                mMasterRVAdapter.submit(TEST_LIST);
             }
         });
 
@@ -104,4 +108,14 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
     }
 
 
+
+
+
+    final static List< Recipe> TEST_LIST =  new ArrayList<Recipe>() {
+        {
+            add(new Recipe(0, "Recipe Test 0", 10, ""));
+            add(new Recipe(0, "Recipe Test 1", 10, ""));
+            add(new Recipe(0, "Recipe Test 2", 10, ""));
+        }
+    };
 }
