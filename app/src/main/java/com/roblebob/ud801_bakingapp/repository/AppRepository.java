@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp.data;
+package com.roblebob.ud801_bakingapp.repository;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,6 @@ import com.roblebob.ud801_bakingapp.model.AppState;
 import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.model.Step;
-import com.roblebob.ud801_bakingapp.util.Executors;
 
 import org.json.JSONArray;
 import org.json.JSONException;

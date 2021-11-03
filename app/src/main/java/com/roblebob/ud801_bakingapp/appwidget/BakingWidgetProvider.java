@@ -8,16 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
-import com.roblebob.ud801_bakingapp.data.AppStateDao;
+import com.roblebob.ud801_bakingapp.repository.AppDatabase;
+import com.roblebob.ud801_bakingapp.repository.AppStateDao;
 import com.roblebob.ud801_bakingapp.model.AppState;
 import com.roblebob.ud801_bakingapp.ui.MainActivity;
-import com.roblebob.ud801_bakingapp.util.Executors;
+import com.roblebob.ud801_bakingapp.repository.Executors;
 
 /**
  * Implementation of App Widget functionality.
@@ -31,8 +30,6 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-
-            Log.e(this.getClass().getSimpleName(), "onUpdate()");
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
 

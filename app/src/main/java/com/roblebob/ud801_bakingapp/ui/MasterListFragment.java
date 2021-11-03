@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppConnectivity;
+import com.roblebob.ud801_bakingapp.repository.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
@@ -56,7 +56,6 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
 
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
-            Log.e(this.getClass().getSimpleName(), "recieving  " + recipeList.toString() );
             if (recipeList.size() != 0) {
                 ((RecyclerView) rootview.findViewById(R.id.master_RV)).setVisibility(View.VISIBLE);
                 ((TextView) rootview.findViewById(R.id.fragment_master_list_empty_tv)).setVisibility(View.GONE);

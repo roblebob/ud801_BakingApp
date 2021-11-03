@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 
-import com.roblebob.ud801_bakingapp.data.AppRepository;
+import com.roblebob.ud801_bakingapp.repository.AppRepository;
 import com.roblebob.ud801_bakingapp.model.Ingredient;
 import com.roblebob.ud801_bakingapp.model.Step;
 

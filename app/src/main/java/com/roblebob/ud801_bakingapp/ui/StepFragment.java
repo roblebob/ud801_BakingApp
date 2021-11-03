@@ -31,7 +31,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppConnectivity;
+import com.roblebob.ud801_bakingapp.repository.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;

@@ -3,18 +3,17 @@ package com.roblebob.ud801_bakingapp.appwidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import androidx.annotation.WorkerThread;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
-import com.roblebob.ud801_bakingapp.data.AppStateDao;
-import com.roblebob.ud801_bakingapp.data.IngredientDao;
+import com.roblebob.ud801_bakingapp.repository.AppDatabase;
+import com.roblebob.ud801_bakingapp.repository.AppStateDao;
+import com.roblebob.ud801_bakingapp.repository.IngredientDao;
 import com.roblebob.ud801_bakingapp.model.Ingredient;
-import com.roblebob.ud801_bakingapp.util.Executors;
+import com.roblebob.ud801_bakingapp.repository.Executors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class BakingWidgetRemoteViewServiceIngredients extends RemoteViewsService
         return new BakingWidgetItemFactoryIngredients(getApplicationContext(), intent);
     }
 
-    @WorkerThread
+
     static class BakingWidgetItemFactoryIngredients implements RemoteViewsFactory {
         private final Context mContext;
         private final int mAppWidgetId;

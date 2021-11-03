@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp.data;
+package com.roblebob.ud801_bakingapp.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

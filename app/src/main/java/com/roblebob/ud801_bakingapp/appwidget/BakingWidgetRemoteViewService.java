@@ -11,9 +11,9 @@ import android.widget.RemoteViewsService;
 import androidx.annotation.WorkerThread;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.data.AppDatabase;
-import com.roblebob.ud801_bakingapp.data.RecipeDao;
-import com.roblebob.ud801_bakingapp.util.Executors;
+import com.roblebob.ud801_bakingapp.repository.AppDatabase;
+import com.roblebob.ud801_bakingapp.repository.RecipeDao;
+import com.roblebob.ud801_bakingapp.repository.Executors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,6 @@ public class BakingWidgetRemoteViewService extends RemoteViewsService {
         return new BakingWidgetItemFactory(getApplicationContext(), intent);
     }
 
-    @WorkerThread
     static class BakingWidgetItemFactory implements RemoteViewsFactory{
 
         private final Context mContext;
