@@ -25,6 +25,14 @@ import java.util.List;
 import java.util.Scanner;
 
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+
+
+
+
 public class AppRepository {
 
     final String mSrcUrl;
@@ -87,7 +95,7 @@ public class AppRepository {
         Executors.getInstance().networkIO().execute( () -> {
 
             try {
-                String result = getResponseFromHttpUrl(mSrcUrl);
+                String result = getResponseFromHttpUrl_OkHttp(mSrcUrl);
 
                 JSONArray jsonArray = new JSONArray(result);
                 for (int i=0; i < jsonArray.length(); i++) {
@@ -163,4 +171,30 @@ public class AppRepository {
         }
         finally { urlConnection.disconnect(); }
     }
+
+
+
+
+
+
+    public static String getResponseFromHttpUrl_OkHttp(String urlString)  throws IOException {
+
+        final OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(urlString)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+
+    }
 }
+
+
+
+
+
+
+
