@@ -31,7 +31,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
+import com.roblebob.ud801_bakingapp.data.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
@@ -70,12 +70,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStepNumber = savedInstanceState.getInt("stepNumber");
         }
 
-        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                mIsConnected = aBoolean;
-            }
-        });
+        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
 
 
 
@@ -86,16 +81,17 @@ public class StepFragment extends Fragment implements Player.Listener{
             detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
                 @Override
                 public void onChanged(List<Step> steps) {
-                    detailViewModel.getStepListLive().removeObserver(this);
+                    //detailViewModel.getStepListLive().removeObserver(this);
                     setStepList(steps);
                     if (mStepList.size() > 0) {
                         setup(mStepList.get(mStepNumber));
-                    } else {
-                        Log.e(this.getClass().getSimpleName(), "size is 0 --->  ERROR");
                     }
                 }
             });
         }
+
+
+        // handles navigation by arrows
 
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
@@ -110,6 +106,10 @@ public class StepFragment extends Fragment implements Player.Listener{
                 setup(mStepList.get(mStepNumber));
             }
         });
+
+
+
+
 
         mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
@@ -171,6 +171,8 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (mExoPlayer != null) {
             releasePlayer();
         }
+
+        // needs to be null, to go on
 
         if (mExoPlayer == null) {
 

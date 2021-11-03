@@ -1,4 +1,4 @@
-package com.roblebob.ud801_bakingapp.conectivity;
+package com.roblebob.ud801_bakingapp.data;
 
 
 import android.content.BroadcastReceiver;

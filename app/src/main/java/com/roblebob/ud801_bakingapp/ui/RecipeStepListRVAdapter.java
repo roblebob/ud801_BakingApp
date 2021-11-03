@@ -22,7 +22,6 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
 
     @SuppressLint("NotifyDataSetChanged")
     public void submit(List<Step> stepList) {
-        Log.e(this.getClass().getSimpleName(), "size: " + stepList.size());
         mStepList = new ArrayList<>(stepList);
         notifyDataSetChanged();
     }
@@ -30,11 +29,9 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
 
     public interface ItemClickListener { void onItemClickListener(Step step); }
     ItemClickListener mItemClickListener;
+
+
     RecipeStepListRVAdapter(ItemClickListener itemClickListener) { mItemClickListener = itemClickListener; }
-
-
-
-
 
 
     @NonNull
@@ -58,10 +55,6 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
     public int getItemCount() {
         return mStepList.size();
     }
-
-
-
-
 
 
 

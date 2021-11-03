@@ -1,16 +1,9 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
-import com.roblebob.ud801_bakingapp.conectivity.ConnectionLiveData;
-import com.roblebob.ud801_bakingapp.conectivity.ConnectionModel;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {

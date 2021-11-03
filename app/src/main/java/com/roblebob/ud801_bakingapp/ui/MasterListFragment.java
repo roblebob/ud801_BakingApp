@@ -7,27 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ud801_bakingapp.R;
-import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
+import com.roblebob.ud801_bakingapp.data.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
-    public static final String TAG = MasterListFragment.class.getSimpleName();
 
     MasterRVAdapter mMasterRVAdapter;
 
@@ -52,12 +48,9 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
 
-        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    masterViewModel.start();
-                }
+        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean) {
+                masterViewModel.start();
             }
         });
 
@@ -68,27 +61,17 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
                 ((RecyclerView) rootview.findViewById(R.id.master_RV)).setVisibility(View.VISIBLE);
                 ((TextView) rootview.findViewById(R.id.fragment_master_list_empty_tv)).setVisibility(View.GONE);
                 mMasterRVAdapter.submit(recipeList);
-            } else {
-                mMasterRVAdapter.submit(TEST_LIST);
             }
         });
-
-
 
         return rootview;
     }
 
 
 
-
-
-
     // Callback from the MasterRVAdapter
     @Override
     public void onItemClickListener(Recipe recipe) {
-        Log.e(this.getClass().getSimpleName(), recipe.getName() + " was clicked");
-        Toast.makeText(getContext(), recipe.getName(), Toast.LENGTH_LONG).show();
-
         mCallback.onRecipeSelected(recipe);
     }
 
@@ -121,16 +104,4 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
                     + " must implement OnRecipeClickListener");
         }
     }
-
-
-
-
-
-    final static List< Recipe> TEST_LIST =  new ArrayList<Recipe>() {
-        {
-            add(new Recipe(0, "Recipe Test 0", 10, ""));
-            add(new Recipe(0, "Recipe Test 1", 10, ""));
-            add(new Recipe(0, "Recipe Test 2", 10, ""));
-        }
-    };
 }

@@ -28,7 +28,6 @@ public class MasterRVAdapter extends RecyclerView.Adapter<MasterRVAdapter.Master
 
     @SuppressLint("NotifyDataSetChanged")
     public void submit(List<Recipe> recipeList) {
-        Log.e(this.getClass().getSimpleName(), "--->" + recipeList.get(0).getName());
         mRecipeList = new ArrayList<>(recipeList);
         notifyDataSetChanged();
     }
