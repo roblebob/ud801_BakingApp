@@ -31,6 +31,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 
 import com.roblebob.ud801_bakingapp.R;
+import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
@@ -54,6 +55,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     TextView mShortDescriptionTv;
     TextView mDescriptionTv;
 
+    boolean mIsConnected;
 
     @Nullable
     @Override
@@ -67,6 +69,15 @@ public class StepFragment extends Fragment implements Player.Listener{
             mRecipeName = savedInstanceState.getString("recipeName");
             mStepNumber = savedInstanceState.getInt("stepNumber");
         }
+
+        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                mIsConnected = aBoolean;
+            }
+        });
+
+
 
         if (mRecipeName != null) {
             DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
@@ -118,7 +129,10 @@ public class StepFragment extends Fragment implements Player.Listener{
     ImageView mForwardArrow;
 
 
-
+    /**
+     * sets up the views with the corresponding step data
+     * @param step
+     */
     void setup(Step step) {
         if (step.getStepNumber() == 0) {
             mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.divider));
@@ -136,7 +150,7 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         String videoUrl = !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL();
 
-        if (videoUrl == null || videoUrl.equals("")) {
+        if (videoUrl == null || videoUrl.equals("") || !mIsConnected) {
             mExoPlayerView.setVisibility(View.INVISIBLE);
         } else {
             mExoPlayerView.setVisibility(View.VISIBLE);
@@ -158,7 +172,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             releasePlayer();
         }
 
-
         if (mExoPlayer == null) {
 
             mExoPlayer = new SimpleExoPlayer
@@ -176,7 +189,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mExoPlayer.prepare();
             mExoPlayer.setPlayWhenReady(true);
         }
-
     }
 
     private void releasePlayer() {

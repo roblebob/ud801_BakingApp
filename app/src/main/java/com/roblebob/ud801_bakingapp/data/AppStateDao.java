@@ -8,6 +8,11 @@ import androidx.room.Query;
 
 import com.roblebob.ud801_bakingapp.model.AppState;
 
+/**
+ * Is only used to communicate between the two remote view services within the widget
+ */
+
+
 @Dao
 public interface AppStateDao {
 
