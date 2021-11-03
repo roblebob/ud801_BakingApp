@@ -27,11 +27,10 @@ public class IngredientsFragment extends Fragment {
     void setRecipeName(String recipeName) { mRecipeName = recipeName; }
 
     @Nullable
-    @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable @org.jetbrains.annotations.Nullable ViewGroup container,
-                             @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         final View rootview = inflater.inflate(R.layout.fragment_ingredients, container, false);
 
