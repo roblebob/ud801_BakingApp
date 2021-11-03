@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.roblebob.ud801_bakingapp.R;
+import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
@@ -25,7 +27,7 @@ import java.util.List;
 
 
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
-
+    public static final String TAG = MasterListFragment.class.getSimpleName();
 
     MasterRVAdapter mMasterRVAdapter;
 
@@ -50,6 +52,16 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
 
+        new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    masterViewModel.start();
+                }
+            }
+        });
+
+
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
             Log.e(this.getClass().getSimpleName(), "recieving  " + recipeList.toString() );
             if (recipeList.size() != 0) {
@@ -62,7 +74,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         });
 
 
-        masterViewModel.start();
+
         return rootview;
     }
 

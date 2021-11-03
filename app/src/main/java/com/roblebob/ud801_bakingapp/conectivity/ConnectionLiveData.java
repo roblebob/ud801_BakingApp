@@ -9,6 +9,24 @@ import android.net.NetworkInfo;
 
 import androidx.lifecycle.LiveData;
 
+/*      ... usage:
+
+        ConnectionLiveData connectionLiveData = new ConnectionLiveData( getApplicationContext());
+        connectionLiveData.observe(this, new Observer<ConnectionModel>() {
+            @Override
+            public void onChanged(ConnectionModel connection) {
+                Log.e(TAG, "----->--->" + connection.getIsConnected());
+            }
+        });
+ */
+
+
+
+
+
+
+
+
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
 
     private Context context;

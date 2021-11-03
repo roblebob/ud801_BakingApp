@@ -15,27 +15,16 @@ import com.roblebob.ud801_bakingapp.model.Recipe;
 
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ConnectionLiveData connectionLiveData = new ConnectionLiveData( getApplicationContext());
-        connectionLiveData.observe(this, new Observer<ConnectionModel>() {
-            @Override
-            public void onChanged(ConnectionModel connection) {
-                Log.e(TAG, "----->--->" + connection.getIsConnected());
-            }
-        });
 
-        new AppConnectivity( getApplicationContext()) .observe( this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                Log.e(TAG, "----->--->" + aBoolean);
-            }
-        });
+
+
     }
 
 
