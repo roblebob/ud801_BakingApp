@@ -1,12 +1,14 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.roblebob.ud801_bakingapp.R;
+import com.roblebob.ud801_bakingapp.conectivity.AppConnectivity;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 
 public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
@@ -16,6 +18,14 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        new AppConnectivity( getApplicationContext()) .observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Log.e(this.getClass().getSimpleName(), "-----> connectivity: ");
+            }
+        });
     }
 
 
