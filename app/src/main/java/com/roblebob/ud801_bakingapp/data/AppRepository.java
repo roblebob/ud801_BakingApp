@@ -51,45 +51,25 @@ public class AppRepository {
     }
 
 
-
+    /**
+     *  methods providing the view models with the required live data from the database
+     */
 
     public LiveData<List<Recipe>> getRecipeListLive() {
         return mRecipeDao.loadRecipeListLive();
     }
-
     public LiveData<List<Ingredient>> getIngredientListLive(String recipeName) {
         return mIngredientDao.loadIngredientsLive(recipeName);
     }
-
-
-
-
     public LiveData<List<Step>> getStepListLive(String recipeName) {
         return mStepDao.loadStepListLive(recipeName);
     }
 
 
-
-
-
-
-    public void insert( Recipe recipe) {
-        Executors.getInstance().diskIO().execute( () -> mRecipeDao.insert( recipe));
-    }
-    public void insert( Ingredient ingredient) {
-        Executors.getInstance().diskIO().execute( () -> mIngredientDao.insert( ingredient));
-    }
-    public void insert( Step step) {
-        Executors.getInstance().diskIO().execute( () -> mStepDao.insert( step));
-    }
-    public void insert(AppState appState) {
-        Executors.getInstance().diskIO().execute( () -> mAppStateDao.insert( appState));
-    }
-
-
-
-
-
+    /**
+     *  Integrates the necessary data into the room database by first sending the http request,
+     *  then parse the string response throw json to entities of the data model.
+     */
 
     public void integrate() {
         Executors.getInstance().networkIO().execute( () -> {
@@ -140,16 +120,35 @@ public class AppRepository {
                 e.printStackTrace();
                 Log.e(this.getClass().getSimpleName(), "Error, while gathering json data");
             }
-
         });
     }
 
 
+    /**
+     * This method returns the entire result from the HTTP response, using the third party library
+     * OkHttp (part of the integration process)
+     *
+     * @param urlString The URL to fetch the HTTP response from (as a String and NOT as URL).
+     * @return The contents of the HTTP response.
+     * @throws IOException ...
+     */
+
+    public static String getResponseFromHttpUrl_OkHttp(String urlString)  throws IOException {
+
+        final OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(urlString)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
+    }
 
 
-
-    /* *********************************************************************************************
-     * This method returns the entire result from the HTTP response.
+    /**
+     * (old/deprecated) This method returns the entire result from the HTTP response.
      *
      * @param   urlString The URL to fetch the HTTP response from (as a String and NOT as URL).
      * @return  The contents of the HTTP response.
@@ -174,21 +173,22 @@ public class AppRepository {
 
 
 
+    /**
+     * Insert a entities of the data model into the database
+     * (overloaded methods, part of the integration process)
+     */
 
-
-
-    public static String getResponseFromHttpUrl_OkHttp(String urlString)  throws IOException {
-
-        final OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(urlString)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-
+    public void insert( Recipe recipe) {
+        Executors.getInstance().diskIO().execute( () -> mRecipeDao.insert( recipe));
+    }
+    public void insert( Ingredient ingredient) {
+        Executors.getInstance().diskIO().execute( () -> mIngredientDao.insert( ingredient));
+    }
+    public void insert( Step step) {
+        Executors.getInstance().diskIO().execute( () -> mStepDao.insert( step));
+    }
+    public void insert(AppState appState) {
+        Executors.getInstance().diskIO().execute( () -> mAppStateDao.insert( appState));
     }
 }
 

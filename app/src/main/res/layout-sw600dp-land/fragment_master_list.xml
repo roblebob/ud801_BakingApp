@@ -13,8 +13,21 @@
         android:layout_height="match_parent"
         android:layout_gravity="fill_vertical"
         android:alwaysDrawnWithCache="false"
-        android:visibility="visible"
+        android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/fragment_master_list_empty_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/fragment_master_list_empty_note"
+        android:visibility="visible"
+        android:lineSpacingExtra="10sp"
+        />
+
 
     <View
         android:layout_width="1dp"

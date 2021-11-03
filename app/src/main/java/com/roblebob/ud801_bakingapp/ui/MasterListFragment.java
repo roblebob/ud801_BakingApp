@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,8 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
             Log.e(this.getClass().getSimpleName(), "recieving  " + recipeList.toString() );
             if (recipeList.size() != 0) {
+                ((RecyclerView) rootview.findViewById(R.id.master_RV)).setVisibility(View.VISIBLE);
+                ((TextView) rootview.findViewById(R.id.fragment_master_list_empty_tv)).setVisibility(View.GONE);
                 mMasterRVAdapter.submit(recipeList);
             } else {
                 mMasterRVAdapter.submit(TEST_LIST);
@@ -103,7 +106,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
             mCallback = (OnRecipeClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnImageClickListener");
+                    + " must implement OnRecipeClickListener");
         }
     }
 

@@ -540,4 +540,5 @@
     <string name="app_widget_description">This is an app widget description</string>
     <string name="content_description_back_navigation_arrow">back navigation arrow</string>
     <string name="content_description_forward_navigation_arrow">forward navigation arrow</string>
+    <string name="fragment_master_list_empty_note">NOTE:\nThe app needs have connectivity\nat least ones before showing\nany data.\nIn addition, videos will only be shown\nif connectivity is present,\n at the time the video is requested.</string>
 </resources>
