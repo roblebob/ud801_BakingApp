@@ -50,12 +50,12 @@ public class StepFragment extends Fragment implements Player.Listener{
     public void setStepNumber(int stepNumber) { mStepNumber = stepNumber; }
 
     List<Step> mStepList = new ArrayList<>();
-    public void setStepList(List<Step> stepList) { mStepList = new ArrayList<>(stepList); }
+
+    boolean mIsConnected;
 
     TextView mShortDescriptionTv;
     TextView mDescriptionTv;
 
-    boolean mIsConnected;
 
     @Nullable
     @Override
@@ -82,7 +82,8 @@ public class StepFragment extends Fragment implements Player.Listener{
                 @Override
                 public void onChanged(List<Step> steps) {
                     //detailViewModel.getStepListLive().removeObserver(this);
-                    setStepList(steps);
+                    mStepList = new ArrayList<>(steps);
+                    //setStepList(steps);
                     if (mStepList.size() > 0) {
                         setup(mStepList.get(mStepNumber));
                     }
@@ -151,6 +152,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         String videoUrl = !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL();
 
         if (videoUrl == null || videoUrl.equals("") || !mIsConnected) {
+            releasePlayer();
             mExoPlayerView.setVisibility(View.INVISIBLE);
         } else {
             mExoPlayerView.setVisibility(View.VISIBLE);
@@ -203,10 +205,8 @@ public class StepFragment extends Fragment implements Player.Listener{
     @Override
     public void onIsPlayingChanged(boolean isPlaying) {
         if (isPlaying) {
-            Log.e(this.getClass().getSimpleName(), "PLAYING");
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, mExoPlayer.getCurrentPosition(), 1f);
         } else if (mExoPlayer.getPlaybackState() == Player.STATE_READY) {
-            Log.e(this.getClass().getSimpleName(), "PAUSED");
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
