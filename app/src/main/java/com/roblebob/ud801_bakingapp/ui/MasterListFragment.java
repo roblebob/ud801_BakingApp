@@ -61,15 +61,6 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
             }
         });
 
-//        new AppConnectivity( this.getContext()) .observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                Log.e(this.getClass().getSimpleName(), "-----> connectivity: " + aBoolean);
-//            }
-//        });
-
-
-
 
         masterViewModel.start();
         return rootview;
