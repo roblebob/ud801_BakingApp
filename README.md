@@ -12,5 +12,6 @@ for every __Recipe__, there exist multiple __RecipeIngredient__ _s_ and __Recipe
 Therefore those associated all include the ID of the __Recipe__ they correspond to.  
 
 
-widget vector image rescource:
-+ [https://pixabay.com/vectors/cake-dessert-food-chocolate-sweet-5306411/](https://pixabay.com/vectors/cake-dessert-food-chocolate-sweet-5306411/)
+widget vector image resource used:
+[https://pixabay.com/vectors/cake-dessert-food-chocolate-sweet-5306411/](https://pixabay.com/vectors/cake-dessert-food-chocolate-sweet-5306411/)
+
