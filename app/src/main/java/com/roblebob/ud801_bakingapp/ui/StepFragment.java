@@ -63,8 +63,6 @@ public class StepFragment extends Fragment implements Player.Listener{
     ImageView mBackwardArrow;
     ImageView mForwardArrow;
 
-
-
     PlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
     long mExoPlayerCurrentPosition;
@@ -187,6 +185,8 @@ public class StepFragment extends Fragment implements Player.Listener{
     void setup() {
 
         releasePlayer();
+
+        if (mStepNumber >= mStepList.size()) return;
 
         Step step = mStepList.get(mStepNumber);
 
