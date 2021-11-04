@@ -73,7 +73,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
 
 
-
         if (mRecipeName != null) {
             DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
             final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
@@ -81,12 +80,8 @@ public class StepFragment extends Fragment implements Player.Listener{
             detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
                 @Override
                 public void onChanged(List<Step> steps) {
-                    //detailViewModel.getStepListLive().removeObserver(this);
                     mStepList = new ArrayList<>(steps);
-                    //setStepList(steps);
-                    if (mStepList.size() > 0) {
-                        setup(mStepList.get(mStepNumber));
-                    }
+                    setup(mStepList.get(mStepNumber));
                 }
             });
         }
@@ -96,14 +91,14 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
-                mStepNumber = mStepNumber - 1;
+                mStepNumber -= 1;
                 setup(mStepList.get(mStepNumber));
             }
         });
 
         rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
-                mStepNumber = mStepNumber + 1;
+                mStepNumber += 1;
                 setup(mStepList.get(mStepNumber));
             }
         });
