@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
+    public static final String TAG = StepFragment.class.getSimpleName();
 
     public static final String RECIPE_NAME = "com.roblebob.ud801_bakingapp.ui.recipe_name";
     public static final String STEP_NUMBER = "com.roblebob.ud801_bakingapp.ui.step_number";
@@ -322,6 +325,17 @@ public class StepFragment extends Fragment implements Player.Listener{
         @Override public void onPlay() { mExoPlayer.setPlayWhenReady(true);}
         @Override public void onPause() { mExoPlayer.setPlayWhenReady(false);}
         @Override public void onStop() { mExoPlayer.seekTo(0); }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+
+        Log.e(TAG, "------>" + isInPictureInPictureMode);
+        //mExoPlayerView.setUseController(!isInPictureInPictureMode);
+        if (isInPictureInPictureMode) {
+
+            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+        }
     }
 }
 
