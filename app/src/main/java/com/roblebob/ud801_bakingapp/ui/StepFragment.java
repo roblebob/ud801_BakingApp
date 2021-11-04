@@ -47,6 +47,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     public static final String EXOPLAYER_CURRENT_POSITION = "com.roblebob.ud801_bakingapp.ui.exoplayer_current_position";
     private static final String EXOPLAYER_PLAY_WHEN_READY = "com.roblebob.ud801_bakingapp.ui.exoplayer_play_when_ready";
 
+
     public StepFragment() { }
 
     String mRecipeName;
@@ -82,6 +83,8 @@ public class StepFragment extends Fragment implements Player.Listener{
                              @Nullable Bundle savedInstanceState) {
 
         final View rootview = inflater.inflate(R.layout.fragment_step, container, false);
+
+
 
         if (savedInstanceState != null) {
             mRecipeName = savedInstanceState.getString(RECIPE_NAME);
@@ -124,11 +127,10 @@ public class StepFragment extends Fragment implements Player.Listener{
         rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
                 mStepNumber += 1;
+
                 setup(mStepList.get(mStepNumber));
             }
         });
-
-
 
         initializedMediaSession();
 
@@ -136,6 +138,53 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT >= 24) {
+            initializePlayer();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT < 24) || mExoPlayer == null) {
+            initializePlayer();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT < 24) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT >= 24) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString(RECIPE_NAME, mRecipeName);
+        currentState.putInt(STEP_NUMBER, mStepNumber);
+        currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
+        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        mMediaSession.setActive(false);
+        super.onDestroyView();
+        releasePlayer();
+    }
 
 
     /**
@@ -143,6 +192,8 @@ public class StepFragment extends Fragment implements Player.Listener{
      * @param step
      */
     void setup(Step step) {
+
+        releasePlayer();
 
         mShortDescriptionTv.setText(step.getShortDescription());
         mDescriptionTv.setText( (step.getDescription().equals(step.getShortDescription())) ? "" : step.getDescription());
@@ -158,16 +209,14 @@ public class StepFragment extends Fragment implements Player.Listener{
             mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
-        String videoUrl = !step.getVideoURL().equals("") ? step.getVideoURL()  : step.getThumbnailURL();
+        mExoPlayerCurrentPosition = 0;
 
-        if (videoUrl == null || videoUrl.equals("") || !mIsConnected) {
-            releasePlayer();
-            mExoPlayerView.setVisibility(View.INVISIBLE);
-        } else {
-            mExoPlayerView.setVisibility(View.VISIBLE);
-            initializePlayer(Uri.parse(videoUrl));
-        }
+        initializePlayer();
     }
+
+
+
+
 
 
     /**
@@ -175,15 +224,21 @@ public class StepFragment extends Fragment implements Player.Listener{
      */
 
 
-    void initializePlayer(Uri uri) {
+    void initializePlayer() {
+        if (mStepNumber >= mStepList.size()) return;
+
+        Step step = mStepList.get(mStepNumber);
+        String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
 
         if (mExoPlayer != null) {
             releasePlayer();
         }
 
-        // needs to be null, to go on
+        // ExoPlayer needs to be null, to go on
 
-        if (mExoPlayer == null) {
+        if (mExoPlayer == null && mIsConnected && !videoUrl.equals("")) {
+
+            mExoPlayerView.setVisibility(View.VISIBLE);
 
             mExoPlayer = new SimpleExoPlayer
                     .Builder(this.requireContext(), new DefaultRenderersFactory( this.getContext()))
@@ -195,21 +250,48 @@ public class StepFragment extends Fragment implements Player.Listener{
             String userAgent = Util.getUserAgent( this.requireContext(), getString(R.string.app_name));
             MediaSource mediaSource = new ProgressiveMediaSource
                     .Factory( new DefaultDataSourceFactory( this.requireContext(), userAgent ))
-                    .createMediaSource(MediaItem.fromUri(uri));
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(videoUrl)));
             mExoPlayer.setMediaSource(mediaSource);
             mExoPlayer.prepare();
+            mExoPlayer.setPlayWhenReady(mExoPlayerPlayWhenReady);
+            mExoPlayer.seekTo(mExoPlayerCurrentPosition);
+
+        } else {
+
+            mExoPlayerView.setVisibility(View.INVISIBLE);
         }
 
-
-        mExoPlayer.setPlayWhenReady(mExoPlayerPlayWhenReady);
-        mExoPlayer.seekTo(mExoPlayerCurrentPosition);
     }
 
     private void releasePlayer() {
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
+        if (mExoPlayer != null) {
+            mExoPlayerCurrentPosition = mExoPlayer.getCurrentPosition();
+            mExoPlayerPlayWhenReady = mExoPlayer.getPlayWhenReady();
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *  MediaSession
+     */
 
 
     @Override
@@ -221,13 +303,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
     }
-
-
-
-
-    /**
-     *  MediaSession
-     */
 
 
     public void initializedMediaSession() {
@@ -250,32 +325,9 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     private static class MySessionCallBack extends MediaSessionCompat.Callback {
         public static final String TAG2 = MySessionCallBack.class.getSimpleName();
-        @Override public void onPlay() {
-            Log.e(TAG2, "onPause()");
-        }
-        @Override public void onPause() {
-            Log.e(TAG2, "onPause()");
-        }
-        @Override public void onStop() {
-            Log.e(TAG2, "onStop()");
-        }
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle currentState) {
-        currentState.putString(RECIPE_NAME, mRecipeName);
-        currentState.putInt(STEP_NUMBER, mStepNumber);
-        currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayer.getCurrentPosition());
-        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayer.getPlayWhenReady());
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        mMediaSession.setActive(false);
-        super.onDestroyView();
-        releasePlayer();
+        @Override public void onPlay() {}
+        @Override public void onPause() {}
+        @Override public void onStop() {}
     }
 }
 
