@@ -318,10 +318,10 @@ public class StepFragment extends Fragment implements Player.Listener{
         mMediaSession.setActive(true);
     }
 
-    private static class MySessionCallBack extends MediaSessionCompat.Callback {
-        @Override public void onPlay() {}
-        @Override public void onPause() {}
-        @Override public void onStop() {}
+    private class MySessionCallBack extends MediaSessionCompat.Callback {
+        @Override public void onPlay() { mExoPlayer.setPlayWhenReady(true);}
+        @Override public void onPause() { mExoPlayer.setPlayWhenReady(false);}
+        @Override public void onStop() { mExoPlayer.seekTo(0); }
     }
 }
 
