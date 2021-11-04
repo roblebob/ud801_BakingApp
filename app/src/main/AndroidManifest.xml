@@ -41,7 +41,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.RecipeActivity" />
-        <activity android:name=".ui.StepActivity"/>
+        <activity android:name=".ui.StepActivity"
+            android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
+            />
         <activity android:name=".ui.IngredientsActivity" />
 
     </application>

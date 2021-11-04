@@ -1,6 +1,9 @@
 package com.roblebob.ud801_bakingapp.ui;
 
+import android.app.PictureInPictureParams;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Rational;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,4 +27,18 @@ public class StepActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().add(R.id.step_container, stepFragment).commit();
         }
     }
+
+    @Override
+    protected void onUserLeaveHint() {
+
+        enterPictureInPictureMode(
+                new PictureInPictureParams
+                        .Builder()
+                        .setAspectRatio(new Rational(16,9))
+                        .build()
+        );
+
+    }
+
+
 }
