@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
-    public static final String TAG = StepFragment.class.getSimpleName();
 
     public static final String RECIPE_NAME = "com.roblebob.ud801_bakingapp.ui.recipe_name";
     public static final String STEP_NUMBER = "com.roblebob.ud801_bakingapp.ui.step_number";
@@ -106,12 +104,9 @@ public class StepFragment extends Fragment implements Player.Listener{
             DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
             final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
 
-            detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), new Observer<List<Step>>() {
-                @Override
-                public void onChanged(List<Step> steps) {
-                    mStepList = new ArrayList<>(steps);
-                    setup(mStepList.get(mStepNumber));
-                }
+            detailViewModel.getStepListLive().observe(getViewLifecycleOwner(), steps -> {
+                mStepList = new ArrayList<>(steps);
+                setup();
             });
         }
 
@@ -121,14 +116,13 @@ public class StepFragment extends Fragment implements Player.Listener{
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
                 mStepNumber -= 1;
-                setup(mStepList.get(mStepNumber));
+                setup();
             }
         });
         rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
                 mStepNumber += 1;
-
-                setup(mStepList.get(mStepNumber));
+                setup();
             }
         });
 
@@ -189,11 +183,12 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     /**
      * sets up the views with the corresponding step data
-     * @param step
      */
-    void setup(Step step) {
+    void setup() {
 
         releasePlayer();
+
+        Step step = mStepList.get(mStepNumber);
 
         mShortDescriptionTv.setText(step.getShortDescription());
         mDescriptionTv.setText( (step.getDescription().equals(step.getShortDescription())) ? "" : step.getDescription());
@@ -324,7 +319,6 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
     private static class MySessionCallBack extends MediaSessionCompat.Callback {
-        public static final String TAG2 = MySessionCallBack.class.getSimpleName();
         @Override public void onPlay() {}
         @Override public void onPause() {}
         @Override public void onStop() {}
