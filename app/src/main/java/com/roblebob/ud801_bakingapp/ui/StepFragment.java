@@ -90,6 +90,13 @@ public class StepFragment extends Fragment implements Player.Listener{
             mExoPlayerPlayWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
         }
 
+        mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
+        mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
+        mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
+        mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
+        mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
+
+
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
 
         if (mRecipeName != null) {
@@ -121,11 +128,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             }
         });
 
-        mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
-        mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
-        mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
-        mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
-        mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
+
 
         initializedMediaSession();
 
@@ -259,22 +262,13 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
-
-
-
     @Override
     public void onSaveInstanceState(Bundle currentState) {
         currentState.putString(RECIPE_NAME, mRecipeName);
         currentState.putInt(STEP_NUMBER, mStepNumber);
         currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayer.getCurrentPosition());
         currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayer.getPlayWhenReady());
-
-
-
-
     }
-
-
 
 
     @Override
