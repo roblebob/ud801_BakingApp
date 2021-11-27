@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
 
         <receiver
             android:name=".appwidget.BakingWidgetProvider"
@@ -25,27 +26,55 @@
                 android:resource="@xml/baking_widget_provider_info" />
         </receiver>
 
+
+
         <service android:name=".appwidget.BakingWidgetRemoteViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+
+
         <service android:name=".appwidget.BakingWidgetRemoteViewServiceIngredients"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+
 
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:launchMode="singleTop">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RecipeActivity" />
-        <activity android:name=".ui.StepActivity"
-            android:supportsPictureInPicture="true"
-            android:resizeableActivity="true"
+
+
+
+        <activity android:name=".ui.RecipeActivity"
             />
+
+
+        <activity android:name=".ui.StepActivity"
+            android:resizeableActivity="true"
+            android:configChanges="keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation"
+            android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=".ui.StepActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:autoRemoveFromRecents="true"
+            />
+        <!--
+
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+        -->
+
+
+
         <activity android:name=".ui.IngredientsActivity" />
+
+
 
     </application>
 

@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -51,6 +54,8 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     public StepFragment() { }
 
+
+
     String mRecipeName;
     public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
 
@@ -59,12 +64,30 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     List<Step> mStepList = new ArrayList<>();
 
+
+
+
+
     boolean mIsConnected;
+
+    public boolean mIsInPictureInPictureMode;
+
+
+    public boolean hasVideoPlayable() {
+        if (!mIsConnected)  return false;
+        if (mStepNumber >= mStepList.size()) return false;
+        Step step = mStepList.get( mStepNumber);
+        String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
+        return !videoUrl.equals("");
+    }
+
+
 
     TextView mShortDescriptionTv;
     TextView mDescriptionTv;
     ImageView mBackwardArrow;
     ImageView mForwardArrow;
+    Group uiSet;
 
     PlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
@@ -90,6 +113,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStepNumber = savedInstanceState.getInt(STEP_NUMBER);
             mExoPlayerCurrentPosition = savedInstanceState.getLong(EXOPLAYER_CURRENT_POSITION);
             mExoPlayerPlayWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
+            mIsInPictureInPictureMode = savedInstanceState.getBoolean("is_in_picture_in_picture_mode");
         }
 
         mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
@@ -97,6 +121,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
+        uiSet = rootview.findViewById(R.id.fragment_step_group);
 
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
@@ -139,6 +164,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT >= 24) {
             initializePlayer();
         }
+        Log.e(TAG, "----> onStart()");
     }
 
     @Override
@@ -147,6 +173,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         if ((Util.SDK_INT < 24) || mExoPlayer == null) {
             initializePlayer();
         }
+        Log.e(TAG, "----> onResume()");
     }
 
     @Override
@@ -155,6 +182,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT < 24) {
             releasePlayer();
         }
+        Log.e(TAG, "----> onPause()");
     }
 
     @Override
@@ -163,6 +191,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT >= 24) {
             releasePlayer();
         }
+        Log.e(TAG, "----> onStop()");
     }
 
     @Override
@@ -171,6 +200,8 @@ public class StepFragment extends Fragment implements Player.Listener{
         currentState.putInt(STEP_NUMBER, mStepNumber);
         currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
         currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
+        currentState.putBoolean("is_in_picture_in_picture_mode", mIsInPictureInPictureMode);
+        Log.e(TAG, "----> onSaveInstanceState()");
     }
 
 
@@ -179,6 +210,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mMediaSession.setActive(false);
         super.onDestroyView();
         releasePlayer();
+        Log.e(TAG, "----> onDestroyView()");
     }
 
 
@@ -300,6 +332,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
+        Log.e(TAG, "----> onIsPlayerChanged( " + isPlaying +" )");
     }
 
 
@@ -319,6 +352,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mMediaSession.setCallback(new MySessionCallBack());
 
         mMediaSession.setActive(true);
+
     }
 
     private class MySessionCallBack extends MediaSessionCompat.Callback {
@@ -327,16 +361,39 @@ public class StepFragment extends Fragment implements Player.Listener{
         @Override public void onStop() { mExoPlayer.seekTo(0); }
     }
 
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
 
-        Log.e(TAG, "------>" + isInPictureInPictureMode);
+        Log.e(TAG, "------> onPictureInPictureModeChanged( " +  isInPictureInPictureMode + " )");
+
+        mIsInPictureInPictureMode = isInPictureInPictureMode;
         //mExoPlayerView.setUseController(!isInPictureInPictureMode);
-        if (isInPictureInPictureMode) {
 
-            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-        }
+//        if (isInPictureInPictureMode) {
+//            if (uiSet != null) uiSet.setVisibility(View.GONE);
+//            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+//            //mExoPlayerView
+//        } else {
+//            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
+//        }
+
+
     }
+
+
+
 }
 
 
