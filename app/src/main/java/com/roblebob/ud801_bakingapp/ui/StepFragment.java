@@ -204,7 +204,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
-        mExoPlayerCurrentPosition = 0;
+
 
         initializePlayer();
     }
