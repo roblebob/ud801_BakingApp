@@ -239,8 +239,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
-        mExoPlayerCurrentPosition = 0;
-
         initializePlayer();
     }
 
@@ -332,6 +330,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
+
         Log.e(TAG, "----> onIsPlayerChanged( " + isPlaying +" )");
     }
 
@@ -381,11 +380,13 @@ public class StepFragment extends Fragment implements Player.Listener{
         mIsInPictureInPictureMode = isInPictureInPictureMode;
         //mExoPlayerView.setUseController(!isInPictureInPictureMode);
 
-//        if (isInPictureInPictureMode) {
-//            if (uiSet != null) uiSet.setVisibility(View.GONE);
-//            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-//            //mExoPlayerView
-//        } else {
+        if (isInPictureInPictureMode) {
+            if (uiSet != null) uiSet.setVisibility(View.GONE);
+            //mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            //mExoPlayerView
+
+        }
+//        else {
 //            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
 //        }
 
