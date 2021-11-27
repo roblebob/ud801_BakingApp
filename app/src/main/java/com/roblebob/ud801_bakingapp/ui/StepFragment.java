@@ -384,11 +384,11 @@ public class StepFragment extends Fragment implements Player.Listener{
             if (uiSet != null) uiSet.setVisibility(View.GONE);
             //mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
             //mExoPlayerView
-
+            mExoPlayerView.setLayoutParams( new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-//        else {
-//            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
-//        }
+        else {
+            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
+        }
 
 
     }
