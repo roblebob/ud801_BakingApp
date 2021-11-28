@@ -45,7 +45,7 @@
 
             android:id="@+id/fragment_step_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="top|center_horizontal"
             android:lineSpacingExtra="4dp"
             android:padding="40dp"
@@ -64,7 +64,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/divider"
-            resAuto:layout_constraintBottom_toBottomOf="parent"
+            resAuto:layout_constraintTop_toBottomOf="@id/fragment_step_description"
             resAuto:layout_constraintEnd_toStartOf="@id/fragment_step_navigation_right"
             resAuto:layout_constraintStart_toStartOf="parent" />
 
@@ -102,7 +102,7 @@
             android:scaleY="2"
             resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_right"
             resAuto:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_right"
-            resAuto:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
+            resAuto:layout_constraintStart_toStartOf="@id/fragment_step_navigation_right"
             resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_right"
             resAuto:srcCompat="@drawable/ic_baseline_arrow_right_24"
             android:contentDescription="@string/content_description_forward_navigation_arrow"

@@ -37,6 +37,8 @@ public class StepActivity extends AppCompatActivity {
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
+
     }
 
     @Override
@@ -47,10 +49,14 @@ public class StepActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+
+
+
+
     @Override
     protected void onUserLeaveHint() {
 
-        if (mStepFragment.hasVideoPlayable()) {
+        if ( mStepFragment.hasVideoPlayable()) {
 
             enterPictureInPictureMode(
                     new PictureInPictureParams

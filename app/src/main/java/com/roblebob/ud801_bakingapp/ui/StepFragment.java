@@ -9,16 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -28,7 +25,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -87,7 +83,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     TextView mDescriptionTv;
     ImageView mBackwardArrow;
     ImageView mForwardArrow;
-    Group uiSet;
+    Group mUiSet;
 
     PlayerView mExoPlayerView;
     SimpleExoPlayer mExoPlayer;
@@ -121,7 +117,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
-        uiSet = rootview.findViewById(R.id.fragment_step_group);
+        mUiSet = rootview.findViewById(R.id.fragment_step_group);
 
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
@@ -142,12 +138,16 @@ public class StepFragment extends Fragment implements Player.Listener{
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
                 mStepNumber -= 1;
+                mExoPlayerPlayWhenReady = true;
+                mExoPlayerCurrentPosition = 0;
                 setup();
             }
         });
         rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
                 mStepNumber += 1;
+                mExoPlayerPlayWhenReady = true;
+                mExoPlayerCurrentPosition = 0;
                 setup();
             }
         });
@@ -229,14 +229,14 @@ public class StepFragment extends Fragment implements Player.Listener{
         mDescriptionTv.setText( (step.getDescription().equals(step.getShortDescription())) ? "" : step.getDescription());
 
         if (step.getStepNumber() == 0) {
-            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_off));
-            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
+            mBackwardArrow.setVisibility( View.GONE); //.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_off));
+            mForwardArrow.setVisibility(View.VISIBLE); //.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         } else if (step.getStepNumber() == mStepList.size() - 1) {
-            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
-            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_off));
+            mBackwardArrow.setVisibility( View.VISIBLE);//.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
+            mForwardArrow.setVisibility( View.GONE);//.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_off));
         } else {
-            mBackwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
-            mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
+            mBackwardArrow.setVisibility( View.VISIBLE); //.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
+            mForwardArrow.setVisibility( View.VISIBLE); //.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
         initializePlayer();
@@ -381,13 +381,16 @@ public class StepFragment extends Fragment implements Player.Listener{
         //mExoPlayerView.setUseController(!isInPictureInPictureMode);
 
         if (isInPictureInPictureMode) {
-            if (uiSet != null) uiSet.setVisibility(View.GONE);
+            if (mUiSet != null) mUiSet.setVisibility(View.GONE);
             //mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
             //mExoPlayerView
             mExoPlayerView.setLayoutParams( new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
         else {
-            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
+            if (mUiSet != null) mUiSet.setVisibility(View.VISIBLE);
+            else Log.e(TAG, "----------->  not working");
+            mExoPlayerView //.setLayoutParams( new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 250));
+                .getLayoutParams().height = 0;
         }
 
 

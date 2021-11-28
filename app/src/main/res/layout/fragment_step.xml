@@ -8,7 +8,7 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/fragment_step_video"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         resAuto:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
         resAuto:layout_constraintEnd_toStartOf="@id/fragment_step_navigation_right"
         resAuto:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/margin"
-        android:background="@color/divider"
+
         />
 
     <View
@@ -78,7 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginEnd="@dimen/margin"
-        android:background="@color/divider"
+
         resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
         resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
         resAuto:layout_constraintEnd_toEndOf="parent"
