@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recipe_root_element"
@@ -9,16 +8,24 @@
     android:baselineAligned="false"
     tools:context=".ui.MainActivity"
     >
-    <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/pane_1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:id="@+id/pane_1"
         />
 
-    <!-- android:name="com.roblebob.ud801_bakingapp.ui.MasterListFragment" -->
+    <View
+        android:id="@+id/two_pane_devider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"/>
 
-
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pane_2"
+        />
 
 </LinearLayout>

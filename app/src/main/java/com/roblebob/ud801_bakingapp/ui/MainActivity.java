@@ -3,6 +3,7 @@ package com.roblebob.ud801_bakingapp.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
 
+            ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = V
             mFragmentManager.beginTransaction().add(R.id.pane_1, masterListFragment).commit();
 
         } else {
@@ -108,7 +110,12 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+    boolean isTwoPane() {
+        if (findViewById(R.id.pane_2) != null) {
+            return true;
+        }
+        return false;
+    }
 
 
 
@@ -140,7 +147,9 @@ public class MainActivity extends AppCompatActivity
         StepFragment stepFragment = new StepFragment();
         stepFragment.setRecipeName(mRecipeName);
         stepFragment.setStepNumber(step.getStepNumber());
-        mFragmentManager.beginTransaction().replace(R.id.pane_1, stepFragment).commit();
+        mFragmentManager.beginTransaction()
+                .replace( (isTwoPane()) ? R.id.pane_2 : R.id.pane_1, stepFragment)
+                .commit();
         mFragmentBackstack.add( stepFragment);
     }
 
