@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
 
-            ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = V
+            ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
             mFragmentManager.beginTransaction().add(R.id.pane_1, masterListFragment).commit();
 
         } else {
@@ -132,6 +133,8 @@ public class MainActivity extends AppCompatActivity
     // ... from MasterListFragment
     @Override
     public void onRecipeSelected( Recipe recipe) {
+        ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = dp2pixels(400);
+
         mRecipeName = recipe.getName();
         mRecipeServings = recipe.getServings();
         RecipeFragment recipeFragment = new RecipeFragment();
@@ -158,7 +161,9 @@ public class MainActivity extends AppCompatActivity
     public void onIngredientsSelected() {
         IngredientsFragment ingredientsFragment = new IngredientsFragment();
         ingredientsFragment.setRecipeName( mRecipeName);
-        mFragmentManager.beginTransaction().replace(R.id.pane_1, ingredientsFragment).commit();
+        mFragmentManager.beginTransaction()
+                .replace( (isTwoPane())  ?  R.id.pane_2  :  R.id.pane_1,   ingredientsFragment)
+                .commit();
         mFragmentBackstack.add( ingredientsFragment);
     }
 
@@ -176,7 +181,22 @@ public class MainActivity extends AppCompatActivity
         if ( mFragmentBackstack.isEmpty()) {
             super.onBackPressed();
         } else {
-            mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get( mFragmentBackstack.size() - 1)).commit();
+
+            if (isTwoPane() && mFragmentBackstack.get(mFragmentBackstack.size() - 1).getClass().getSimpleName().equals(RecipeFragment.class.getSimpleName()) ) {
+
+                mFragmentBackstack.remove(mFragmentBackstack.size() - 1);
+                ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            }
+            mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get(mFragmentBackstack.size() - 1)).commit();
         }
+    }
+
+
+
+
+
+
+    private int dp2pixels(int dp) {
+        return (int) (dp * getApplicationContext().getResources().getDisplayMetrics().density);
     }
 }
