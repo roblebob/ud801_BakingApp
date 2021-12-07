@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.PictureInPictureParams;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Rational;
 import android.view.ViewGroup;
 
 import com.roblebob.ud801_bakingapp.R;
@@ -199,4 +201,35 @@ public class MainActivity extends AppCompatActivity
     private int dp2pixels(int dp) {
         return (int) (dp * getApplicationContext().getResources().getDisplayMetrics().density);
     }
+
+
+
+
+
+
+
+
+//    @Override
+//    protected void onUserLeaveHint() {
+//
+//        if (mStepFragment.hasVideoPlayable()) {
+//
+//            enterPictureInPictureMode(
+//                    new PictureInPictureParams
+//                            .Builder()
+//                            .setAspectRatio(new Rational(16, 9))
+//                            .build()
+//            );
+//        } else {
+//
+//            super.onUserLeaveHint();
+//        }
+//    }
+
+
+
+
+
+
+
 }

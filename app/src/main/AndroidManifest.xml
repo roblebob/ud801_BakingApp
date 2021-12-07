@@ -50,12 +50,7 @@
         </activity>
 
 
-
-        <activity android:name=".ui.RecipeActivity"
-            />
-
-
-        <activity android:name=".ui.StepActivity"
+        <!--activity android:name=".ui.StepActivity"
             android:resizeableActivity="true"
             android:configChanges="keyboardHidden|screenSize|smallestScreenSize|screenLayout|orientation"
             android:supportsPictureInPicture="true"
@@ -64,15 +59,13 @@
             android:excludeFromRecents="true"
             android:noHistory="true"
             android:autoRemoveFromRecents="true"
-            />
+            /-->
         <!--
 
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
         -->
 
 
-
-        <activity android:name=".ui.IngredientsActivity" />
 
 
 
