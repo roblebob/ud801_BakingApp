@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity
     // ... from MasterListFragment
     @Override
     public void onRecipeSelected( Recipe recipe) {
+        logger("onRecipeSelected(...)  " +  "before" );
+
         ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = dp2pixels(400);
 
         mRecipeName = recipe.getName();
@@ -144,31 +146,39 @@ public class MainActivity extends AppCompatActivity
         recipeFragment.setServings( mRecipeServings);
         mFragmentManager.beginTransaction().replace(R.id.pane_1, recipeFragment).commit();
         mFragmentBackstack.add( recipeFragment);
+
+        logger("onRecipeSelected(...)  " +  "after" );
     }
 
     // ... from RecipeFragment
     @Override
     public void onStepSelected(Step step) {
+        logger("onStepSelected(...)  " +  "before" );
         StepFragment stepFragment = new StepFragment();
         stepFragment.setRecipeName(mRecipeName);
         stepFragment.setStepNumber(step.getStepNumber());
         mFragmentManager.beginTransaction()
                 .replace( (isTwoPane()) ? R.id.pane_2 : R.id.pane_1, stepFragment)
                 .commit();
+
         mFragmentBackstack.add( stepFragment);
+        logger("onStepSelected(...)  " +  "after" );
     }
+
 
     // ... from RecipeFragment
     @Override
     public void onIngredientsSelected() {
+        logger("onIngredientsSelected()  " +  "before" );
         IngredientsFragment ingredientsFragment = new IngredientsFragment();
         ingredientsFragment.setRecipeName( mRecipeName);
         mFragmentManager.beginTransaction()
                 .replace( (isTwoPane())  ?  R.id.pane_2  :  R.id.pane_1,   ingredientsFragment)
                 .commit();
-        mFragmentBackstack.add( ingredientsFragment);
-    }
 
+        mFragmentBackstack.add( ingredientsFragment);
+        logger("onIngredientsSelected()  " +  "after" );
+    }
 
 
 
@@ -178,19 +188,40 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        logger("onBackPressed()  " + "before");
+
+
         mFragmentBackstack.remove(mFragmentBackstack.size() - 1);
 
         if ( mFragmentBackstack.isEmpty()) {
             super.onBackPressed();
         } else {
 
-            if (isTwoPane() && mFragmentBackstack.get(mFragmentBackstack.size() - 1).getClass().getSimpleName().equals(RecipeFragment.class.getSimpleName()) ) {
+            if (isTwoPane()) {
 
-                mFragmentBackstack.remove(mFragmentBackstack.size() - 1);
-                ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                logger("onBackPressed()  " + "intermediate");
+
+                if (mFragmentBackstack.get(mFragmentBackstack.size() - 1).getClass().getSimpleName()  .equals( MasterListFragment.class.getSimpleName())) {
+
+                    ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get(mFragmentBackstack.size() - 1)).commit();
+
+                }
+                if (mFragmentBackstack.get(mFragmentBackstack.size() - 1).getClass().getSimpleName()  .equals( RecipeFragment.class.getSimpleName())) {
+
+
+
+                    mFragmentBackstack.remove(mFragmentBackstack.size() - 1);
+                    ((FragmentContainerView) findViewById(R.id.pane_1)).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get(mFragmentBackstack.size() - 1)).commit();
+
+                }
+
+            } else {
+                mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get(mFragmentBackstack.size() - 1)).commit();
             }
-            mFragmentManager.beginTransaction().replace(R.id.pane_1, mFragmentBackstack.get(mFragmentBackstack.size() - 1)).commit();
         }
+        logger("onBackPressed()  " + "after");
     }
 
 
@@ -201,6 +232,24 @@ public class MainActivity extends AppCompatActivity
     private int dp2pixels(int dp) {
         return (int) (dp * getApplicationContext().getResources().getDisplayMetrics().density);
     }
+
+
+
+
+
+
+    private void logger(String label) {
+        String output = label + "...\n";
+
+        for (Fragment element : mFragmentBackstack) {
+
+            output +=  "\n" + element.getClass().getSimpleName() ;
+        }
+        Log.e(TAG, output);
+    }
+
+
+
 
 
 
