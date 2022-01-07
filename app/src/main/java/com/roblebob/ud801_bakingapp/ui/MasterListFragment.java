@@ -75,10 +75,7 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
     @Override
     public void onItemClickListener(Recipe recipe) {
 
-        //mCallback.onRecipeSelected(recipe);
 
-        //FragmentManager supportFragmentManager = getSupportFragmentManager();
-        //NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(R.id.action_masterListFragment_to_recipeFragment);
 
@@ -87,30 +84,4 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
 
 
-
-    /**
-        Callback interface back to the MainActivity
-    **/
-
-    public interface OnRecipeClickListener {
-        void onRecipeSelected(Recipe recipe);
-    }
-
-    OnRecipeClickListener mCallback;
-
-
-    // Override onAttach to make sure that the container activity has implemented the callback
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        // This makes sure that the host activity has implemented the callback interface
-        // If not, it throws an exception
-        try {
-            mCallback = (OnRecipeClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnRecipeClickListener");
-        }
-    }
 }

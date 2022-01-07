@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,7 +80,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         });
 
         rootview.findViewById(R.id.fragment_recipe_ingredients_button)
-                .setOnClickListener( (view) -> mIngredientsCallback.onIngredientsSelected());
+                .setOnClickListener( (view) -> {
+                    NavController navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.action_recipeFragment_to_ingredientsFragment);
+                });
 
         return rootview;
     }
@@ -85,36 +91,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
     @Override
     public void onSaveInstanceState(Bundle currentState) { currentState.putString("recipeName", mRecipeName); }
 
+    // Callback from the RecipeStepListRVAdapter
     @Override
-    public void onItemClickListener(Step step) { mStepCallback.onStepSelected(step); }
-
-
-
-    /**
-     Callback interface back to the MainActivity
-     **/
-
-    public interface OnStepClickListener { void onStepSelected(Step step); }
-    OnStepClickListener mStepCallback;
-
-    public interface OnIngredientsClickListener { void onIngredientsSelected(); }
-    OnIngredientsClickListener mIngredientsCallback;
-
-
-
-    // Override onAttach to make sure that the container activity has implemented the callback
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        // This makes sure that the host activity has implemented the callback interface
-        // If not, it throws an exception
-        try {
-            mStepCallback = (OnStepClickListener) context;
-            mIngredientsCallback = (OnIngredientsClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnImageClickListener");
-        }
+    public void onItemClickListener(Step step) {
+        NavController navController = NavHostFragment.findNavController(this);
+        navController.navigate(R.id.action_recipeFragment_to_stepFragment);
     }
 }
