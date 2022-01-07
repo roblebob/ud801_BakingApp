@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/masterListFragment">
+
+    <fragment
+        android:id="@+id/masterListFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.MasterListFragment"
+        android:label="MasterListFragment" >
+        <action
+            android:id="@+id/action_masterListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.RecipeFragment"
+        android:label="RecipeFragment" >
+        <action
+            android:id="@+id/action_recipeFragment_to_ingredientsFragment"
+            app:destination="@id/ingredientsFragment" />
+        <action
+            android:id="@+id/action_recipeFragment_to_stepFragment"
+            app:destination="@id/stepFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ingredientsFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.IngredientsFragment"
+        android:label="IngredientsFragment" />
+
+    <fragment
+        android:id="@+id/stepFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.StepFragment"
+        android:label="StepFragment" />
+</navigation>
