@@ -1,23 +1,15 @@
 package com.roblebob.ud801_bakingapp.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ViewGroup;
 
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Recipe;
 import com.roblebob.ud801_bakingapp.model.Step;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements MasterListFragment.OnRecipeClickListener,
@@ -28,6 +20,7 @@ public class MainActivity extends AppCompatActivity
     public static final String TAG = MainActivity.class.getSimpleName();
 
 
+    NavController mNavController;
 
 
 
@@ -38,15 +31,9 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManager.findFragmentById(R.id.nav_host_fragment);
-        NavController navController = navHostFragment.getNavController();
-
+        mNavController = navHostFragment.getNavController();
 
     }
-
-
-
-
-
 
 
 
@@ -59,12 +46,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRecipeSelected( Recipe recipe) {
 
+//        Bundle bundle = new Bundle();
+//        bundle.putString("recipeName", recipe.getName());
+//        bundle.putInt("servings", recipe.getServings());
+//        mNavController.navigate(R.id.action_masterListFragment_to_recipeFragment, bundle);
     }
 
     // ... from RecipeFragment
     @Override
     public void onStepSelected(Step step) {
 
+        mNavController.navigate(R.id.action_recipeFragment_to_stepFragment);
     }
 
 
@@ -72,6 +64,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onIngredientsSelected() {
 
+        mNavController.navigate(R.id.action_recipeFragment_to_ingredientsFragment );
     }
 
 
