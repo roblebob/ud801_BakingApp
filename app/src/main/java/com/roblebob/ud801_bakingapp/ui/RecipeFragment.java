@@ -45,7 +45,16 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        if (savedInstanceState != null) { mRecipeName = savedInstanceState.getString("recipeName"); }
+        RecipeFragmentArgs safeArgs;
+
+        if (savedInstanceState == null)
+        {
+            //safeArgs =
+        } else {
+            mRecipeName = savedInstanceState.getString("recipeName");
+        }
+
+
         ((TextView) rootview.findViewById(R.id.fragment_recipe_heading_tv)).setText(mRecipeName);
         ((TextView) rootview.findViewById(R.id.fragment_recipe_servings_value_tv)).setText(String.valueOf(mServings));
 
