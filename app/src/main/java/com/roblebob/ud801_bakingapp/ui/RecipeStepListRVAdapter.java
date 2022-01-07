@@ -1,7 +1,6 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,7 @@ public class RecipeStepListRVAdapter extends RecyclerView.Adapter<RecipeStepList
     @NonNull
     @Override
     public StepRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.step_list_single_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_step_list, parent, false);
         return new StepRVViewHolder(view);
     }
 
