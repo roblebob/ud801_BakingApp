@@ -34,7 +34,12 @@ public class IngredientsFragment extends Fragment {
 
         final View rootview = inflater.inflate(R.layout.fragment_ingredients, container, false);
 
-        if (savedInstanceState != null) { mRecipeName = savedInstanceState.getString("recipeName"); }
+        if (savedInstanceState == null)
+        {
+            mRecipeName = IngredientsFragmentArgs.fromBundle(getArguments()).getRecipeName();
+        } else {
+            mRecipeName = savedInstanceState.getString("recipeName");
+        }
 
         RecyclerView ingredientsRV = rootview.findViewById(R.id.ingredients_RV);
         RecyclerView.LayoutManager ingredientsRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);

@@ -108,13 +108,18 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            mRecipeName = StepFragmentArgs.fromBundle(getArguments()).getRecipeName();
+            mStepNumber = StepFragmentArgs.fromBundle(getArguments()).getStepNumber();
+        } else {
             mRecipeName = savedInstanceState.getString(RECIPE_NAME);
             mStepNumber = savedInstanceState.getInt(STEP_NUMBER);
             mExoPlayerCurrentPosition = savedInstanceState.getLong(EXOPLAYER_CURRENT_POSITION);
             mExoPlayerPlayWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
             mIsInPictureInPictureMode = savedInstanceState.getBoolean("is_in_picture_in_picture_mode");
         }
+
+        Log.e(TAG,">>>>>>>> recipeName: " + mRecipeName + " ,   stepNumber: " + mStepNumber);
 
         mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);

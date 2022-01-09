@@ -10,30 +10,21 @@
         android:id="@+id/masterListFragment"
         android:name="com.roblebob.ud801_bakingapp.ui.MasterListFragment"
         android:label="MasterListFragment"
-        tools:layout="@layout/fragment_master_list"
-        >
+        tools:layout="@layout/fragment_master_list">
         <action
             android:id="@+id/action_masterListFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment">
-            <argument
-                android:name="recipeName"
-                app:argType="string"
-                android:defaultValue="Nutella Pie"
-                />
-        </action>
+            app:destination="@id/recipeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.roblebob.ud801_bakingapp.ui.RecipeFragment"
         android:label="RecipeFragment"
-        tools:layout="@layout/fragment_recipe"
-        >
+        tools:layout="@layout/fragment_recipe">
         <argument
             android:name="recipeName"
             app:argType="string"
-            android:defaultValue="Nutella Pie"
-            />
+            android:defaultValue="Nutella Pie" />
 
         <action
             android:id="@+id/action_recipeFragment_to_ingredientsFragment"
@@ -41,19 +32,32 @@
         <action
             android:id="@+id/action_recipeFragment_to_stepFragment"
             app:destination="@id/stepFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/ingredientsFragment"
         android:name="com.roblebob.ud801_bakingapp.ui.IngredientsFragment"
         android:label="IngredientsFragment"
-        tools:layout="@layout/fragment_ingredients"
-        />
+        tools:layout="@layout/fragment_ingredients">
+        <argument
+            android:name="recipeName"
+            app:argType="string"
+            android:defaultValue="Nutella Pie" />
+    </fragment>
 
     <fragment
         android:id="@+id/stepFragment"
         android:name="com.roblebob.ud801_bakingapp.ui.StepFragment"
         android:label="StepFragment"
-        tools:layout="@layout/fragment_step"
-        />
+        tools:layout="@layout/fragment_step">
+        <argument
+            android:name="recipeName"
+            app:argType="string"
+            android:defaultValue="Nutella Pie" />
+        <argument
+            android:name="stepNumber"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
