@@ -28,6 +28,9 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
+    public static final String TAG = RecipeFragment.class.getSimpleName();
+
+
     String mRecipeName;
     public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
 
@@ -48,15 +51,14 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        RecipeFragmentArgs safeArgs;
-
         if (savedInstanceState == null)
         {
-            //safeArgs =
+            mRecipeName = RecipeFragmentArgs.fromBundle(getArguments()).getRecipeName();
         } else {
             mRecipeName = savedInstanceState.getString("recipeName");
         }
 
+        Log.e(TAG, ">>>>>> recipeName: " + mRecipeName);
 
         ((TextView) rootview.findViewById(R.id.fragment_recipe_heading_tv)).setText(mRecipeName);
         ((TextView) rootview.findViewById(R.id.fragment_recipe_servings_value_tv)).setText(String.valueOf(mServings));
@@ -81,8 +83,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         rootview.findViewById(R.id.fragment_recipe_ingredients_button)
                 .setOnClickListener( (view) -> {
+                    RecipeFragmentDirections.ActionRecipeFragmentToIngredientsFragment action = RecipeFragmentDirections.actionRecipeFragmentToIngredientsFragment();
+                    action.setRecipeName(mRecipeName);
                     NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.action_recipeFragment_to_ingredientsFragment);
+                    navController.navigate(action);
                 });
 
         return rootview;
@@ -94,7 +98,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
     // Callback from the RecipeStepListRVAdapter
     @Override
     public void onItemClickListener(Step step) {
+        RecipeFragmentDirections.ActionRecipeFragmentToStepFragment action = RecipeFragmentDirections.actionRecipeFragmentToStepFragment();
+        action.setRecipeName(mRecipeName);
+        action.setStepNumber(step.getStepNumber());
         NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_recipeFragment_to_stepFragment);
+        navController.navigate(action);
     }
 }

@@ -75,10 +75,10 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
     @Override
     public void onItemClickListener(Recipe recipe) {
 
-
+        MasterListFragmentDirections.ActionMasterListFragmentToRecipeFragment action = MasterListFragmentDirections.actionMasterListFragmentToRecipeFragment();
+        action.setRecipeName(recipe.getName());
         NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_masterListFragment_to_recipeFragment);
-
+        navController.navigate(action);
     }
 
 
