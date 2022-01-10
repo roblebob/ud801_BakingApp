@@ -25,6 +25,11 @@
             android:name="recipeName"
             app:argType="string"
             android:defaultValue="Nutella Pie" />
+        <argument
+            android:name="servings"
+            app:argType="integer"
+            android:defaultValue="0" />
+
 
         <action
             android:id="@+id/action_recipeFragment_to_ingredientsFragment"
