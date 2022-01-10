@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -52,20 +53,14 @@ public class StepFragment extends Fragment implements Player.Listener{
     private static final String EXOPLAYER_PLAY_WHEN_READY = "com.roblebob.ud801_bakingapp.ui.exoplayer_play_when_ready";
 
 
+    String mRecipeName;
+    int mStepNumber;
+
+
     public StepFragment() { }
 
 
-
-    String mRecipeName;
-    public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
-
-    int mStepNumber;
-    public void setStepNumber(int stepNumber) { mStepNumber = stepNumber; }
-
     List<Step> mStepList = new ArrayList<>();
-
-
-
 
 
     boolean mIsConnected;
@@ -90,7 +85,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     Group uiSet;
 
     PlayerView mExoPlayerView;
-    SimpleExoPlayer mExoPlayer;
+    ExoPlayer mExoPlayer;
     long mExoPlayerCurrentPosition;
     boolean mExoPlayerPlayWhenReady = true;
 
@@ -126,7 +121,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
-        uiSet = rootview.findViewById(R.id.fragment_step_group);
+        //uiSet = rootview.findViewById(R.id.fragment_step_group);
 
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
@@ -275,7 +270,7 @@ public class StepFragment extends Fragment implements Player.Listener{
 
             mExoPlayerView.setVisibility(View.VISIBLE);
 
-            mExoPlayer = new SimpleExoPlayer
+            mExoPlayer = new ExoPlayer
                     .Builder(this.requireContext(), new DefaultRenderersFactory( this.getContext()))
                     .setTrackSelector(new DefaultTrackSelector( this.getContext()))
                     .setLoadControl(new DefaultLoadControl())
