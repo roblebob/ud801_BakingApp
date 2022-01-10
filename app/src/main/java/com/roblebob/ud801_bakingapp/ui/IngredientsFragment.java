@@ -19,12 +19,10 @@ import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
 
 public class IngredientsFragment extends Fragment {
 
-    IngredientsRVAdapter mIngredientsRVAdapter;
+    String mRecipeName;
 
     public IngredientsFragment(){}
 
-    String mRecipeName;
-    void setRecipeName(String recipeName) { mRecipeName = recipeName; }
 
     @Nullable
     @Override
@@ -44,14 +42,14 @@ public class IngredientsFragment extends Fragment {
         RecyclerView ingredientsRV = rootview.findViewById(R.id.ingredients_RV);
         RecyclerView.LayoutManager ingredientsRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
         ingredientsRV.setLayoutManager(ingredientsRVLayoutManager);
-        mIngredientsRVAdapter = new IngredientsRVAdapter();
-        ingredientsRV.setAdapter(mIngredientsRVAdapter);
+        IngredientsRVAdapter ingredientsRVAdapter = new IngredientsRVAdapter();
+        ingredientsRV.setAdapter(ingredientsRVAdapter);
 
         if (mRecipeName != null) {
 
             DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
             final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
-            detailViewModel.getIngredientListLive().observe(getViewLifecycleOwner(), ingredients -> mIngredientsRVAdapter.submit(ingredients));
+            detailViewModel.getIngredientListLive().observe(getViewLifecycleOwner(), ingredients -> ingredientsRVAdapter.submit(ingredients));
         }
 
         return rootview;
