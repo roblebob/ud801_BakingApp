@@ -8,7 +8,7 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/fragment_step_video"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="230dp"
         resAuto:layout_constraintEnd_toEndOf="parent"
         resAuto:layout_constraintRight_toRightOf="parent"
         resAuto:layout_constraintStart_toStartOf="parent"
@@ -36,6 +36,7 @@
         android:textSize="@dimen/step_heading_size"
         android:textAlignment="center"
         android:padding="@dimen/padding"
+        android:text="short description"
         />
 
     <ScrollView
