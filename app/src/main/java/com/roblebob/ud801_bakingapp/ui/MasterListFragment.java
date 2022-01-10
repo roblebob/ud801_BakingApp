@@ -1,16 +1,12 @@
 package com.roblebob.ud801_bakingapp.ui;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,11 +20,7 @@ import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
 
 
-
-
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
-
-    MasterRVAdapter mMasterRVAdapter;
 
     // Mandatory empty constructor
     public MasterListFragment() {
@@ -45,8 +37,8 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
                 (rootview.findViewById(R.id.master_multi_pane_marker) != null)? 3 : 1,
                 RecyclerView.VERTICAL, false);
         masterRV.setLayoutManager(masterRVLayoutManager);
-        mMasterRVAdapter = new MasterRVAdapter(this);
-        masterRV.setAdapter(mMasterRVAdapter);
+        MasterRVAdapter masterRVAdapter = new MasterRVAdapter(this);
+        masterRV.setAdapter(masterRVAdapter);
 
         MasterViewModelFactory masterViewModelFactory = new MasterViewModelFactory(this.getContext());
         final MasterViewModel masterViewModel = new ViewModelProvider(this, masterViewModelFactory).get(MasterViewModel.class);
@@ -57,12 +49,11 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
             }
         });
 
-
         masterViewModel.getRecipeListLive().observe( getViewLifecycleOwner(), recipeList -> {
             if (recipeList.size() != 0) {
                 ((RecyclerView) rootview.findViewById(R.id.master_RV)).setVisibility(View.VISIBLE);
                 ((TextView) rootview.findViewById(R.id.fragment_master_list_empty_tv)).setVisibility(View.GONE);
-                mMasterRVAdapter.submit(recipeList);
+                masterRVAdapter.submit(recipeList);
             }
         });
 
@@ -77,11 +68,8 @@ public class MasterListFragment extends Fragment implements MasterRVAdapter.Item
 
         MasterListFragmentDirections.ActionMasterListFragmentToRecipeFragment action = MasterListFragmentDirections.actionMasterListFragmentToRecipeFragment();
         action.setRecipeName(recipe.getName());
+        action.setServings(recipe.getServings());
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(action);
     }
-
-
-
-
 }

@@ -1,6 +1,5 @@
 package com.roblebob.ud801_bakingapp.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,20 +27,10 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
-    public static final String TAG = RecipeFragment.class.getSimpleName();
-
-
     String mRecipeName;
-    public void setRecipeName(String recipeName) { mRecipeName = recipeName; }
-
     int mServings;
-    public void setServings(int servings) { mServings = servings; }
-
-    RecipeStepListRVAdapter mRecipeStepListRVAdapter;
-
 
     public RecipeFragment() {}
-
 
     @Nullable
     @Override
@@ -51,14 +40,13 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        if (savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             mRecipeName = RecipeFragmentArgs.fromBundle(getArguments()).getRecipeName();
+            mServings = RecipeFragmentArgs.fromBundle(getArguments()).getServings();
         } else {
             mRecipeName = savedInstanceState.getString("recipeName");
+            mServings = savedInstanceState.getInt("servings");
         }
-
-        Log.e(TAG, ">>>>>> recipeName: " + mRecipeName);
 
         ((TextView) rootview.findViewById(R.id.fragment_recipe_heading_tv)).setText(mRecipeName);
         ((TextView) rootview.findViewById(R.id.fragment_recipe_servings_value_tv)).setText(String.valueOf(mServings));
@@ -66,8 +54,8 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
         RecyclerView stepListRV = rootview.findViewById(R.id.fragment_recipe_steps_rv);
         RecyclerView.LayoutManager stepListRVLayoutManager = new LinearLayoutManager(this.getContext(), RecyclerView.VERTICAL, false);
         stepListRV.setLayoutManager(stepListRVLayoutManager);
-        mRecipeStepListRVAdapter = new RecipeStepListRVAdapter(this);
-        stepListRV.setAdapter(mRecipeStepListRVAdapter);
+        RecipeStepListRVAdapter recipeStepListRVAdapter = new RecipeStepListRVAdapter(this);
+        stepListRV.setAdapter(recipeStepListRVAdapter);
 
         DetailViewModelFactory detailViewModelFactory = new DetailViewModelFactory(this.getContext(), mRecipeName);
         final DetailViewModel detailViewModel = new ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel.class);
@@ -76,7 +64,7 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
             public void onChanged(List<Step> steps) {
                 if (steps != null) {
                     Log.e(this.getClass().getSimpleName(), "size: " + steps.size());
-                    mRecipeStepListRVAdapter.submit(steps);
+                    recipeStepListRVAdapter.submit(steps);
                 }
             }
         });
@@ -93,7 +81,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
     }
 
     @Override
-    public void onSaveInstanceState(Bundle currentState) { currentState.putString("recipeName", mRecipeName); }
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString("recipeName", mRecipeName);
+        currentState.putInt("servings", mServings);
+    }
 
     // Callback from the RecipeStepListRVAdapter
     @Override
