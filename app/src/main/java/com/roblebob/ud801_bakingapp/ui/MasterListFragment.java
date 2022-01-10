@@ -23,8 +23,7 @@ import com.roblebob.ud801_bakingapp.viewmodels.MasterViewModelFactory;
 public class MasterListFragment extends Fragment implements MasterRVAdapter.ItemClickListener{
 
     // Mandatory empty constructor
-    public MasterListFragment() {
-    }
+    public MasterListFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
