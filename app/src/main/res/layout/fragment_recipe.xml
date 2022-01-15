@@ -44,20 +44,14 @@
             />
 
 
-        <View
-            android:id="@+id/fragment_recipe_post_heading_divider"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            resAuto:layout_constraintTop_toBottomOf="@id/fragment_recipe_servings_key_tv"
-            resAuto:layout_constraintStart_toStartOf="parent"
-            resAuto:layout_constraintEnd_toEndOf="parent"
-            />
+
 
         <Button
             android:id="@+id/fragment_recipe_ingredients_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            resAuto:layout_constraintTop_toBottomOf="@id/fragment_recipe_post_heading_divider"
+            android:layout_marginTop="20dp"
+            resAuto:layout_constraintTop_toBottomOf="@id/fragment_recipe_servings_key_tv"
             resAuto:layout_constraintStart_toStartOf="parent"
             resAuto:layout_constraintEnd_toEndOf="parent"
             android:text="Ingredients"
