@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_pane_nav_graph"
+    app:startDestination="@id/ingredientsFragment"
+    >
+
+
+    <action
+        android:id="@+id/action_recipeFragment_to_ingredientsFragment"
+        app:destination="@id/ingredientsFragment" />
+    <action
+        android:id="@+id/action_recipeFragment_to_stepFragment"
+        app:destination="@id/stepFragment" />
+
+    <fragment
+        android:id="@+id/ingredientsFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.IngredientsFragment"
+        android:label="IngredientsFragment"
+        tools:layout="@layout/fragment_ingredients">
+        <argument
+            android:name="recipeName"
+            app:argType="string"
+            android:defaultValue="Nutella Pie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stepFragment"
+        android:name="com.roblebob.ud801_bakingapp.ui.StepFragment"
+        android:label="StepFragment"
+        tools:layout="@layout/fragment_step">
+        <argument
+            android:name="recipeName"
+            app:argType="string"
+            android:defaultValue="Nutella Pie" />
+        <argument
+            android:name="stepNumber"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+</navigation>
