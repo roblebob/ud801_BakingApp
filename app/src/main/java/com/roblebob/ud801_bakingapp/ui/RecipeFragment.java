@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -27,8 +28,12 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
+    public static final String TAG = RecipeFragment.class.getSimpleName();
+
     String mRecipeName;
     int mServings;
+
+    boolean mIsTwoPane = false;
 
     public RecipeFragment() {}
 
@@ -39,6 +44,10 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
                              @Nullable Bundle savedInstanceState) {
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe, container, false);
+
+        FragmentContainerView fragmentContainerView = rootview.findViewById(R.id.fragment_recipe_detail_pane);
+        mIsTwoPane = fragmentContainerView != null;
+        Log.e(TAG, "mIsTwoPane= " + mIsTwoPane);
 
         if (savedInstanceState == null) {
             mRecipeName = RecipeFragmentArgs.fromBundle(getArguments()).getRecipeName();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:resAuto="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/divider"
@@ -21,39 +21,39 @@
             android:text="@string/recipe_default_name"
             android:textSize="@dimen/recipe_text_size"
             android:layout_marginTop="20dp"
-            resAuto:layout_constraintEnd_toEndOf="parent"
-            resAuto:layout_constraintStart_toStartOf="parent"
-            resAuto:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/fragment_recipe_servings_key_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Servings: "
-            resAuto:layout_constraintEnd_toEndOf="@+id/fragment_recipe_heading_tv"
-            resAuto:layout_constraintTop_toBottomOf="@+id/fragment_recipe_heading_tv"
-            resAuto:layout_constraintStart_toStartOf="@+id/fragment_recipe_heading_tv" />
+            app:layout_constraintEnd_toEndOf="@+id/fragment_recipe_heading_tv"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_heading_tv"
+            app:layout_constraintStart_toStartOf="@+id/fragment_recipe_heading_tv" />
 
         <TextView
             android:id="@+id/fragment_recipe_servings_value_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
-            resAuto:layout_constraintBaseline_toBaselineOf="@+id/fragment_recipe_servings_key_tv"
-            resAuto:layout_constraintStart_toEndOf="@id/fragment_recipe_servings_key_tv"
+            app:layout_constraintBaseline_toBaselineOf="@+id/fragment_recipe_servings_key_tv"
+            app:layout_constraintStart_toEndOf="@id/fragment_recipe_servings_key_tv"
             />
 
 
-
+        <!-- body -->
 
         <Button
             android:id="@+id/fragment_recipe_ingredients_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            resAuto:layout_constraintTop_toBottomOf="@id/fragment_recipe_servings_key_tv"
-            resAuto:layout_constraintStart_toStartOf="parent"
-            resAuto:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_recipe_servings_key_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:text="Ingredients"
             android:padding="20dp"
             android:layout_margin="12dp"
@@ -63,10 +63,10 @@
             android:id="@+id/fragment_recipe_steps_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            resAuto:layout_constraintTop_toBottomOf="@id/fragment_recipe_ingredients_button"
-            resAuto:layout_constraintStart_toStartOf="parent"
-            resAuto:layout_constraintEnd_toEndOf="parent"
-            resAuto:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_recipe_ingredients_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
