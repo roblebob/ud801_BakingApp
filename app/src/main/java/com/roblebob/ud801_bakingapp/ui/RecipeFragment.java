@@ -14,17 +14,20 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.roblebob.ud801_bakingapp.DetailPaneNavGraphDirections;
 import com.roblebob.ud801_bakingapp.R;
 import com.roblebob.ud801_bakingapp.model.Step;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModel;
 import com.roblebob.ud801_bakingapp.viewmodels.DetailViewModelFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.ItemClickListener{
 
@@ -80,10 +83,17 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
 
         rootview.findViewById(R.id.fragment_recipe_ingredients_button)
                 .setOnClickListener( (view) -> {
-                    RecipeFragmentDirections.ActionRecipeFragmentToIngredientsFragment action = RecipeFragmentDirections.actionRecipeFragmentToIngredientsFragment();
-                    action.setRecipeName(mRecipeName);
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(action);
+                    if (mIsTwoPane) {
+                        NavController navController = Navigation.findNavController(getActivity(), R.id.fragment_recipe_detail_pane);
+                        DetailPaneNavGraphDirections.ActionToIngredientsFragment action = DetailPaneNavGraphDirections.actionToIngredientsFragment();
+                        action.setRecipeName(mRecipeName);
+                        navController.navigate(action);
+                    } else {
+                        RecipeFragmentDirections.ActionRecipeFragmentToIngredientsFragment action = RecipeFragmentDirections.actionRecipeFragmentToIngredientsFragment();
+                        action.setRecipeName(mRecipeName);
+                        NavController navController = Navigation.findNavController(view);
+                        navController.navigate(action);
+                    }
                 });
 
         return rootview;
@@ -98,10 +108,18 @@ public class RecipeFragment extends Fragment implements RecipeStepListRVAdapter.
     // Callback from the RecipeStepListRVAdapter
     @Override
     public void onItemClickListener(Step step) {
-        RecipeFragmentDirections.ActionRecipeFragmentToStepFragment action = RecipeFragmentDirections.actionRecipeFragmentToStepFragment();
-        action.setRecipeName(mRecipeName);
-        action.setStepNumber(step.getStepNumber());
-        NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(action);
+        if (mIsTwoPane) {
+            NavController navController = Navigation.findNavController(getActivity(), R.id.fragment_recipe_detail_pane);
+            DetailPaneNavGraphDirections.ActionToStepFragment action = DetailPaneNavGraphDirections.actionToStepFragment();
+            action.setRecipeName(mRecipeName);
+            action.setStepNumber(step.getStepNumber());
+            navController.navigate(action);
+        } else {
+            RecipeFragmentDirections.ActionRecipeFragmentToStepFragment action = RecipeFragmentDirections.actionRecipeFragmentToStepFragment();
+            action.setRecipeName(mRecipeName);
+            action.setStepNumber(step.getStepNumber());
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(action);
+        }
     }
 }

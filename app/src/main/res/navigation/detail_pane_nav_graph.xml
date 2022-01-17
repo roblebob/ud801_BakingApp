@@ -8,10 +8,10 @@
 
 
     <action
-        android:id="@+id/action_recipeFragment_to_ingredientsFragment"
+        android:id="@+id/action_to_ingredientsFragment"
         app:destination="@id/ingredientsFragment" />
     <action
-        android:id="@+id/action_recipeFragment_to_stepFragment"
+        android:id="@+id/action_to_stepFragment"
         app:destination="@id/stepFragment" />
 
     <fragment
