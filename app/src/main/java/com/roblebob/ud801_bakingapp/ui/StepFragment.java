@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -83,6 +84,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     ImageView mBackwardArrow;
     ImageView mForwardArrow;
     Group uiSet;
+    FrameLayout mVideoFrame;
 
     PlayerView mExoPlayerView;
     ExoPlayer mExoPlayer;
@@ -99,10 +101,6 @@ public class StepFragment extends Fragment implements Player.Listener{
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        final View rootview = inflater.inflate(R.layout.fragment_step, container, false);
-
-
-
         if (savedInstanceState == null) {
             mRecipeName = StepFragmentArgs.fromBundle(getArguments()).getRecipeName();
             mStepNumber = StepFragmentArgs.fromBundle(getArguments()).getStepNumber();
@@ -116,13 +114,15 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         Log.e(TAG,">>>>>>>> recipeName: " + mRecipeName + " ,   stepNumber: " + mStepNumber);
 
+        final View rootview = inflater.inflate(R.layout.fragment_step, container, false);
+
         mShortDescriptionTv = rootview.findViewById(R.id.fragment_step_short_description);
         mDescriptionTv = rootview.findViewById(R.id.fragment_step_description);
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
         //uiSet = rootview.findViewById(R.id.fragment_step_group);
-
+        mVideoFrame = rootview.findViewById(R.id.fragment_step_video_frame);
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
 
@@ -142,12 +142,14 @@ public class StepFragment extends Fragment implements Player.Listener{
         rootview.findViewById(R.id.fragment_step_navigation_left).setOnClickListener(view -> {
             if (mStepNumber > 0) {
                 mStepNumber -= 1;
+                mExoPlayerCurrentPosition = 0;
                 setup();
             }
         });
         rootview.findViewById(R.id.fragment_step_navigation_right).setOnClickListener(view -> {
             if (mStepNumber < mStepList.size() - 1) {
                 mStepNumber += 1;
+                mExoPlayerCurrentPosition = 0;
                 setup();
             }
         });
@@ -219,10 +221,7 @@ public class StepFragment extends Fragment implements Player.Listener{
      */
     void setup() {
 
-        releasePlayer();
-
         if (mStepNumber >= mStepList.size()) return;
-
         Step step = mStepList.get(mStepNumber);
 
         mShortDescriptionTv.setText(step.getShortDescription());
@@ -239,7 +238,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
-        mExoPlayerCurrentPosition = 0;
 
         initializePlayer();
     }
@@ -255,20 +253,20 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
     void initializePlayer() {
-        if (mStepNumber >= mStepList.size()) return;
+        releasePlayer();
 
+        if (mStepNumber >= mStepList.size()) return;
         Step step = mStepList.get(mStepNumber);
         String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
-
-        if (mExoPlayer != null) {
-            releasePlayer();
-        }
 
         // ExoPlayer needs to be null, to go on
 
         if (mExoPlayer == null && mIsConnected && !videoUrl.equals("")) {
 
             mExoPlayerView.setVisibility(View.VISIBLE);
+            if (mVideoFrame != null) {
+                mVideoFrame.setVisibility(View.VISIBLE);
+            }
 
             mExoPlayer = new ExoPlayer
                     .Builder(this.requireContext(), new DefaultRenderersFactory( this.getContext()))
@@ -287,8 +285,10 @@ public class StepFragment extends Fragment implements Player.Listener{
             mExoPlayer.seekTo(mExoPlayerCurrentPosition);
 
         } else {
-
             mExoPlayerView.setVisibility(View.INVISIBLE);
+            if (mVideoFrame != null) {
+                mVideoFrame.setVisibility(View.GONE);
+            }
         }
 
     }
