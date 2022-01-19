@@ -47,7 +47,6 @@ import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
     public static final String TAG = StepFragment.class.getSimpleName();
-
     public static final String RECIPE_NAME = "com.roblebob.ud801_bakingapp.ui.recipe_name";
     public static final String STEP_NUMBER = "com.roblebob.ud801_bakingapp.ui.step_number";
     public static final String EXOPLAYER_CURRENT_POSITION = "com.roblebob.ud801_bakingapp.ui.exoplayer_current_position";
@@ -56,28 +55,10 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     String mRecipeName;
     int mStepNumber;
-
-
-    public StepFragment() { }
-
-
     List<Step> mStepList = new ArrayList<>();
 
-
     boolean mIsConnected;
-
     public boolean mIsInPictureInPictureMode;
-
-
-    public boolean hasVideoPlayable() {
-        if (!mIsConnected)  return false;
-        if (mStepNumber >= mStepList.size()) return false;
-        Step step = mStepList.get( mStepNumber);
-        String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
-        return !videoUrl.equals("");
-    }
-
-
 
     TextView mShortDescriptionTv;
     TextView mDescriptionTv;
@@ -94,6 +75,9 @@ public class StepFragment extends Fragment implements Player.Listener{
     MediaSessionCompat mMediaSession;
     PlaybackStateCompat.Builder mStateBuilder;
 
+
+    // Mandatory empty constructor
+    public StepFragment() { }
 
     @Nullable
     @Override
@@ -238,7 +222,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mForwardArrow.setColorFilter(this.requireContext().getColor(R.color.nav_arrow_on));
         }
 
-
         initializePlayer();
     }
 
@@ -251,7 +234,6 @@ public class StepFragment extends Fragment implements Player.Listener{
      *  ExoPlayer
      */
 
-
     void initializePlayer() {
         releasePlayer();
 
@@ -260,7 +242,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
 
         // ExoPlayer needs to be null, to go on
-
         if (mExoPlayer == null && mIsConnected && !videoUrl.equals("")) {
 
             mExoPlayerView.setVisibility(View.VISIBLE);
@@ -392,6 +373,14 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     }
 
+
+    public boolean hasVideoPlayable() {
+        if (!mIsConnected)  return false;
+        if (mStepNumber >= mStepList.size()) return false;
+        Step step = mStepList.get( mStepNumber);
+        String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
+        return !videoUrl.equals("");
+    }
 
 
 }

@@ -63,7 +63,6 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="@dimen/margin"
-            android:background="@color/divider"
             resAuto:layout_constraintBottom_toBottomOf="parent"
             resAuto:layout_constraintEnd_toStartOf="@id/fragment_step_navigation_right"
             resAuto:layout_constraintStart_toStartOf="parent" />
@@ -73,7 +72,6 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="@dimen/margin"
-            android:background="@color/divider"
             resAuto:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
             resAuto:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
             resAuto:layout_constraintEnd_toEndOf="parent"
