@@ -2,6 +2,9 @@ package com.roblebob.ud801_bakingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.app.PictureInPictureParams;
 import android.os.Bundle;
@@ -26,7 +29,14 @@ public class MainActivity extends AppCompatActivity
 
         View rootOfStepFragment = (View) findViewById(R.id.fragment_step_root);
 
-        if ( rootOfStepFragment != null) {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+
+        Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+
+        Log.e(TAG, String.valueOf(fragment));
+
+
+        if (fragment instanceof StepFragment  && ((StepFragment) fragment).hasVideoPlayable()) {
 
             Log.e(TAG, "entered pip");
 

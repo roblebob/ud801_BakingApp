@@ -355,9 +355,10 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
 
-        Log.e(TAG, "------> onPictureInPictureModeChanged( " +  isInPictureInPictureMode + " )");
+        Log.e(TAG, "------> onPictureInPictureModeChanged( " + isInPictureInPictureMode + " )");
 
         mIsInPictureInPictureMode = isInPictureInPictureMode;
         //mExoPlayerView.setUseController(!isInPictureInPictureMode);
@@ -381,6 +382,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
         return !videoUrl.equals("");
     }
+
 
 
 }
