@@ -105,7 +105,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mBackwardArrow = rootview.findViewById(R.id.fragment_step_backward_arrow);
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
-        //uiSet = rootview.findViewById(R.id.fragment_step_group);
+        uiSet = rootview.findViewById(R.id.fragment_step_group);
         mVideoFrame = rootview.findViewById(R.id.fragment_step_video_frame);
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
@@ -361,15 +361,17 @@ public class StepFragment extends Fragment implements Player.Listener{
         Log.e(TAG, "------> onPictureInPictureModeChanged( " + isInPictureInPictureMode + " )");
 
         mIsInPictureInPictureMode = isInPictureInPictureMode;
-        //mExoPlayerView.setUseController(!isInPictureInPictureMode);
 
-//        if (isInPictureInPictureMode) {
-//            if (uiSet != null) uiSet.setVisibility(View.GONE);
-//            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-//            //mExoPlayerView
-//        } else {
-//            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
-//        }
+
+        mExoPlayerView.setUseController(!isInPictureInPictureMode);
+
+        if (isInPictureInPictureMode) {
+            if (uiSet != null) uiSet.setVisibility(View.GONE);
+            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            //mExoPlayerView
+        } else {
+            if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
+        }
 
 
     }
