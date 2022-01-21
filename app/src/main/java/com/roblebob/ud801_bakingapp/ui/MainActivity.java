@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity
                             .setAspectRatio(new Rational(16, 9))
                             .build()
             );
+            getSupportActionBar().hide();
+
         } else {
             Log.e(TAG, "avoided entering pip");
             super.onUserLeaveHint();
@@ -53,4 +55,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().show();
+    }
 }
