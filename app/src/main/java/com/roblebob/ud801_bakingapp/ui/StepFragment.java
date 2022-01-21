@@ -1,6 +1,7 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -363,18 +364,30 @@ public class StepFragment extends Fragment implements Player.Listener{
         mIsInPictureInPictureMode = isInPictureInPictureMode;
 
 
-        mExoPlayerView.setUseController(!isInPictureInPictureMode);
+        //mExoPlayerView.setUseController(!isInPictureInPictureMode);
+
 
         if (isInPictureInPictureMode) {
             if (uiSet != null) uiSet.setVisibility(View.GONE);
-            mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            //mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
             //mExoPlayerView
+            mExoPlayerView.setLayoutParams( new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         } else {
             if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
+            mExoPlayerView.getLayoutParams().height = dpToPx(230);
         }
 
 
+
+
+
     }
+
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
 
 
     public boolean hasVideoPlayable() {
