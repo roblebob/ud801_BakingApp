@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <FrameLayout
             android:id="@+id/fragment_step_video_frame"
@@ -19,42 +21,47 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fragment_step_short_description"
             android:background="#000000"
-            >
-
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/fragment_step_video"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:controller_layout_id="@layout/my_exo_player_control_view"
-                />
-
-        </FrameLayout>
-
-        <!--androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_step_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="380dp" /-->
+            />
 
 
+
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/fragment_step_video"
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:controller_layout_id="@layout/my_exo_player_control_view"
+            />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_step_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            app:constraint_referenced_ids="fragment_step_video_frame,fragment_step_short_description,fragment_step_description,fragment_step_navigation_left,fragment_step_navigation_right,fragment_step_backward_arrow,fragment_step_forward_arrow"
+            />
 
         <TextView
             android:id="@+id/fragment_step_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin"
-            android:layout_marginTop="108dp"
-            android:padding="@dimen/padding"
-            android:textAlignment="center"
-            android:textSize="@dimen/step_heading_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.896"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_step_video_frame" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_step_video"
+            android:layout_margin="@dimen/margin"
+            android:textSize="@dimen/step_heading_size"
+            android:textAlignment="center"
+            android:padding="@dimen/padding"
+            android:text="short description"
+            />
+
 
         <TextView
-
             android:id="@+id/fragment_step_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,43 +71,48 @@
             android:padding="40dp"
             android:textAlignment="center"
             android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_step_navigation_left"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_step_short_description"
-            app:layout_constraintVertical_bias="1.0" />
+
+            />
+
+
 
         <View
             android:id="@+id/fragment_step_navigation_left"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="@dimen/margin"
-            app:layout_constraintTop_toBottomOf="@id/fragment_step_description"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fragment_step_navigation_right"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/margin"
+            />
 
         <View
             android:id="@+id/fragment_step_navigation_right"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="@dimen/margin"
-            app:layout_constraintTop_toBottomOf="@id/fragment_step_description"
+            app:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left" />
+            app:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
+            />
 
 
         <ImageView
             android:id="@+id/fragment_step_backward_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="3"
-            android:scaleY="2"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_step_navigation_left"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_left"
             app:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_left"
             app:layout_constraintStart_toStartOf="@id/fragment_step_navigation_left"
             app:layout_constraintTop_toTopOf="@id/fragment_step_navigation_left"
             app:srcCompat="@drawable/ic_baseline_arrow_left_24"
+            android:scaleX="3"
+            android:scaleY="2"
             android:contentDescription="@string/content_description_back_navigation_arrow"
             />
 
@@ -108,19 +120,16 @@
             android:id="@+id/fragment_step_forward_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="3"
-            android:scaleY="2"
             app:layout_constraintBottom_toBottomOf="@id/fragment_step_navigation_right"
             app:layout_constraintEnd_toEndOf="@id/fragment_step_navigation_right"
             app:layout_constraintStart_toEndOf="@id/fragment_step_navigation_left"
             app:layout_constraintTop_toTopOf="@id/fragment_step_navigation_right"
             app:srcCompat="@drawable/ic_baseline_arrow_right_24"
+            android:scaleX="3"
+            android:scaleY="2"
             android:contentDescription="@string/content_description_forward_navigation_arrow"
             />
 
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -1,6 +1,7 @@
 package com.roblebob.ud801_bakingapp.ui;
 
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -399,7 +400,17 @@ public class StepFragment extends Fragment implements Player.Listener{
     }
 
 
-
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT && !mIsInPictureInPictureMode) {
+            mExoPlayerView.getLayoutParams().height = dpToPx(230);
+            mVideoFrame.getLayoutParams().height = dpToPx(230);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE && !mIsInPictureInPictureMode) {
+            mExoPlayerView.getLayoutParams().height = dpToPx(340);
+            mVideoFrame.getLayoutParams().height = dpToPx(340);
+        }
+    }
 }
 
 
