@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onUserLeaveHint() {
 
-        View rootOfStepFragment = (View) findViewById(R.id.fragment_step_root);
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
 
         Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
