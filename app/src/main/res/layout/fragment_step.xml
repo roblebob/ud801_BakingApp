@@ -15,7 +15,7 @@
     <FrameLayout
         android:id="@+id/fragment_step_video_frame"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="@dimen/step_fragments_video_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/fragment_step_video"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="@dimen/step_fragments_video_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
