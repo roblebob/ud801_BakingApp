@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StepFragment extends Fragment implements Player.Listener{
-    public static final String TAG = StepFragment.class.getSimpleName();
     public static final String RECIPE_NAME = "com.roblebob.ud801_bakingapp.ui.recipe_name";
     public static final String STEP_NUMBER = "com.roblebob.ud801_bakingapp.ui.step_number";
     public static final String EXOPLAYER_CURRENT_POSITION = "com.roblebob.ud801_bakingapp.ui.exoplayer_current_position";
@@ -91,8 +90,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mExoPlayerPlayWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
             mIsInPictureInPictureMode = savedInstanceState.getBoolean("is_in_picture_in_picture_mode");
         }
-
-        Log.e(TAG,">>>>>>>> recipeName: " + mRecipeName + " ,   stepNumber: " + mStepNumber);
 
         final View rootview = inflater.inflate(R.layout.fragment_step, container, false);
 
@@ -146,7 +143,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT >= 24) {
             initializePlayer();
         }
-        Log.e(TAG, "----> onStart()");
     }
 
     @Override
@@ -155,7 +151,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         if ((Util.SDK_INT < 24) || mExoPlayer == null) {
             initializePlayer();
         }
-        Log.e(TAG, "----> onResume()");
     }
 
     @Override
@@ -164,7 +159,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT < 24) {
             releasePlayer();
         }
-        Log.e(TAG, "----> onPause()");
     }
 
     @Override
@@ -173,7 +167,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (Util.SDK_INT >= 24) {
             releasePlayer();
         }
-        Log.e(TAG, "----> onStop()");
     }
 
     @Override
@@ -183,7 +176,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
         currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
         currentState.putBoolean("is_in_picture_in_picture_mode", mIsInPictureInPictureMode);
-        Log.e(TAG, "----> onSaveInstanceState()");
     }
 
 
@@ -192,7 +184,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         mMediaSession.setActive(false);
         super.onDestroyView();
         releasePlayer();
-        Log.e(TAG, "----> onDestroyView()");
     }
 
 
@@ -300,7 +291,6 @@ public class StepFragment extends Fragment implements Player.Listener{
      *  MediaSession
      */
 
-
     @Override
     public void onIsPlayingChanged(boolean isPlaying) {
         if (isPlaying) {
@@ -309,7 +299,6 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mMediaSession.setPlaybackState( mStateBuilder.build());
-        Log.e(TAG, "----> onIsPlayerChanged( " + isPlaying +" )");
     }
 
 
@@ -336,6 +325,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         @Override public void onPlay() { mExoPlayer.setPlayWhenReady(true);}
         @Override public void onPause() { mExoPlayer.setPlayWhenReady(false);}
         @Override public void onStop() { mExoPlayer.seekTo(0); }
+        @Override public void onSkipToPrevious() { mExoPlayer.seekTo(0); }
     }
 
 
@@ -349,33 +339,24 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
+    /**
+     *  Picture in Picture mode
+     */
+
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
 
         super.onPictureInPictureModeChanged(isInPictureInPictureMode);
-
-        Log.e(TAG, "------> onPictureInPictureModeChanged( " + isInPictureInPictureMode + " )");
-
         mIsInPictureInPictureMode = isInPictureInPictureMode;
-
-
-        //mExoPlayerView.setUseController(!isInPictureInPictureMode);
-
+        mExoPlayerView.setUseController(!isInPictureInPictureMode);
 
         if (isInPictureInPictureMode) {
             if (uiSet != null) uiSet.setVisibility(View.GONE);
-            //mExoPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-            //mExoPlayerView
             mExoPlayerView.setLayoutParams( new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         } else {
             if (uiSet != null) uiSet.setVisibility(View.VISIBLE);
             mExoPlayerView.getLayoutParams().height = dpToPx(230);
         }
-
-
-
-
-
     }
 
 

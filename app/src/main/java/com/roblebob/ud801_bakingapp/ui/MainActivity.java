@@ -16,8 +16,6 @@ import com.roblebob.ud801_bakingapp.R;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static final String TAG = MainActivity.class.getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +26,9 @@ public class MainActivity extends AppCompatActivity
     protected void onUserLeaveHint() {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-
         Fragment fragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
 
-        Log.e(TAG, String.valueOf(fragment));
-
-
         if (fragment instanceof StepFragment  && ((StepFragment) fragment).hasVideoPlayable()) {
-
-            Log.e(TAG, "entered pip");
 
             enterPictureInPictureMode(
                     new PictureInPictureParams
@@ -45,12 +37,9 @@ public class MainActivity extends AppCompatActivity
                             .build()
             );
             getSupportActionBar().hide();
-
         } else {
-            Log.e(TAG, "avoided entering pip");
             super.onUserLeaveHint();
         }
-
     }
 
 
