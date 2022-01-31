@@ -7,8 +7,8 @@
     >
 
 
-        <FrameLayout
-            android:id="@+id/fragment_step_video_frame"
+        <View
+            android:id="@+id/fragment_step_video_background"
             android:layout_width="match_parent"
             android:layout_height="340dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -16,16 +16,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fragment_step_short_description"
             android:background="#000000"
-            >
+            />
 
-                <com.google.android.exoplayer2.ui.PlayerView
-                    android:id="@+id/fragment_step_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:controller_layout_id="@layout/my_exo_player_control_view"
-                    />
 
-        </FrameLayout>
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/fragment_step_video"
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            app:controller_layout_id="@layout/my_exo_player_control_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_step_short_description"
+
+            />
 
         <TextView
             android:id="@+id/fragment_step_short_description"
@@ -38,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.896"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_step_video_frame" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_step_video_background" />
 
         <TextView
 

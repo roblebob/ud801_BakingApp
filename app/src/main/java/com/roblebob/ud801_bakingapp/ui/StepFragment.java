@@ -11,28 +11,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -67,7 +61,7 @@ public class StepFragment extends Fragment implements Player.Listener{
     ImageView mBackwardArrow;
     ImageView mForwardArrow;
     Group uiSet;
-    FrameLayout mVideoFrame;
+    View mVideoBackground;
 
     PlayerView mExoPlayerView;
     ExoPlayer mExoPlayer;
@@ -108,7 +102,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         mForwardArrow = rootview.findViewById(R.id.fragment_step_forward_arrow);
         mExoPlayerView = rootview.findViewById(R.id.fragment_step_video);
         uiSet = rootview.findViewById(R.id.fragment_step_group);
-        mVideoFrame = rootview.findViewById(R.id.fragment_step_video_frame);
+        mVideoBackground = rootview.findViewById(R.id.fragment_step_video_background);
 
         new AppConnectivity( this.getContext()) .observe( getViewLifecycleOwner(), aBoolean -> mIsConnected = aBoolean);
 
@@ -247,8 +241,8 @@ public class StepFragment extends Fragment implements Player.Listener{
         if (mExoPlayer == null && mIsConnected && !videoUrl.equals("")) {
 
             mExoPlayerView.setVisibility(View.VISIBLE);
-            if (mVideoFrame != null) {
-                mVideoFrame.setVisibility(View.VISIBLE);
+            if (mVideoBackground != null) {
+                mVideoBackground.setVisibility(View.VISIBLE);
             }
 
             mExoPlayer = new ExoPlayer
@@ -269,8 +263,8 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         } else {
             mExoPlayerView.setVisibility(View.INVISIBLE);
-            if (mVideoFrame != null) {
-                mVideoFrame.setVisibility(View.GONE);
+            if (mVideoBackground != null) {
+                mVideoBackground.setVisibility(View.GONE);
             }
         }
 
@@ -405,10 +399,10 @@ public class StepFragment extends Fragment implements Player.Listener{
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT && !mIsInPictureInPictureMode) {
             mExoPlayerView.getLayoutParams().height = dpToPx(230);
-            mVideoFrame.getLayoutParams().height = dpToPx(230);
+            mVideoBackground.getLayoutParams().height = dpToPx(230);
         } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE && !mIsInPictureInPictureMode) {
             mExoPlayerView.getLayoutParams().height = dpToPx(340);
-            mVideoFrame.getLayoutParams().height = dpToPx(340);
+            mVideoBackground.getLayoutParams().height = dpToPx(340);
         }
     }
 }
