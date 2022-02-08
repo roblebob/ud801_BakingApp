@@ -45,7 +45,8 @@ public class StepFragment extends Fragment implements Player.Listener{
     public static final String RECIPE_NAME = "com.roblebob.ud801_bakingapp.ui.recipe_name";
     public static final String STEP_NUMBER = "com.roblebob.ud801_bakingapp.ui.step_number";
     public static final String EXOPLAYER_CURRENT_POSITION = "com.roblebob.ud801_bakingapp.ui.exoplayer_current_position";
-    private static final String EXOPLAYER_PLAY_WHEN_READY = "com.roblebob.ud801_bakingapp.ui.exoplayer_play_when_ready";
+    public static final String EXOPLAYER_PLAY_WHEN_READY = "com.roblebob.ud801_bakingapp.ui.exoplayer_play_when_ready";
+    public static final String IS_IN_PICTURE_IN_PICTURE_MODE = "com.roblebob.ud801_bakingapp.ui.is_in_picture_in_picture_mode";
 
 
     String mRecipeName;
@@ -88,7 +89,7 @@ public class StepFragment extends Fragment implements Player.Listener{
             mStepNumber = savedInstanceState.getInt(STEP_NUMBER);
             mExoPlayerCurrentPosition = savedInstanceState.getLong(EXOPLAYER_CURRENT_POSITION);
             mExoPlayerPlayWhenReady = savedInstanceState.getBoolean(EXOPLAYER_PLAY_WHEN_READY);
-            mIsInPictureInPictureMode = savedInstanceState.getBoolean("is_in_picture_in_picture_mode");
+            mIsInPictureInPictureMode = savedInstanceState.getBoolean(IS_IN_PICTURE_IN_PICTURE_MODE);
         }
 
         final View rootview = inflater.inflate(R.layout.fragment_step, container, false);
@@ -175,7 +176,7 @@ public class StepFragment extends Fragment implements Player.Listener{
         currentState.putInt(STEP_NUMBER, mStepNumber);
         currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
         currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
-        currentState.putBoolean("is_in_picture_in_picture_mode", mIsInPictureInPictureMode);
+        currentState.putBoolean(IS_IN_PICTURE_IN_PICTURE_MODE, mIsInPictureInPictureMode);
     }
 
 
