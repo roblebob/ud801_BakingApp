@@ -137,7 +137,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         return rootview;
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -156,6 +155,8 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     @Override
     public void onPause() {
+        mExoPlayerCurrentPosition = mExoPlayer.getCurrentPosition();
+        mExoPlayerPlayWhenReady = mExoPlayer.getPlayWhenReady();
         super.onPause();
         if (Util.SDK_INT < 24) {
             releasePlayer();
@@ -174,11 +175,10 @@ public class StepFragment extends Fragment implements Player.Listener{
     public void onSaveInstanceState(Bundle currentState) {
         currentState.putString(RECIPE_NAME, mRecipeName);
         currentState.putInt(STEP_NUMBER, mStepNumber);
-        currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
-        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
+        currentState.putLong(EXOPLAYER_CURRENT_POSITION, (mExoPlayer != null) ? mExoPlayer.getCurrentPosition() : mExoPlayerCurrentPosition);
+        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, (mExoPlayer != null) ? mExoPlayer.getPlayWhenReady() : mExoPlayerPlayWhenReady);
         currentState.putBoolean(IS_IN_PICTURE_IN_PICTURE_MODE, mIsInPictureInPictureMode);
     }
-
 
     @Override
     public void onDestroyView() {
@@ -186,6 +186,9 @@ public class StepFragment extends Fragment implements Player.Listener{
         super.onDestroyView();
         releasePlayer();
     }
+
+
+
 
 
     /**
@@ -212,7 +215,6 @@ public class StepFragment extends Fragment implements Player.Listener{
 
         initializePlayer();
     }
-
 
 
 
@@ -276,18 +278,6 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      *  MediaSession
      */
@@ -335,11 +325,6 @@ public class StepFragment extends Fragment implements Player.Listener{
 
 
 
-
-
-
-
-
     /**
      *  Picture in Picture mode
      */
@@ -360,12 +345,9 @@ public class StepFragment extends Fragment implements Player.Listener{
         }
     }
 
-
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
-
-
 
     public boolean hasVideoPlayable() {
         if (!mIsConnected)  return false;
@@ -374,7 +356,6 @@ public class StepFragment extends Fragment implements Player.Listener{
         String videoUrl = (!step.getVideoURL().equals(""))  ?  step.getVideoURL()  :  step.getThumbnailURL();
         return !videoUrl.equals("");
     }
-
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
