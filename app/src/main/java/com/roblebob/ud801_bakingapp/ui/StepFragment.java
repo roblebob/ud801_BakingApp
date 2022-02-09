@@ -175,8 +175,8 @@ public class StepFragment extends Fragment implements Player.Listener{
     public void onSaveInstanceState(Bundle currentState) {
         currentState.putString(RECIPE_NAME, mRecipeName);
         currentState.putInt(STEP_NUMBER, mStepNumber);
-        currentState.putLong(EXOPLAYER_CURRENT_POSITION, (mExoPlayer != null) ? mExoPlayer.getCurrentPosition() : mExoPlayerCurrentPosition);
-        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, (mExoPlayer != null) ? mExoPlayer.getPlayWhenReady() : mExoPlayerPlayWhenReady);
+        currentState.putLong(EXOPLAYER_CURRENT_POSITION, mExoPlayerCurrentPosition);
+        currentState.putBoolean(EXOPLAYER_PLAY_WHEN_READY, mExoPlayerPlayWhenReady);
         currentState.putBoolean(IS_IN_PICTURE_IN_PICTURE_MODE, mIsInPictureInPictureMode);
     }
 
@@ -266,8 +266,6 @@ public class StepFragment extends Fragment implements Player.Listener{
 
     private void releasePlayer() {
         if (mExoPlayer != null) {
-            mExoPlayerCurrentPosition = mExoPlayer.getCurrentPosition();
-            mExoPlayerPlayWhenReady = mExoPlayer.getPlayWhenReady();
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
